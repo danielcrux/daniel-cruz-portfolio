@@ -14,6 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 
+  /* ---------- scroll-to-explore hint ---------- */
+  const scrollHint = document.getElementById('scrollHint');
+  if (scrollHint) {
+    const onHintScroll = () => {
+      scrollHint.classList.toggle('hidden', window.scrollY > 120);
+    };
+    onHintScroll();
+    window.addEventListener('scroll', onHintScroll, { passive: true });
+  }
+
   /* ---------- back to top ---------- */
   const backToTop = document.getElementById('backToTop');
   if (backToTop) {
