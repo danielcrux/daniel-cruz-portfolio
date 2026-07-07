@@ -146,10 +146,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* animated counters */
+    // Real value lives in the markup (visible even if this script never
+    // runs). JS only resets to 0 and counts back up as a visual flourish.
     document.querySelectorAll('.count').forEach((el) => {
       const target = parseFloat(el.dataset.count);
       const suffix = el.dataset.suffix || '';
       const obj = { val: 0 };
+      el.textContent = '0' + suffix;
       ScrollTrigger.create({
         trigger: el,
         start: 'top 90%',
