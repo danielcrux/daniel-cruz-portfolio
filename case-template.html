@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!--
+  CASE STUDY TEMPLATE
+  To add a new case study:
+  1. Duplicate this file and rename it, e.g. case-my-new-project.html
+  2. Replace every [BRACKETED] placeholder below with your real content.
+  3. Swap the gradient --thumb-a / --thumb-b colors or replace .case-cover /
+     .case-image with a real <img> once you have screenshots.
+  4. Link to the new file from the work grid in index.html.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[Project Name] — Daniel Cruz</title>
+<meta name="description" content="[One-line project summary] — a case study by Daniel Cruz, Product Designer.">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header id="site-header">
+  <div class="wrap nav">
+    <a href="index.html" class="logo"><span class="logo-mark">DC</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#work">Work</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-cta"><span class="dot"></span> Available for freelance work</div>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu"><span></span><span></span></button>
+  </div>
+</header>
+
+<main>
+
+  <section class="case-hero">
+    <div class="wrap">
+      <p class="breadcrumb"><a href="index.html#work">Work</a> / <b>[Project Name]</b></p>
+      <h1 class="case-title">
+        <span class="reveal-line"><span>[One-line description of what this project is]</span></span>
+      </h1>
+
+      <div class="case-cover" style="--thumb-a:#e3ded1;--thumb-b:#c7c0ac;">
+        <span class="cover-note">Replace with a real project screenshot</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-body">
+    <div class="wrap case-grid">
+      <div class="case-copy">
+        <h3>Challenge</h3>
+        <p class="reveal-up">[Describe the problem: what was broken, confusing or missing before this project. What constraints did you have?]</p>
+
+        <h3>Approach</h3>
+        <p class="reveal-up">[Describe how you approached the problem: research, sitemaps, flows, iterations, decisions you made and why.]</p>
+
+        <div class="case-image reveal-up" style="--thumb-a:#e3ded1;--thumb-b:#c7c0ac;">
+          <span class="cover-note">Replace with a supporting screenshot</span>
+        </div>
+      </div>
+
+      <div class="meta-grid reveal-up">
+        <div class="meta-item"><span>Client</span><b>[Client name]</b></div>
+        <div class="meta-item"><span>Year</span><b>[2025]</b></div>
+        <div class="meta-item"><span>Duration</span><b>[8 weeks]</b></div>
+        <div class="meta-item"><span>Type</span><b>[SaaS / Mobile]</b></div>
+        <div class="meta-item"><span>Industry</span><b>[Industry]</b></div>
+        <div class="meta-item full">
+          <span>Scope</span>
+          <div class="chip-row">
+            <span class="chip">UX Research</span>
+            <span class="chip">UI Design</span>
+            <span class="chip">Design System</span>
+            <span class="chip">Prototyping</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-quote">
+    <div class="wrap">
+      <blockquote class="reveal-up">[Add a short client quote about the impact of this project.]</blockquote>
+      <p class="quote-author reveal-up"><b>[Client name]</b> — [Role, Company]</p>
+    </div>
+  </section>
+
+  <section class="more-work">
+    <div class="wrap">
+      <div class="section-head reveal-up">
+        <div><span class="tag">More work</span><h2>Keep exploring.</h2></div>
+        <a href="index.html#work" class="btn-ghost magnetic">See all projects</a>
+      </div>
+      <div class="more-grid" data-stagger>
+        <a href="case-forecasting-platform.html" class="work-card">
+          <div class="work-thumb" style="--thumb-a:#e3ded1;--thumb-b:#c7c0ac;--thumb-c:#fff;">
+            <div class="blob b1"></div><div class="blob b2"></div>
+            <span class="thumb-tag">SaaS · B2B</span>
+          </div>
+          <div class="work-info"><div><h3>Forecasting Platform</h3><span>Distributor analytics · SaaS</span></div><div class="work-arrow">↗</div></div>
+        </a>
+        <a href="case-lifestyle-app.html" class="work-card">
+          <div class="work-thumb" style="--thumb-a:#dfe3e0;--thumb-b:#b9c2bb;--thumb-c:#fff;">
+            <div class="blob b1"></div><div class="blob b2"></div>
+            <span class="thumb-tag">Mobile · Consumer</span>
+          </div>
+          <div class="work-info"><div><h3>Lifestyle App</h3><span>Habit &amp; wellbeing tracker · Mobile</span></div><div class="work-arrow">↗</div></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <span class="tag reveal-up">Contact</span>
+      <h2 class="cta-title reveal-up">Let's build<br>something great.</h2>
+      <a href="mailto:danierocruz@gmail.com" class="cta-email magnetic">danierocruz@gmail.com</a>
+      <p class="cta-sub">Usually respond within 24h · Open to remote, B2B &amp; SaaS projects.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <button class="back-to-top magnetic" id="backToTop" aria-label="Back to top">
+    <span>Take me to the top</span>
+    <span class="btn-icon">↑</span>
+  </button>
+  <div class="wrap footer-row">
+    <span class="footer-note">© 2026 Daniel Cruz. All rights reserved.</span>
+    <ul class="footer-links">
+      <li><a href="https://linkedin.com/in/danieroc" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="mailto:danierocruz@gmail.com">Email</a></li>
+    </ul>
+  </div>
+</footer>
+
+<a href="mailto:danierocruz@gmail.com" class="float-cta magnetic">
+  <span class="label">Start a project</span>
+  <span class="btn-icon">↗</span>
+</a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="assets/main.js"></script>
+</body>
+</html>
