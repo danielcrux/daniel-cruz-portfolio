@@ -103,7 +103,14 @@ header.scrolled{border-bottom-color:var(--line);}
 }
 .identity-text{display:flex;flex-direction:column;line-height:1.3;}
 .identity-text b{font-size:14px;font-weight:600;color:var(--ink);letter-spacing:-.01em;}
-.identity-text span{font-size:12.5px;color:var(--soft);font-weight:400;}
+.identity-text span,
+.identity-text .identity-email{font-size:12.5px;color:var(--soft);font-weight:400;}
+.identity-email{transition:color .2s ease;text-decoration:none;}
+.identity-email:hover{color:var(--accent);}
+/* on case pages the whole block links home */
+a.identity{cursor:pointer;}
+a.identity .identity-text b{transition:color .2s ease;}
+a.identity:hover .identity-text b{color:var(--accent);}
 
 .nav-links{display:flex;align-items:center;gap:38px;}
 .nav-links a{
@@ -223,11 +230,12 @@ header.scrolled{border-bottom-color:var(--line);}
   position:relative;z-index:1;flex-wrap:wrap;
 }
 
-/* scroll to explore hint (bottom-right of hero) */
+/* scroll to explore hint (fixed to viewport bottom-right so it's always
+   visible on load, then fades out once the user starts scrolling) */
 .scroll-hint{
-  position:absolute;
+  position:fixed;
   right:44px;bottom:34px;
-  z-index:2;
+  z-index:50;
   display:flex;align-items:center;gap:14px;
   font-family:'SF Mono','Menlo','Consolas',monospace;
   font-size:13px;letter-spacing:.04em;
@@ -481,6 +489,20 @@ footer{border-top:1px solid var(--line);padding:44px 0;}
 .case-image{margin-top:80px;border-radius:var(--radius-lg);overflow:hidden;aspect-ratio:16/9;
   background:linear-gradient(135deg, var(--thumb-b,#c9c4b3), var(--thumb-a,#e4e1d8));
   display:flex;align-items:center;justify-content:center;
+}
+
+/* animated app-flow gifs (portrait phone recordings) shown on a soft stage */
+.case-gif-stage{
+  display:flex;justify-content:center;align-items:flex-start;gap:36px;flex-wrap:wrap;
+  margin-top:28px;padding:48px 32px;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);
+}
+.case-gif-stage img{
+  width:100%;max-width:288px;display:block;border-radius:22px;
+  box-shadow:0 24px 60px rgba(15,15,15,.16);
+}
+@media (max-width:600px){
+  .case-gif-stage{padding:32px 18px;}
 }
 
 .case-quote{padding:130px 0;text-align:center;border-bottom:1px solid var(--line);}
