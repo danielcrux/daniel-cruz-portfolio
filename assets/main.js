@@ -132,7 +132,13 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- hero typewriter ---------- */
   // Real text lives in the markup (visible even if this script never runs,
   // is delayed, or throws). JS only reads it, clears it, then types it back.
+  // The rotating accent word (below) is kicked off only once the first
+  // line finishes, so nothing appears out of order while it's typing.
   const typeLines = document.querySelectorAll('.hero-title-type .type-line');
+  const rotatingWord = document.getElementById('heroRotatingWord');
+  const rotatingWordText = rotatingWord && rotatingWord.querySelector('.rotating-word-text');
+  let startRotatingWord = () => {};
+
   if (typeLines.length) {
     const CHAR_SPEED = 42;
     const LINE_PAUSE = 220;
@@ -153,36 +159,69 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           el.classList.remove('typing');
           i++;
+          if (i === 1) setTimeout(startRotatingWord, LINE_PAUSE);
           if (i < typeLines.length) setTimeout(typeNext, LINE_PAUSE);
         }
       };
       setTimeout(tick, CHAR_SPEED);
     };
     typeNext();
+  } else {
+    startRotatingWord();
   }
 
-  /* ---------- hero rotating word ---------- */
-  // Cycles the accent word in the H1 (e.g. "clarity" -> "structure" -> ...)
-  // with a fade-out/fade-in. Word list + starting word live in the markup
-  // via data-words, so the page still reads fine if this script never runs.
-  const rotatingWord = document.getElementById('heroRotatingWord');
-  if (rotatingWord) {
-    const words = (rotatingWord.dataset.words || rotatingWord.textContent)
+  /* ---------- hero rotating word (typewriter) ---------- */
+  // Types out each word, holds, deletes it, then types the next one.
+  // Word list + starting word live in the markup via data-words, so the
+  // page still reads fine if this script never runs.
+  if (rotatingWord && rotatingWordText) {
+    const words = (rotatingWord.dataset.words || rotatingWordText.textContent)
       .split(',')
       .map((w) => w.trim())
       .filter(Boolean);
-    const ROTATE_INTERVAL = 2500;
-    const FADE_DURATION = 300;
+    const TYPE_SPEED = 70;
+    const ERASE_SPEED = 40;
+    const HOLD_TIME = 1400;
+    const PAUSE_BETWEEN = 250;
     let wordIndex = 0;
-    if (words.length > 1) {
-      setInterval(() => {
-        rotatingWord.classList.add('word-fading');
+
+    const typeWord = (word, cb) => {
+      let c = 0;
+      const tick = () => {
+        c++;
+        rotatingWordText.textContent = word.slice(0, c);
+        if (c < word.length) setTimeout(tick, TYPE_SPEED);
+        else cb();
+      };
+      tick();
+    };
+
+    const eraseWord = (word, cb) => {
+      let c = word.length;
+      const tick = () => {
+        c--;
+        rotatingWordText.textContent = word.slice(0, c);
+        if (c > 0) setTimeout(tick, ERASE_SPEED);
+        else cb();
+      };
+      tick();
+    };
+
+    const cycle = () => {
+      const word = words[wordIndex];
+      typeWord(word, () => {
         setTimeout(() => {
-          wordIndex = (wordIndex + 1) % words.length;
-          rotatingWord.textContent = words[wordIndex];
-          rotatingWord.classList.remove('word-fading');
-        }, FADE_DURATION);
-      }, ROTATE_INTERVAL);
+          eraseWord(word, () => {
+            wordIndex = (wordIndex + 1) % words.length;
+            setTimeout(cycle, PAUSE_BETWEEN);
+          });
+        }, HOLD_TIME);
+      });
+    };
+
+    if (words.length > 1) {
+      rotatingWordText.textContent = '';
+      startRotatingWord = cycle;
     }
   }
 
