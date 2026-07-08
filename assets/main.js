@@ -32,6 +32,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /* ---------- services accordion ---------- */
+  document.querySelectorAll('.services-list .service-row').forEach((row) => {
+    row.addEventListener('click', () => {
+      const item = row.closest('.service-item');
+      const isOpen = item.classList.toggle('open');
+      row.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  });
+
   /* ---------- mobile menu ---------- */
   const menuBtn = document.getElementById('menuBtn');
   const navLinks = document.querySelector('.nav-links');
