@@ -71,19 +71,24 @@
   <!-- Who we designed for -->
   <section class="case-feature">
     <div class="wrap">
+      <span class="head-tag">With team</span>
       <div class="case-feature-head reveal-up">
         <span class="tag">Who We Designed For</span>
         <h3>Two users pulling in opposite directions.</h3>
-        <p>Early research surfaced two very different people using the same app — and neither could be ignored.</p>
+        <p>We developed behavioral personas to ground the design in real tension, not assumptions. Two of them shaped the surfaces I worked on most — and the conflict between them became the central design problem.</p>
       </div>
       <div class="persona-grid" data-stagger>
         <div class="persona-card">
+          <img src="images/pro2col/persona-skeptic.jpg" alt="The Skeptic — a young man">
           <h4>The Skeptic</h4>
-          <p>New to wellness apps, easily overwhelmed, and quick to abandon anything that feels cluttered or clinical. Wants clarity above everything else.</p>
+          <span class="persona-wants">Wants → Clarity</span>
+          <p>New to wellness apps, time-poor, allergic to clutter. Skims onboarding, abandons anything that feels long or rigid, responds to small early wins. If the first screen feels heavy, this user is gone.</p>
         </div>
         <div class="persona-card">
+          <img src="images/pro2col/persona-optimizer.jpg" alt="The Optimizer — a young woman">
           <h4>The Optimizer</h4>
-          <p>Wants depth — detailed data, weekly analytics, granular control. Feels shortchanged by anything too simplified.</p>
+          <span class="persona-wants">Wants → Depth</span>
+          <p>Experienced and data-fluent. Wants detailed insights, weekly analytics, data that evolves with them. Easily frustrated by an app that feels shallow or treats them like a beginner.</p>
         </div>
       </div>
       <div class="insight-callout reveal-up">
@@ -95,6 +100,7 @@
   <!-- First Access & Assessment -->
   <section class="case-feature">
     <div class="wrap">
+      <span class="head-tag">With team</span>
       <div class="case-feature-head reveal-up">
         <span class="tag">01 — First Access &amp; Assessment</span>
         <h3>Onboarding as a foundation, not a form.</h3>
@@ -106,20 +112,36 @@
 
       <p class="case-feature-label reveal-up" style="margin-top:40px;">Solution — simplified, multiple-choice, consistent anchors</p>
       <img class="reveal-up" src="images/pro2col/01-assessment.png" alt="Pro2col login, goal-setting intro and simplified assessment screens">
+
+      <div class="compare-grid" data-stagger>
+        <div class="compare-card">
+          <span class="compare-tag current">Current state</span>
+          <p>The rainbow slider competes with the stepper (+/−) for the same action — <b>redundant signals</b> for a choice that's already discrete. The color spectrum adds cognitive load, not clarity, and points sit too close to the buttons, making mis-taps easy.</p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-tag current">Current state</span>
+          <p>Many questions reuse the <b>same slider pattern</b> while changing what the scale means — intensity vs. frequency vs. duration. Users re-interpret the scale on every screen, adding load during sensitive, self-reported questions (sleep, anxiety).</p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-tag solution">Solution</span>
+          <p>Standardize subjective measures with <b>multiple-choice inputs and consistent anchors</b> (None / Sometimes / Often, or Low / Moderate / High). Less cognitive load, no redundant sliders, clearer and more reliable responses — data integrity intact, and the assessment feels supportive, not taxing.</p>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Wellness Dashboard & Tracking -->
   <section class="case-feature">
     <div class="wrap">
+      <span class="head-tag">Core · My work</span>
       <div class="case-feature-head reveal-up">
         <span class="tag">02 — Wellness Dashboard &amp; Tracking</span>
         <h3>One screen, four questions answered.</h3>
         <p>The daily dashboard had to answer where am I right now, what needs attention, how am I progressing, and what should I prioritize today — without turning into a wall of cards. Each module (nutrition, hydration, eating window, steps, exercise, lifestyle hacks) is scannable at a glance and expandable on demand.</p>
       </div>
-      <img class="reveal-up" src="images/pro2col/02-dashboard.png" alt="Pro2col daily tracking dashboard with nutrition, hydration, eating window and lifestyle modules">
-      <div class="case-gif-stage reveal-up">
-        <img src="images/pro2col/flow-dashboard.gif" alt="Animated Pro2col home dashboard showing daily points and scheduled products" loading="lazy">
+      <div class="feature-with-gif reveal-up">
+        <div class="gif-col"><img src="images/pro2col/flow-dashboard.gif" alt="Animated Pro2col home dashboard showing daily points and scheduled products" loading="lazy"></div>
+        <div class="img-col"><img src="images/pro2col/02-dashboard.png" alt="Pro2col daily tracking dashboard with nutrition, hydration, eating window and lifestyle modules"></div>
       </div>
     </div>
   </section>
@@ -127,14 +149,15 @@
   <!-- Trends & Insights -->
   <section class="case-feature">
     <div class="wrap">
+      <span class="head-tag">Core · My work</span>
       <div class="case-feature-head reveal-up">
         <span class="tag">03 — Trends &amp; Insights</span>
         <h3>Progress, not just numbers.</h3>
         <p>Raw metrics don't motivate — context does. Weekly and monthly views surface trend direction and contextual summaries instead of dumping charts on the user, so progress is something you can feel, not just read.</p>
       </div>
-      <img class="reveal-up" src="images/pro2col/03-trends.png" alt="Pro2col weight and nutrition trend charts across weekly and monthly views">
-      <div class="case-gif-stage reveal-up">
-        <img src="images/pro2col/flow-trends.gif" alt="Animated Pro2col Trends & Insights screen with points summary and 30-day streak" loading="lazy">
+      <div class="feature-with-gif reveal-up">
+        <div class="gif-col"><img src="images/pro2col/flow-trends.gif" alt="Animated Pro2col Trends & Insights screen with points summary and 30-day streak" loading="lazy"></div>
+        <div class="img-col"><img src="images/pro2col/03-trends.png" alt="Pro2col weight and nutrition trend charts across weekly and monthly views"></div>
       </div>
     </div>
   </section>
@@ -142,14 +165,15 @@
   <!-- Personalized Plans -->
   <section class="case-feature">
     <div class="wrap">
+      <span class="head-tag">Context</span>
       <div class="case-feature-head reveal-up">
         <span class="tag">04 — Personalized Plans</span>
         <h3>Data turned into a narrative.</h3>
         <p>Pro2Score and Pro2Age translate a wall of assessment answers into two numbers someone can actually hold onto — paired with a plan that adapts as goals are completed, instead of a static PDF handed off once.</p>
       </div>
-      <img class="reveal-up" src="images/pro2col/05-plans.png" alt="Pro2col personalized plan screen with Pro2Score, Pro2Age and plan duration">
-      <div class="case-gif-stage reveal-up">
-        <img src="images/pro2col/flow-plan.gif" alt="Animated Pro2col personalized plan with Pro2Score and Pro2Age" loading="lazy">
+      <div class="feature-with-gif reveal-up">
+        <div class="gif-col"><img src="images/pro2col/flow-plan.gif" alt="Animated Pro2col personalized plan with Pro2Score and Pro2Age" loading="lazy"></div>
+        <div class="img-col"><img src="images/pro2col/05-plans.png" alt="Pro2col personalized plan screen with Pro2Score, Pro2Age and plan duration"></div>
       </div>
     </div>
   </section>
@@ -157,6 +181,7 @@
   <!-- Wellness Categories -->
   <section class="case-feature">
     <div class="wrap">
+      <span class="head-tag">Context</span>
       <div class="case-feature-head reveal-up">
         <span class="tag">05 — Wellness Categories</span>
         <h3>Modular surfaces that stay connected.</h3>
@@ -169,6 +194,7 @@
   <!-- Quick Actions -->
   <section class="case-feature">
     <div class="wrap">
+      <span class="head-tag">Context</span>
       <div class="case-feature-head reveal-up">
         <span class="tag">06 — Quick Actions</span>
         <h3>Logging shouldn't be the hard part.</h3>
@@ -181,6 +207,7 @@
   <!-- Blood Biomarkers -->
   <section class="case-feature">
     <div class="wrap">
+      <span class="head-tag">Context</span>
       <div class="case-feature-head reveal-up">
         <span class="tag">07 — Blood Biomarkers</span>
         <h3>Clinical data, made legible.</h3>
@@ -248,7 +275,7 @@
 </footer>
 
 <a href="mailto:danierocruz@gmail.com" class="float-cta magnetic">
-  <span class="label">Start a project</span>
+  <span class="label">Let's talk</span>
   <span class="btn-icon">↗</span>
 </a>
 
