@@ -285,8 +285,15 @@ html[data-theme="dark"]{
    The one class requested to replace the repeated inline
    style="padding-top:90px;" found in 4 of the 5 case-*.html pages. Value
    kept at 90px (see migration-map.md §3.2/§3.3 — the conservative pass did
-   not round it to the 96px mobile tier). Not yet applied to those files.
+   not round it to the 96px mobile tier).
+
+   !important is required: the inline style it replaces had specificity
+   (1,0,0,0), beating .case-body's own padding rule AND its
+   @media(max-width:960px) override at every viewport. A plain class has
+   the same specificity as .case-body and loses to it (later in the
+   cascade), so without !important this utility would silently do nothing
+   — verified in-browser during the spacing refactor pass.
    ========================================================================== */
 .u-case-subhero-pt{
-  padding-top: var(--layout-section-90);
+  padding-top: var(--layout-section-90) !important;
 }
