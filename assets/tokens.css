@@ -1,0 +1,262 @@
+/* ==========================================================================
+   Daniel Cruz — Portfolio design tokens
+   Proposed replacement for the raw values currently hardcoded across
+   assets/style.css. See migration-map.md for value-by-value provenance.
+
+   Not yet linked from any HTML page and not yet consumed by style.css —
+   this file only defines the token architecture for review. No component
+   has been refactored to use it.
+
+   Layer 1 (PRIMITIVES) — raw, context-free values. Never used directly by
+   components. Theme-invariant except the two neutral ramps, which exist
+   so the semantic layer can point at a different ramp per theme.
+
+   Layer 2 (SEMANTIC) — role-based tokens (--color-bg, --color-text, etc).
+   Components should only ever reference semantic tokens. Swapping the
+   semantic color block under html[data-theme="dark"] is the entire dark
+   mode mechanism — identical to how style.css already does it today,
+   just with the raw hex moved one level down into primitives.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. PRIMITIVES
+   ========================================================================== */
+:root{
+
+  /* ---------- color / neutral ramps ----------
+     Two independent ramps, not a mirrored/inverted single ramp — the dark
+     palette is hand-tuned (e.g. dark bg #111113 is not pure black, dark
+     text #f5f4f2 is not pure white), matching what style.css already does. */
+  --neutral-light-50:  #ffffff; /* was --bg (light) */
+  --neutral-light-100: #f3f2ee; /* was --card (light) */
+  --neutral-light-200: #e8e7e2; /* was --line (light) */
+  --neutral-light-500: #8a8a86; /* was --soft (light) */
+  --neutral-light-700: #4a4a48; /* was --body (light) */
+  --neutral-light-900: #0f0f0f; /* was --ink (light) */
+
+  --neutral-dark-50:  #f5f4f2;  /* was --ink (dark) */
+  --neutral-dark-300: #c7c6c2;  /* was --body (dark) */
+  --neutral-dark-500: #8f8f8c;  /* was --soft (dark) */
+  --neutral-dark-700: #2b2b2c;  /* was --line (dark) */
+  --neutral-dark-800: #1b1b1d;  /* was --card (dark) */
+  --neutral-dark-900: #111113;  /* was --bg (dark) */
+
+  --black: #000000;
+  --white: #ffffff; /* alias of --neutral-light-50, kept for overlay math */
+
+  /* ---------- color / brand + status ----------
+     Success collapses the two near-identical greens found in the audit
+     (#33b25a status dot, #43bd68 compare-tag) into one canonical value.
+     See migration-map.md §1 for the choice and its one visual consequence. */
+  --accent-light: #ff4d1f;
+  --accent-dark:  #ff6a3d;
+
+  --success:     #33b25a;
+  --success-ink: #04310f; /* dark text sat on top of a --success chip */
+
+  --warning:     #f5c443;
+  --warning-ink: #3d3000; /* dark text sat on top of a --warning chip */
+
+  /* ---------- color / case-cover placeholder gradients ----------
+     Two presets kept (a warm beige, a cool sage) — the audit found a third,
+     near-duplicate warm pair that added no visual variety; it is dropped
+     here and mapped to placeholder-warm in migration-map.md §1. */
+  --placeholder-warm-1: #e4e1d8;
+  --placeholder-warm-2: #c9c4b3;
+  --placeholder-cool-1: #dfe3e0;
+  --placeholder-cool-2: #b9c2bb;
+
+  /* ---------- color / alpha scale ----------
+     Named steps for every black/white overlay opacity found in the audit.
+     Exact-value mapping (no forced rounding) — see migration-map.md §1 for
+     an optional, more aggressive 6-step version to consider in a later pass. */
+  --a-08: .08;
+  --a-10: .10;
+  --a-18: .18;
+  --a-20: .20;
+  --a-25: .25;
+  --a-35: .35;
+  --a-40: .40;
+  --a-45: .45;
+  --a-50: .50;
+  --a-70: .70;
+  --a-85: .85;
+
+  /* ---------- typography / font family ---------- */
+  --font-body: 'General Sans','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --font-mono: 'SF Mono','Menlo','Consolas',monospace;
+
+  /* ---------- typography / static scale (UI text, labels) ----------
+     Consolidates 5 near-duplicate micro sizes (11 / 11.5 / 12 / 12.5px)
+     found across .tag, .head-tag, .compare-tag, .meta-item span,
+     .persona-wants and .identity-email into a single --text-2xs step.
+     See migration-map.md §2 for the full per-selector list. */
+  --text-2xs: 12px;
+  --text-xs:  13px;
+  --text-sm:  14px;
+  --text-md:  15px;
+  --text-base:16px;
+  --text-lg:  17px;
+  --text-xl:  18px;
+  --text-2xl: 19px;
+  --text-3xl: 20px;
+  --text-4xl: 34px;
+
+  /* ---------- typography / fluid display scale ----------
+     Replaces the 10 ad hoc clamp() formulas the audit found (each with its
+     own, independently-guessed vw coefficient) with ONE construction used
+     for all 8 steps: linear interpolation between a 400px and a 1440px
+     viewport, clamp(min, min + (100vw - 400px) * (max-min)/1040, max).
+     Endpoints (the size at ≤400px and at ≥1440px) are preserved exactly
+     from the current CSS wherever a step maps 1:1; two pairs of steps
+     that shared the same min value AND the same underlying role were
+     merged (see migration-map.md §2 for the merge rationale and the two
+     steps whose value was rounded by 1-2px to make the merge clean). */
+  --font-fluid-2xl: clamp(52px, 52px + (100vw - 400px) * 80/1040, 132px); /* hero title */
+  --font-fluid-xl:  clamp(38px, 38px + (100vw - 400px) * 62/1040, 100px); /* cta title */
+  --font-fluid-lg:  clamp(34px, 34px + (100vw - 400px) * 30/1040, 64px);  /* case title */
+  --font-fluid-md:  clamp(32px, 32px + (100vw - 400px) * 20/1040, 52px);  /* section head h2 */
+  --font-fluid-quote:   clamp(23px, 23px + (100vw - 400px) * 17/1040, 40px); /* testimonial + case-quote (merged) */
+  --font-fluid-lead:    clamp(26px, 26px + (100vw - 400px) * 11/1040, 37px); /* about-lead + case-feature-head h3 (merged) */
+  --font-fluid-heading: clamp(24px, 24px + (100vw - 400px) * 12/1040, 36px); /* service-name */
+  --font-fluid-link:    clamp(22px, 22px + (100vw - 400px) * 14/1040, 36px); /* cta-email */
+
+  /* ---------- typography / weight (already a clean scale, unchanged) ---------- */
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-semibold:600;
+  --weight-bold:    700;
+
+  /* ---------- typography / line-height ----------
+     4 roles instead of 9-10 ad hoc values. Paired 1:1 with the fluid
+     steps above — see migration-map.md §2 for which selectors gain an
+     explicit line-height they didn't have before (they inherited body's
+     1.55, which is looser than these). */
+  --leading-tight:  1;     /* cta-title */
+  --leading-snug:   1.08;  /* hero-title, case-title (1.05-1.08, rounded to one value) */
+  --leading-normal: 1.1;   /* section-head h2, service-name — new, previously unset */
+  --leading-relaxed:1.35;  /* lead + quote merges, case-copy/feature-head paragraphs */
+  --leading-loose:  1.6;   /* long-form body copy (about-body p, persona-card p, case-feature-head p) */
+  --leading-body:   1.55;  /* base body line-height, unchanged */
+
+  /* ---------- typography / letter-spacing ----------
+     Drops the single outlier (.04em on .scroll-hint) into the nearest
+     existing step (.06em) — flagged in migration-map.md §2. */
+  --tracking-tightest: -.04em;
+  --tracking-tighter:  -.03em;
+  --tracking-tight:    -.02em;
+  --tracking-snug:     -.01em;
+  --tracking-normal:   0;
+  --tracking-wide:     .06em;
+  --tracking-wider:    .08em;
+
+  /* ---------- spacing / micro scale (4px base, 10 steps) ---------- */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-7:  32px;
+  --space-8:  40px;
+  --space-9:  56px;
+  --space-10: 80px;
+
+  /* ---------- spacing / layout (macro section rhythm) ----------
+     Consolidates 6 near-arbitrary section padding values (90/100/120/
+     130/140/150px) into 3 tiers. Justified by the site's own responsive
+     behavior: at ≤960px, 4 of these 5 values already collapse to the same
+     96px — see migration-map.md §3 for the full before/after per selector,
+     including the padding-top:90px inline style this replaces. */
+  --layout-section-sm: 96px;   /* was: 90px inline (case sub-hero), 100px (.case-feature), 96px (all @960px overrides) */
+  --layout-section-md: 120px;  /* was: 120px (.case-body), 130px (.case-quote) */
+  --layout-section-lg: 150px;  /* was: 150px (section, .case-hero), 140px (.more-work) */
+
+  /* ---------- radius (unchanged — already the healthiest subsystem) ---------- */
+  --radius-lg: 28px;
+  --radius-md: 18px;
+  --radius-sm: 999px;
+
+  /* ---------- shadow (unchanged — the site intentionally has only one) ---------- */
+  --shadow-elevated-offset: 0 18px 40px;
+
+  /* ---------- motion ---------- */
+  --ease-brand: cubic-bezier(.16,1,.3,1);
+  --duration-fast: 200ms; /* merges .2s + .25s */
+  --duration-base: 300ms; /* merges .3s + .35s, the most common duration today */
+  --duration-slow: 500ms; /* merges .4s + .5s + .6s */
+}
+
+
+/* ==========================================================================
+   2. SEMANTIC
+   Only color needs a per-theme layer — type, spacing, radius, shadow and
+   motion primitives are theme-invariant and can be consumed directly by
+   components. This block is the entire dark-mode mechanism.
+   ========================================================================== */
+:root{
+  --color-bg:            var(--neutral-light-50);
+  --color-surface:       var(--neutral-light-100);
+  --color-border:        var(--neutral-light-200);
+  --color-text:          var(--neutral-light-900);
+  --color-text-secondary:var(--neutral-light-700);
+  --color-text-muted:    var(--neutral-light-500);
+
+  --color-accent: var(--accent-light);
+
+  --color-success:     var(--success);
+  --color-success-ink: var(--success-ink);
+  --color-warning:     var(--warning);
+  --color-warning-ink: var(--warning-ink);
+
+  /* Same primitive as --color-text / --color-bg in both themes today.
+     Kept as separate roles (not merged into --color-text/--color-bg)
+     because they answer a different question — "what's the solid button
+     surface" vs "what's the reading text color" — that only happen to
+     coincide right now. See migration-map.md §1. */
+  --color-inverse-bg:   var(--color-text);
+  --color-inverse-text: var(--color-bg);
+
+  --color-placeholder-1: var(--placeholder-warm-1);
+  --color-placeholder-2: var(--placeholder-warm-2);
+  --color-placeholder-accent: var(--white);
+
+  /* Composite overlays: alpha applied on top of the theme's own bg color.
+     RGB triples are inlined (not var-referenced) because these primitives
+     are stored as hex, and hex can't be alpha-blended without color-mix().
+     See migration-map.md §1 for the color-mix() alternative considered. */
+  --color-header-bg: rgba(255,255,255, var(--a-70));
+  --color-shadow:     rgba(15,15,15, var(--a-10));
+
+  color-scheme: light;
+}
+
+html[data-theme="dark"]{
+  --color-bg:            var(--neutral-dark-900);
+  --color-surface:       var(--neutral-dark-800);
+  --color-border:        var(--neutral-dark-700);
+  --color-text:          var(--neutral-dark-50);
+  --color-text-secondary:var(--neutral-dark-300);
+  --color-text-muted:    var(--neutral-dark-500);
+
+  --color-accent: var(--accent-dark);
+
+  /* success/warning are theme-invariant today — no override needed */
+
+  --color-header-bg: rgba(17,17,19, var(--a-70));
+  --color-shadow:     rgba(0,0,0, var(--a-35));
+
+  color-scheme: dark;
+}
+
+
+/* ==========================================================================
+   3. LAYOUT UTILITY
+   The one class requested to replace the repeated inline
+   style="padding-top:90px;" found in 4 of the 5 case-*.html pages. Not
+   yet applied to those files — see migration-map.md §3.
+   ========================================================================== */
+.u-section-pt-sm{
+  padding-top: var(--layout-section-sm);
+}
