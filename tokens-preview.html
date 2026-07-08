@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design tokens — preview interno (não faz parte do site)</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="assets/tokens.css">
+<style>
+  /* ---------- preview-only chrome — none of this ships with the site ---------- */
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--color-bg);
+    color:var(--color-text);
+    font-family:var(--font-body);
+    line-height:var(--leading-body);
+    transition:background-color .2s ease, color .2s ease;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+
+  .banner{
+    background:var(--color-inverse-bg);color:var(--color-inverse-text);
+    font-size:var(--text-xs);font-weight:var(--weight-medium);
+    text-align:center;padding:var(--space-3) var(--space-4);
+    position:sticky;top:0;z-index:50;
+  }
+  .banner b{color:var(--color-accent);}
+
+  header.page-head{padding:var(--space-9) 0 var(--space-7);border-bottom:1px solid var(--color-border);}
+  header.page-head h1{font-size:var(--font-fluid-lg);font-weight:var(--weight-semibold);letter-spacing:var(--tracking-tighter);margin:0 0 var(--space-3);}
+  header.page-head p{max-width:640px;color:var(--color-text-secondary);font-size:var(--text-lg);margin:0;}
+
+  nav.toc{
+    display:flex;flex-wrap:wrap;gap:var(--space-2);
+    padding:var(--space-5) 0;border-bottom:1px solid var(--color-border);
+    position:sticky;top:41px;background:var(--color-bg);z-index:40;
+  }
+  nav.toc a{
+    font-size:var(--text-xs);font-weight:var(--weight-medium);color:var(--color-text-secondary);
+    border:1px solid var(--color-border);padding:var(--space-1) var(--space-3);border-radius:var(--radius-sm);
+    text-decoration:none;transition:color .2s ease,border-color .2s ease;
+  }
+  nav.toc a:hover{color:var(--color-accent);border-color:var(--color-accent);}
+
+  .theme-toggle{
+    margin-left:auto;display:inline-flex;align-items:center;gap:var(--space-2);
+    font-size:var(--text-xs);font-weight:var(--weight-semibold);color:var(--color-text);
+    background:var(--color-surface);border:1px solid var(--color-border);
+    padding:var(--space-1) var(--space-3);border-radius:var(--radius-sm);cursor:pointer;
+  }
+
+  section.block{padding:var(--space-9) 0;border-bottom:1px solid var(--color-border);}
+  section.block h2{font-size:var(--text-4xl);font-weight:var(--weight-semibold);letter-spacing:var(--tracking-tight);margin:0 0 var(--space-2);}
+  section.block > .wrap > p.lede{color:var(--color-text-secondary);font-size:var(--text-lg);max-width:680px;margin:0 0 var(--space-7);}
+  h3.sub{font-size:var(--text-2xl);font-weight:var(--weight-semibold);margin:var(--space-8) 0 var(--space-4);letter-spacing:var(--tracking-tight);}
+  h3.sub:first-of-type{margin-top:0;}
+  p.note{color:var(--color-text-muted);font-size:var(--text-sm);max-width:680px;line-height:var(--leading-loose);}
+
+  /* ---------- color swatches ---------- */
+  .swatch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:var(--space-4);}
+  .swatch{border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden;background:var(--color-surface);}
+  .swatch .fill{height:72px;}
+  .swatch .label{padding:var(--space-3);}
+  .swatch .name{display:block;font-size:var(--text-xs);font-weight:var(--weight-semibold);color:var(--color-text);}
+  .swatch .value{display:block;font-size:11px;font-family:var(--font-mono);color:var(--color-text-muted);margin-top:2px;word-break:break-all;}
+
+  .checker{
+    background-image:
+      linear-gradient(45deg,#8884 25%,transparent 25%),
+      linear-gradient(-45deg,#8884 25%,transparent 25%),
+      linear-gradient(45deg,transparent 75%,#8884 75%),
+      linear-gradient(-45deg,transparent 75%,#8884 75%);
+    background-size:16px 16px;
+    background-position:0 0,0 8px,8px -8px,-8px 0px;
+    background-color:var(--color-bg);
+  }
+
+  .semantic-row{display:flex;align-items:center;gap:var(--space-4);margin-bottom:var(--space-3);}
+  .semantic-row .swatch{flex:0 0 140px;}
+  .semantic-row .desc{font-size:var(--text-sm);color:var(--color-text-secondary);}
+  .semantic-row .desc b{color:var(--color-text);}
+
+  /* ---------- typography ---------- */
+  .type-row{display:flex;align-items:baseline;gap:var(--space-5);padding:var(--space-4) 0;border-bottom:1px solid var(--color-border);}
+  .type-row:last-child{border-bottom:none;}
+  .type-row .tag{flex:0 0 190px;font-family:var(--font-mono);font-size:11px;color:var(--color-text-muted);}
+  .type-row .sample{flex:1;color:var(--color-text);overflow-wrap:anywhere;}
+
+  .fluid-card{border:1px solid var(--color-border);border-radius:var(--radius-md);padding:var(--space-6);margin-bottom:var(--space-5);}
+  .fluid-card .meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(--space-2);font-family:var(--font-mono);font-size:11px;color:var(--color-text-muted);margin-bottom:var(--space-4);}
+  .fluid-card .meta b{color:var(--color-accent);}
+  .sim-row{display:flex;gap:var(--space-5);align-items:flex-start;flex-wrap:wrap;}
+  .sim-box{border:1px dashed var(--color-border);border-radius:12px;overflow:hidden;}
+  .sim-box .sim-label{font-size:10px;font-family:var(--font-mono);color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.06em;padding:6px 10px;border-bottom:1px dashed var(--color-border);background:var(--color-surface);}
+  .sim-mobile{width:375px;}
+  .sim-mobile .viewport-sim{container-type:inline-size;width:375px;padding:14px;}
+  .sim-desktop{width:100%;max-width:100%;overflow-x:auto;}
+  .sim-desktop .viewport-sim{container-type:inline-size;width:1440px;padding:14px;}
+  .viewport-sim .fluid-sample{font-weight:var(--weight-semibold);letter-spacing:var(--tracking-tight);line-height:1.05;color:var(--color-text);white-space:nowrap;}
+
+  .weight-row, .track-row{display:flex;align-items:center;gap:var(--space-5);padding:var(--space-3) 0;}
+  .weight-row span.sample, .track-row span.sample{font-size:var(--text-2xl);}
+  .weight-row .tag, .track-row .tag{width:150px;font-family:var(--font-mono);font-size:11px;color:var(--color-text-muted);}
+
+  .leading-block{border:1px solid var(--color-border);border-radius:var(--radius-md);padding:var(--space-5);margin-bottom:var(--space-4);}
+  .leading-block .tag{font-family:var(--font-mono);font-size:11px;color:var(--color-text-muted);margin-bottom:var(--space-2);display:block;}
+  .leading-block p{margin:0;font-size:var(--text-lg);color:var(--color-text);max-width:520px;}
+
+  /* ---------- spacing bars ---------- */
+  .bar-row{display:flex;align-items:center;gap:var(--space-4);margin-bottom:var(--space-3);}
+  .bar-row .tag{width:130px;flex-shrink:0;font-family:var(--font-mono);font-size:11px;color:var(--color-text-muted);}
+  .bar-row .bar{height:22px;background:var(--color-accent);border-radius:4px;}
+  .bar-row .px{width:60px;flex-shrink:0;font-size:11px;color:var(--color-text-muted);font-family:var(--font-mono);}
+
+  /* ---------- radius / shadow / duration ---------- */
+  .demo-grid{display:flex;gap:var(--space-6);flex-wrap:wrap;}
+  .demo-item{text-align:center;}
+  .demo-item .box{width:120px;height:120px;background:var(--color-surface);border:1px solid var(--color-border);margin-bottom:var(--space-2);}
+  .demo-item .tag{font-family:var(--font-mono);font-size:11px;color:var(--color-text-muted);}
+
+  .shadow-stage{background:var(--color-surface);border-radius:var(--radius-lg);padding:var(--space-9);display:flex;justify-content:center;}
+  .shadow-card{width:220px;height:120px;background:var(--color-bg);border-radius:var(--radius-md);box-shadow:var(--shadow-elevated-offset) var(--color-shadow);display:flex;align-items:center;justify-content:center;font-size:var(--text-xs);color:var(--color-text-muted);font-family:var(--font-mono);}
+
+  .duration-demo{border:1px solid var(--color-border);border-radius:var(--radius-md);padding:var(--space-5);text-align:center;flex:1;min-width:180px;}
+  .duration-demo .track{height:8px;background:var(--color-border);border-radius:999px;position:relative;margin:var(--space-5) 0;overflow:hidden;}
+  .duration-demo .puck{position:absolute;top:-4px;left:0;width:16px;height:16px;border-radius:50%;background:var(--color-accent);transition:transform var(--duration-fast) var(--ease-brand);}
+  .duration-demo.base .puck{transition-duration:var(--duration-base);}
+  .duration-demo.slow .puck{transition-duration:var(--duration-slow);}
+  .duration-demo:hover .puck{transform:translateX(calc(100% + 148px));}
+  .duration-demo .tag{font-family:var(--font-mono);font-size:11px;color:var(--color-text-muted);}
+
+  /* ---------- before/after ---------- */
+  .collapse-row{display:flex;align-items:center;gap:var(--space-5);flex-wrap:wrap;padding:var(--space-6) 0;border-bottom:1px solid var(--color-border);}
+  .collapse-row:last-child{border-bottom:none;}
+  .collapse-before{display:flex;gap:var(--space-3);flex-wrap:wrap;}
+  .collapse-arrow{font-size:22px;color:var(--color-text-muted);flex-shrink:0;}
+  .collapse-after{flex-shrink:0;}
+  .mini-swatch{width:76px;text-align:center;}
+  .mini-swatch .fill{width:76px;height:52px;border-radius:8px;border:1px solid var(--color-border);}
+  .mini-swatch .lbl{font-size:10px;font-family:var(--font-mono);color:var(--color-text-muted);margin-top:4px;}
+  .collapse-label{font-size:var(--text-sm);color:var(--color-text-secondary);flex-basis:100%;margin-top:var(--space-2);}
+  .collapse-label b{color:var(--color-text);}
+
+  footer.page-foot{padding:var(--space-8) 0 var(--space-9);text-align:center;color:var(--color-text-muted);font-size:var(--text-sm);}
+</style>
+</head>
+<body>
+
+<div class="banner">Preview interno de <b>tokens.css</b> — não faz parte do site, não linkado de nenhuma página real. Revisão visual apenas.</div>
+
+<header class="page-head">
+  <div class="wrap">
+    <h1>Sistema de design tokens</h1>
+    <p>Renderização viva de <code>assets/tokens.css</code> — cada cor, tamanho, espaçamento, raio, sombra e duração abaixo vem do arquivo real, não de uma cópia. Ver <code>migration-map.md</code> para a origem de cada valor e as decisões já tomadas.</p>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap" style="display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap;width:100%;">
+    <a href="#cores-primitivas">Cores · primitivas</a>
+    <a href="#cores-semanticas">Cores · semânticas</a>
+    <a href="#tipografia">Tipografia</a>
+    <a href="#espacamento">Espaçamento</a>
+    <a href="#radius-shadow-motion">Radius · shadow · motion</a>
+    <a href="#antes-depois">Antes → depois</a>
+    <button class="theme-toggle" id="themeToggle" type="button">☾ / ☀ tema</button>
+  </div>
+</nav>
+
+<!-- ============================================================ -->
+<!-- COLORS — PRIMITIVES                                           -->
+<!-- ============================================================ -->
+<section class="block" id="cores-primitivas">
+  <div class="wrap">
+    <h2>Cores — primitivas</h2>
+    <p class="lede">Valores brutos, sem papel atribuído. Os componentes nunca deveriam referenciar isso diretamente — servem só de base para a camada semântica abaixo.</p>
+
+    <h3 class="sub">Neutros — light</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="fill" style="background:var(--neutral-light-50)"></div><div class="label"><span class="name">neutral-light-50</span><span class="value">#ffffff</span></div></div>
+      <div class="swatch"><div class="fill" style="background:var(--neutral-light-100)"></div><div class="label"><span class="name">neutral-light-100</span><span class="value">#f3f2ee</span></div></div>
+      <div class="swatch"><div class="fill" style="background:var(--neutral-light-200)"></div><div class="label"><span class="name">neutral-light-200</span><span class="value">#e8e7e2</span></div></div>
+      <div class="swatch"><div class="fill" style="background:var(--neutral-light-500)"></div><div class="label"><span class="name">neutral-light-500</span><span class="value">#8a8a86</span></div></div>
+      <div class="swatch"><div class="fill" style="background:var(--neutral-light-700)"></div><div class="label"><span class="name">neutral-light-700</span><span class="value">#4a4a48</span></div></div>
+      <div class="swatch"><div class="fill" style="background:var(--neutral-light-900)"></div><div class="label"><span class="name">neutral-light-900</span><span class="value">#0f0f0f</span></div></div>
+    </div>
+
+    <h3 class="sub">Neutros — dark</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="fill" style="background:var(--neutral-dark-50)"></div><div class="label"><span class="name">neutral-dark-50</span><span class="value">#f5f4f2</span></div></div>
+      <div class="swatch"><div class="fill" style="background:var(--neutral-dark-300)"></div><div class="label"><span class="name">neutral-dark-300</span><span class="value">#c7c6c2</span></div></div>
+      <div class="swatch"><div class="fill" style="background:var(--neutral-dark-500)"></div><div class="label"><span class="name">neutral-dark-500</span><span class="value">#8f8f8c</span></div></div>
+      <div class="swatch"><div class="fill" style="background:var(--neutral-dark-700)"></div><div class="label"><span class="name">neutral-dark-700</span><span class="value">#2b2b2c</span></div></div>
+      <div class="swatch"><div class="fill" style="background:var(--neutral-dark-800)"></div><div class="label"><span class="name">neutral-dark-800</span><span class="value">#1b1b1d</span></div></div>
+      <div class="swatch"><div class="fill" style="background:var(--neutral-dark-900)"></div><div class="label"><span class="name">neutral-dark-900</span><span class="value">#111113</span></div></div>
+    </div>
+
+    <h3 class="sub">Marca &amp; status</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="fill" style="background:var(--accent-light)"></div><div class="label"><span class="name">accent-light</span><span class="value">#ff4d1f</span></div></div>
+      <div class="swatch"><div class="fill" style="background:var(--accent-dark)"></div><div class="label"><span class="name">accent-dark</span><span class="value">#ff6a3d</span></div></div>
+      <div class="swatch"><div class="fill" style="background:var(--success)"></div><div class="label"><span class="name">success</span><span class="value">#33b25a</span></div></div>
+      <div class="swatch"><div class="fill" style="background:var(--success-ink)"></div><div class="label"><span class="name">success-ink</span><span class="value">#04310f</span></div></div>
+      <div class="swatch"><div class="fill" style="background:var(--warning)"></div><div class="label"><span class="name">warning</span><span class="value">#f5c443</span></div></div>
+      <div class="swatch"><div class="fill" style="background:var(--warning-ink)"></div><div class="label"><span class="name">warning-ink</span><span class="value">#3d3000</span></div></div>
+    </div>
+
+    <h3 class="sub">Placeholder de cover (case studies)</h3>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="fill" style="background:linear-gradient(135deg,var(--placeholder-warm-1),var(--placeholder-warm-2))"></div><div class="label"><span class="name">placeholder-warm-1/2</span><span class="value">#e4e1d8 → #c9c4b3</span></div></div>
+      <div class="swatch"><div class="fill" style="background:linear-gradient(135deg,var(--placeholder-warm-alt-1),var(--placeholder-warm-alt-2))"></div><div class="label"><span class="name">placeholder-warm-alt-1/2</span><span class="value">#e3ded1 → #c7c0ac</span></div></div>
+      <div class="swatch"><div class="fill" style="background:linear-gradient(135deg,var(--placeholder-cool-1),var(--placeholder-cool-2))"></div><div class="label"><span class="name">placeholder-cool-1/2</span><span class="value">#dfe3e0 → #b9c2bb</span></div></div>
+    </div>
+    <p class="note">3 presets, não 2 — a decisão conservadora manteve o par quase-duplicado (<code>warm-alt</code>) separado em vez de fundi-lo com <code>warm</code>. Ver migration-map.md §1.6.</p>
+
+    <h3 class="sub">Escala alpha (overlay preto/branco)</h3>
+    <div class="swatch-grid">
+      <div class="swatch checker"><div class="fill" style="background:rgba(15,15,15,var(--a-08))"></div><div class="label"><span class="name">a-08</span><span class="value">.08</span></div></div>
+      <div class="swatch checker"><div class="fill" style="background:rgba(15,15,15,var(--a-10))"></div><div class="label"><span class="name">a-10</span><span class="value">.10</span></div></div>
+      <div class="swatch checker"><div class="fill" style="background:rgba(15,15,15,var(--a-18))"></div><div class="label"><span class="name">a-18</span><span class="value">.18</span></div></div>
+      <div class="swatch checker"><div class="fill" style="background:rgba(15,15,15,var(--a-20))"></div><div class="label"><span class="name">a-20</span><span class="value">.20</span></div></div>
+      <div class="swatch checker"><div class="fill" style="background:rgba(15,15,15,var(--a-25))"></div><div class="label"><span class="name">a-25</span><span class="value">.25</span></div></div>
+      <div class="swatch checker"><div class="fill" style="background:rgba(15,15,15,var(--a-35))"></div><div class="label"><span class="name">a-35</span><span class="value">.35</span></div></div>
+      <div class="swatch checker"><div class="fill" style="background:rgba(15,15,15,var(--a-40))"></div><div class="label"><span class="name">a-40</span><span class="value">.40</span></div></div>
+      <div class="swatch checker"><div class="fill" style="background:rgba(15,15,15,var(--a-45))"></div><div class="label"><span class="name">a-45</span><span class="value">.45</span></div></div>
+      <div class="swatch checker"><div class="fill" style="background:rgba(15,15,15,var(--a-50))"></div><div class="label"><span class="name">a-50</span><span class="value">.50</span></div></div>
+      <div class="swatch checker"><div class="fill" style="background:rgba(15,15,15,var(--a-70))"></div><div class="label"><span class="name">a-70</span><span class="value">.70</span></div></div>
+      <div class="swatch checker"><div class="fill" style="background:rgba(15,15,15,var(--a-85))"></div><div class="label"><span class="name">a-85</span><span class="value">.85</span></div></div>
+    </div>
+    <p class="note">Mostrado com preto (#0f0f0f) sobre fundo quadriculado, para visualizar a opacidade real de cada passo. 11 passos exatos, nenhum arredondado (migration-map.md §1.7).</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- COLORS — SEMANTIC                                             -->
+<!-- ============================================================ -->
+<section class="block" id="cores-semanticas">
+  <div class="wrap">
+    <h2>Cores — semânticas</h2>
+    <p class="lede">Os tokens que os componentes deveriam de fato usar. Clique em "☾ / ☀ tema" no menu para alternar — esta seção inteira responde de verdade, porque usa as mesmas variáveis do site.</p>
+
+    <div class="semantic-row"><div class="swatch"><div class="fill" style="background:var(--color-bg);border-bottom:1px solid var(--color-border)"></div></div><div class="desc"><b>--color-bg</b> — fundo da página</div></div>
+    <div class="semantic-row"><div class="swatch"><div class="fill" style="background:var(--color-surface)"></div></div><div class="desc"><b>--color-surface</b> — fundo de cards/chips</div></div>
+    <div class="semantic-row"><div class="swatch"><div class="fill" style="background:var(--color-border)"></div></div><div class="desc"><b>--color-border</b> — bordas e divisórias</div></div>
+    <div class="semantic-row"><div class="swatch"><div class="fill" style="background:var(--color-text)"></div></div><div class="desc"><b>--color-text</b> — texto principal</div></div>
+    <div class="semantic-row"><div class="swatch"><div class="fill" style="background:var(--color-text-secondary)"></div></div><div class="desc"><b>--color-text-secondary</b> — corpo de texto</div></div>
+    <div class="semantic-row"><div class="swatch"><div class="fill" style="background:var(--color-text-muted)"></div></div><div class="desc"><b>--color-text-muted</b> — legendas, texto terciário</div></div>
+    <div class="semantic-row"><div class="swatch"><div class="fill" style="background:var(--color-accent)"></div></div><div class="desc"><b>--color-accent</b> — laranja de marca</div></div>
+    <div class="semantic-row"><div class="swatch"><div class="fill" style="background:var(--color-success)"></div></div><div class="desc"><b>--color-success</b> — status "disponível", tag "solution"</div></div>
+    <div class="semantic-row"><div class="swatch"><div class="fill" style="background:var(--color-warning)"></div></div><div class="desc"><b>--color-warning</b> — tag "current" (comparação)</div></div>
+    <div class="semantic-row"><div class="swatch"><div class="fill" style="background:var(--color-inverse-bg)"></div></div><div class="desc"><b>--color-inverse-bg</b> — fundo de botão sólido</div></div>
+
+    <p class="note">Tema atual: <b id="themeReadout">light</b> — atributo <code>data-theme</code> na tag <code>&lt;html&gt;</code>, exatamente como no site real.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TYPOGRAPHY                                                    -->
+<!-- ============================================================ -->
+<section class="block" id="tipografia">
+  <div class="wrap">
+    <h2>Tipografia</h2>
+    <p class="lede">Escala estática (UI/labels) primeiro, depois a escala fluida (títulos), depois peso, altura de linha e tracking.</p>
+
+    <h3 class="sub">Escala estática</h3>
+    <div class="type-row"><span class="tag">--text-2xs · 12px</span><span class="sample" style="font-size:var(--text-2xs)">The quick brown fox jumps over the lazy dog</span></div>
+    <div class="type-row"><span class="tag">--text-xs · 13px</span><span class="sample" style="font-size:var(--text-xs)">The quick brown fox jumps over the lazy dog</span></div>
+    <div class="type-row"><span class="tag">--text-sm · 14px</span><span class="sample" style="font-size:var(--text-sm)">The quick brown fox jumps over the lazy dog</span></div>
+    <div class="type-row"><span class="tag">--text-md · 15px</span><span class="sample" style="font-size:var(--text-md)">The quick brown fox jumps over the lazy dog</span></div>
+    <div class="type-row"><span class="tag">--text-base · 16px</span><span class="sample" style="font-size:var(--text-base)">The quick brown fox jumps over the lazy dog</span></div>
+    <div class="type-row"><span class="tag">--text-lg · 17px</span><span class="sample" style="font-size:var(--text-lg)">The quick brown fox jumps over the lazy dog</span></div>
+    <div class="type-row"><span class="tag">--text-xl · 18px</span><span class="sample" style="font-size:var(--text-xl)">The quick brown fox jumps over the lazy dog</span></div>
+    <div class="type-row"><span class="tag">--text-2xl · 19px</span><span class="sample" style="font-size:var(--text-2xl)">The quick brown fox jumps</span></div>
+    <div class="type-row"><span class="tag">--text-3xl · 20px</span><span class="sample" style="font-size:var(--text-3xl)">The quick brown fox jumps</span></div>
+    <div class="type-row"><span class="tag">--text-4xl · 34px</span><span class="sample" style="font-size:var(--text-4xl);font-weight:var(--weight-semibold)">The quick fox</span></div>
+
+    <h3 class="sub">Escala fluida — 9 steps, uma fórmula só</h3>
+    <p class="note">Cada card simula os dois extremos reais do <code>clamp()</code>: uma caixa com largura de container travada em <b>375px</b> (mobile) e outra em <b>1440px</b> (desktop — role a caixa se necessário). Usa <code>container-type:inline-size</code> + <code>cqw</code> em vez de <code>vw</code>, então o número que você vê é exatamente o que o clamp real produziria naquele viewport. Requer um navegador atual (Chrome/Safari/Firefox recentes).</p>
+
+    <div class="fluid-card">
+      <div class="meta"><span>--font-fluid-2xl</span><b>52px → 132px</b></div>
+      <div class="sim-row">
+        <div class="sim-box sim-mobile"><div class="sim-label">375px</div><div class="viewport-sim"><span class="fluid-sample" style="font-size:clamp(52px, 52px + (100cqw - 400px) * 80/1040, 132px)">Designing</span></div></div>
+        <div class="sim-box sim-desktop"><div class="sim-label">1440px (role →)</div><div class="viewport-sim"><span class="fluid-sample" style="font-size:clamp(52px, 52px + (100cqw - 400px) * 80/1040, 132px)">Designing</span></div></div>
+      </div>
+    </div>
+
+    <div class="fluid-card">
+      <div class="meta"><span>--font-fluid-xl</span><b>38px → 100px</b></div>
+      <div class="sim-row">
+        <div class="sim-box sim-mobile"><div class="sim-label">375px</div><div class="viewport-sim"><span class="fluid-sample" style="font-size:clamp(38px, 38px + (100cqw - 400px) * 62/1040, 100px)">Let's talk</span></div></div>
+        <div class="sim-box sim-desktop"><div class="sim-label">1440px (role →)</div><div class="viewport-sim"><span class="fluid-sample" style="font-size:clamp(38px, 38px + (100cqw - 400px) * 62/1040, 100px)">Let's talk</span></div></div>
+      </div>
+    </div>
+
+    <div class="fluid-card">
+      <div class="meta"><span>--font-fluid-lg</span><b>34px → 64px</b></div>
+      <div class="sim-row">
+        <div class="sim-box sim-mobile"><div class="sim-label">375px</div><div class="viewport-sim"><span class="fluid-sample" style="font-size:clamp(34px, 34px + (100cqw - 400px) * 30/1040, 64px)">Pro2col case study</span></div></div>
+        <div class="sim-box sim-desktop"><div class="sim-label">1440px (role →)</div><div class="viewport-sim"><span class="fluid-sample" style="font-size:clamp(34px, 34px + (100cqw - 400px) * 30/1040, 64px)">Pro2col case study</span></div></div>
+      </div>
+    </div>
+
+    <div class="fluid-card">
+      <div class="meta"><span>--font-fluid-md</span><b>32px → 52px</b></div>
+      <div class="sim-row">
+        <div class="sim-box sim-mobile"><div class="sim-label">375px</div><div class="viewport-sim"><span class="fluid-sample" style="font-size:clamp(32px, 32px + (100cqw - 400px) * 20/1040, 52px)">Selected work</span></div></div>
+        <div class="sim-box sim-desktop"><div class="sim-label">1440px (role →)</div><div class="viewport-sim"><span class="fluid-sample" style="font-size:clamp(32px, 32px + (100cqw - 400px) * 20/1040, 52px)">Selected work</span></div></div>
+      </div>
+    </div>
+
+    <div class="fluid-card">
+      <div class="meta"><span>--font-fluid-quote-testimonial</span><b>24px → 42px</b></div>
+      <div class="sim-row">
+        <div class="sim-box sim-mobile"><div class="sim-label">375px</div><div class="viewport-sim"><span class="fluid-sample" style="font-size:clamp(24px, 24px + (100cqw - 400px) * 18/1040, 42px);font-style:italic;font-weight:var(--weight-medium)">“Daniel picks up new tools fast.”</span></div></div>
+        <div class="sim-box sim-desktop"><div class="sim-label">1440px (role →)</div><div class="viewport-sim"><span class="fluid-sample" style="font-size:clamp(24px, 24px + (100cqw - 400px) * 18/1040, 42px);font-style:italic;font-weight:var(--weight-medium)">“Daniel picks up new tools fast.”</span></div></div>
+      </div>
+    </div>
+
+    <div class="fluid-card">
+      <div class="meta"><span>--font-fluid-quote-case</span><b>22px → 38px</b></div>
+      <div class="sim-row">
+        <div class="sim-box sim-mobile"><div class="sim-label">375px</div><div class="viewport-sim"><span class="fluid-sample" style="font-size:clamp(22px, 22px + (100cqw - 400px) * 16/1040, 38px);font-style:italic;font-weight:var(--weight-medium)">“Went straight to the client, no revisions.”</span></div></div>
+        <div class="sim-box sim-desktop"><div class="sim-label">1440px (role →)</div><div class="viewport-sim"><span class="fluid-sample" style="font-size:clamp(22px, 22px + (100cqw - 400px) * 16/1040, 38px);font-style:italic;font-weight:var(--weight-medium)">“Went straight to the client, no revisions.”</span></div></div>
+      </div>
+    </div>
+
+    <div class="fluid-card">
+      <div class="meta"><span>--font-fluid-lead</span><b>26px → 37px</b> <span style="color:var(--color-text-muted)">(merge: about-lead + case-feature-head h3)</span></div>
+      <div class="sim-row">
+        <div class="sim-box sim-mobile"><div class="sim-label">375px</div><div class="viewport-sim"><span class="fluid-sample" style="font-size:clamp(26px, 26px + (100cqw - 400px) * 11/1040, 37px);font-weight:var(--weight-medium)">I care about clarity and prioritization.</span></div></div>
+        <div class="sim-box sim-desktop"><div class="sim-label">1440px (role →)</div><div class="viewport-sim"><span class="fluid-sample" style="font-size:clamp(26px, 26px + (100cqw - 400px) * 11/1040, 37px);font-weight:var(--weight-medium)">I care about clarity and prioritization.</span></div></div>
+      </div>
+    </div>
+
+    <div class="fluid-card">
+      <div class="meta"><span>--font-fluid-heading</span><b>24px → 36px</b></div>
+      <div class="sim-row">
+        <div class="sim-box sim-mobile"><div class="sim-label">375px</div><div class="viewport-sim"><span class="fluid-sample" style="font-size:clamp(24px, 24px + (100cqw - 400px) * 12/1040, 36px)">Product Design</span></div></div>
+        <div class="sim-box sim-desktop"><div class="sim-label">1440px (role →)</div><div class="viewport-sim"><span class="fluid-sample" style="font-size:clamp(24px, 24px + (100cqw - 400px) * 12/1040, 36px)">Product Design</span></div></div>
+      </div>
+    </div>
+
+    <div class="fluid-card">
+      <div class="meta"><span>--font-fluid-link</span><b>22px → 36px</b></div>
+      <div class="sim-row">
+        <div class="sim-box sim-mobile"><div class="sim-label">375px</div><div class="viewport-sim"><span class="fluid-sample" style="font-size:clamp(22px, 22px + (100cqw - 400px) * 14/1040, 36px);font-weight:var(--weight-medium)">danierocruz@gmail.com</span></div></div>
+        <div class="sim-box sim-desktop"><div class="sim-label">1440px (role →)</div><div class="viewport-sim"><span class="fluid-sample" style="font-size:clamp(22px, 22px + (100cqw - 400px) * 14/1040, 36px);font-weight:var(--weight-medium)">danierocruz@gmail.com</span></div></div>
+      </div>
+    </div>
+
+    <h3 class="sub">Peso</h3>
+    <div class="weight-row"><span class="tag">--weight-regular · 400</span><span class="sample" style="font-weight:var(--weight-regular)">Daniel Cruz</span></div>
+    <div class="weight-row"><span class="tag">--weight-medium · 500</span><span class="sample" style="font-weight:var(--weight-medium)">Daniel Cruz</span></div>
+    <div class="weight-row"><span class="tag">--weight-semibold · 600</span><span class="sample" style="font-weight:var(--weight-semibold)">Daniel Cruz</span></div>
+    <div class="weight-row"><span class="tag">--weight-bold · 700</span><span class="sample" style="font-weight:var(--weight-bold)">Daniel Cruz</span></div>
+
+    <h3 class="sub">Altura de linha (line-height)</h3>
+    <div class="leading-block"><span class="tag">--leading-tight · 1</span><p style="line-height:var(--leading-tight);font-size:var(--text-2xl);font-weight:var(--weight-semibold)">Let's talk about your next hire and how we can work together.</p></div>
+    <div class="leading-block"><span class="tag">--leading-snug · 1.08</span><p style="line-height:var(--leading-snug);font-size:var(--text-2xl);font-weight:var(--weight-semibold)">Let's talk about your next hire and how we can work together.</p></div>
+    <div class="leading-block"><span class="tag">--leading-relaxed · 1.35</span><p style="line-height:var(--leading-relaxed);font-size:var(--text-2xl);font-weight:var(--weight-medium)">Let's talk about your next hire and how we can work together.</p></div>
+    <div class="leading-block"><span class="tag">--leading-loose · 1.6</span><p style="line-height:var(--leading-loose);font-size:var(--text-md)">Let's talk about your next hire and how we can work together across B2B, SaaS, mobile and healthcare products.</p></div>
+    <div class="leading-block"><span class="tag">--leading-body · 1.55</span><p style="line-height:var(--leading-body);font-size:var(--text-md)">Let's talk about your next hire and how we can work together across B2B, SaaS, mobile and healthcare products.</p></div>
+
+    <h3 class="sub">Letter-spacing</h3>
+    <div class="track-row"><span class="tag">tightest · -.04em</span><span class="sample" style="letter-spacing:var(--tracking-tightest);font-weight:var(--weight-semibold)">DESIGNING CLARITY</span></div>
+    <div class="track-row"><span class="tag">tighter · -.03em</span><span class="sample" style="letter-spacing:var(--tracking-tighter);font-weight:var(--weight-semibold)">DESIGNING CLARITY</span></div>
+    <div class="track-row"><span class="tag">tight · -.02em</span><span class="sample" style="letter-spacing:var(--tracking-tight);font-weight:var(--weight-semibold)">DESIGNING CLARITY</span></div>
+    <div class="track-row"><span class="tag">snug · -.01em</span><span class="sample" style="letter-spacing:var(--tracking-snug);font-weight:var(--weight-semibold)">DESIGNING CLARITY</span></div>
+    <div class="track-row"><span class="tag">normal · 0</span><span class="sample" style="letter-spacing:var(--tracking-normal);font-weight:var(--weight-semibold)">DESIGNING CLARITY</span></div>
+    <div class="track-row"><span class="tag">wide · .06em</span><span class="sample" style="letter-spacing:var(--tracking-wide);font-weight:var(--weight-semibold);font-size:var(--text-sm)">DESIGNING CLARITY</span></div>
+    <div class="track-row"><span class="tag">wider · .08em</span><span class="sample" style="letter-spacing:var(--tracking-wider);font-weight:var(--weight-semibold);font-size:var(--text-sm)">DESIGNING CLARITY</span></div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SPACING                                                       -->
+<!-- ============================================================ -->
+<section class="block" id="espacamento">
+  <div class="wrap">
+    <h2>Espaçamento</h2>
+    <p class="lede">Barras proporcionais — a largura de cada barra é o próprio valor em pixels, então a razão entre elas é a razão real.</p>
+
+    <h3 class="sub">Escala micro (base 4px)</h3>
+    <div class="bar-row"><span class="tag">--space-1</span><div class="bar" style="width:var(--space-1)"></div><span class="px">4px</span></div>
+    <div class="bar-row"><span class="tag">--space-2</span><div class="bar" style="width:var(--space-2)"></div><span class="px">8px</span></div>
+    <div class="bar-row"><span class="tag">--space-3</span><div class="bar" style="width:var(--space-3)"></div><span class="px">12px</span></div>
+    <div class="bar-row"><span class="tag">--space-4</span><div class="bar" style="width:var(--space-4)"></div><span class="px">16px</span></div>
+    <div class="bar-row"><span class="tag">--space-5</span><div class="bar" style="width:var(--space-5)"></div><span class="px">20px</span></div>
+    <div class="bar-row"><span class="tag">--space-6</span><div class="bar" style="width:var(--space-6)"></div><span class="px">24px</span></div>
+    <div class="bar-row"><span class="tag">--space-7</span><div class="bar" style="width:var(--space-7)"></div><span class="px">32px</span></div>
+    <div class="bar-row"><span class="tag">--space-8</span><div class="bar" style="width:var(--space-8)"></div><span class="px">40px</span></div>
+    <div class="bar-row"><span class="tag">--space-9</span><div class="bar" style="width:var(--space-9)"></div><span class="px">56px</span></div>
+    <div class="bar-row"><span class="tag">--space-10</span><div class="bar" style="width:var(--space-10)"></div><span class="px">80px</span></div>
+
+    <h3 class="sub">Escala macro (padding de seção — não consolidada, ver migration-map §3.2)</h3>
+    <div class="bar-row"><span class="tag">--layout-section-90</span><div class="bar" style="width:calc(var(--layout-section-90) / 2);background:var(--color-text-muted)"></div><span class="px">90px</span></div>
+    <div class="bar-row"><span class="tag">--layout-section-100</span><div class="bar" style="width:calc(var(--layout-section-100) / 2);background:var(--color-text-muted)"></div><span class="px">100px</span></div>
+    <div class="bar-row"><span class="tag">--layout-section-120</span><div class="bar" style="width:calc(var(--layout-section-120) / 2);background:var(--color-text-muted)"></div><span class="px">120px</span></div>
+    <div class="bar-row"><span class="tag">--layout-section-130</span><div class="bar" style="width:calc(var(--layout-section-130) / 2);background:var(--color-text-muted)"></div><span class="px">130px</span></div>
+    <div class="bar-row"><span class="tag">--layout-section-140</span><div class="bar" style="width:calc(var(--layout-section-140) / 2);background:var(--color-text-muted)"></div><span class="px">140px</span></div>
+    <div class="bar-row"><span class="tag">--layout-section-150</span><div class="bar" style="width:calc(var(--layout-section-150) / 2);background:var(--color-text-muted)"></div><span class="px">150px</span></div>
+    <div class="bar-row"><span class="tag">--layout-section-mobile</span><div class="bar" style="width:calc(var(--layout-section-mobile) / 2);background:var(--color-text-muted)"></div><span class="px">96px</span></div>
+    <p class="note">Barras divididas por 2 só para caber na tela — a proporção entre elas continua exata.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- RADIUS / SHADOW / MOTION                                      -->
+<!-- ============================================================ -->
+<section class="block" id="radius-shadow-motion">
+  <div class="wrap">
+    <h2>Radius, shadow &amp; motion</h2>
+
+    <h3 class="sub">Border-radius</h3>
+    <div class="demo-grid">
+      <div class="demo-item"><div class="box" style="border-radius:var(--radius-sm)"></div><span class="tag">--radius-sm · 999px</span></div>
+      <div class="demo-item"><div class="box" style="border-radius:var(--radius-md)"></div><span class="tag">--radius-md · 18px</span></div>
+      <div class="demo-item"><div class="box" style="border-radius:var(--radius-lg)"></div><span class="tag">--radius-lg · 28px</span></div>
+      <div class="demo-item"><div class="box" style="width:44px;height:44px;border-radius:9px;background:var(--color-inverse-bg)"></div><span class="tag">9px — exceção<br>(.logo-mark, não tokenizado)</span></div>
+      <div class="demo-item"><div class="box" style="width:90px;height:70px;border-radius:12px"></div><span class="tag">12px — exceção<br>(.persona-card img, não tokenizado)</span></div>
+    </div>
+
+    <h3 class="sub">Shadow</h3>
+    <div class="shadow-stage">
+      <div class="shadow-card">--shadow-elevated-offset + --color-shadow</div>
+    </div>
+    <p class="note">Única sombra real do site (usada em <code>.float-cta</code>). Muda de cor sozinha ao trocar de tema, porque <code>--color-shadow</code> é um token semântico.</p>
+
+    <h3 class="sub">Duração (passe o mouse em cada card)</h3>
+    <div class="demo-grid">
+      <div class="duration-demo fast"><div class="track"><div class="puck"></div></div><span class="tag">--duration-fast · 200ms</span></div>
+      <div class="duration-demo base"><div class="track"><div class="puck"></div></div><span class="tag">--duration-base · 300ms</span></div>
+      <div class="duration-demo slow"><div class="track"><div class="puck"></div></div><span class="tag">--duration-slow · 500ms</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- BEFORE / AFTER                                                -->
+<!-- ============================================================ -->
+<section class="block" id="antes-depois" style="border-bottom:none;">
+  <div class="wrap">
+    <h2>Antes → depois</h2>
+    <p class="lede">Os 4 casos onde valores diferentes hoje viram um token único (todos os outros itens ambíguos ficaram <i>sem</i> fusão — ver migration-map.md).</p>
+
+    <div class="collapse-row">
+      <div class="collapse-before">
+        <div class="mini-swatch"><div class="fill" style="background:#33b25a"></div><div class="lbl">#33b25a<br>status dot</div></div>
+        <div class="mini-swatch"><div class="fill" style="background:#43bd68"></div><div class="lbl">#43bd68<br>compare-tag</div></div>
+      </div>
+      <span class="collapse-arrow">→</span>
+      <div class="collapse-after">
+        <div class="mini-swatch"><div class="fill" style="background:var(--success)"></div><div class="lbl">--success<br>#33b25a</div></div>
+      </div>
+      <div class="collapse-label">2 verdes → 1. <b>Mantido #33b25a</b> (já usado em toda página); só a tag "Solution" do Pro2col muda de tom.</div>
+    </div>
+
+    <div class="collapse-row">
+      <div class="collapse-before">
+        <div class="mini-swatch"><div class="fill" style="display:flex;align-items:center;justify-content:center;background:var(--color-surface);font-size:11px">Aa</div><div class="lbl">11px<br>compare-tag</div></div>
+        <div class="mini-swatch"><div class="fill" style="display:flex;align-items:center;justify-content:center;background:var(--color-surface);font-size:11.5px">Aa</div><div class="lbl">11.5px<br>head-tag</div></div>
+        <div class="mini-swatch"><div class="fill" style="display:flex;align-items:center;justify-content:center;background:var(--color-surface);font-size:12px">Aa</div><div class="lbl">12px<br>tag / meta</div></div>
+        <div class="mini-swatch"><div class="fill" style="display:flex;align-items:center;justify-content:center;background:var(--color-surface);font-size:12.5px">Aa</div><div class="lbl">12.5px<br>identity-email</div></div>
+      </div>
+      <span class="collapse-arrow">→</span>
+      <div class="collapse-after">
+        <div class="mini-swatch"><div class="fill" style="display:flex;align-items:center;justify-content:center;background:var(--color-surface);font-size:var(--text-2xs)">Aa</div><div class="lbl">--text-2xs<br>12px</div></div>
+      </div>
+      <div class="collapse-label">4 micro-tamanhos → 1. Maior desvio: 1px sobre uma fonte de 11px — abaixo do perceptível.</div>
+    </div>
+
+    <div class="collapse-row">
+      <div class="collapse-before">
+        <div class="mini-swatch" style="width:auto;"><div class="fill" style="width:auto;padding:0 10px;display:flex;align-items:center;justify-content:center;background:var(--color-surface);font-size:26px;font-weight:var(--weight-medium)">Aa</div><div class="lbl">about-lead<br>26px→36px</div></div>
+        <div class="mini-swatch" style="width:auto;"><div class="fill" style="width:auto;padding:0 10px;display:flex;align-items:center;justify-content:center;background:var(--color-surface);font-size:26px;font-weight:var(--weight-semibold)">Aa</div><div class="lbl">feature-head h3<br>26px→38px</div></div>
+      </div>
+      <span class="collapse-arrow">→</span>
+      <div class="collapse-after">
+        <div class="mini-swatch" style="width:auto;"><div class="fill" style="width:auto;padding:0 10px;display:flex;align-items:center;justify-content:center;background:var(--color-surface);font-size:26px;font-weight:var(--weight-medium)">Aa</div><div class="lbl">--font-fluid-lead<br>26px→37px</div></div>
+      </div>
+      <div class="collapse-label">2 papéis → 1 (único merge tipográfico mantido). Já tinham o mesmo mínimo e o mesmo coeficiente de vw no CSS original — fusão de risco zero.</div>
+    </div>
+
+    <div class="collapse-row">
+      <div class="collapse-before">
+        <div class="mini-swatch"><div class="fill" style="display:flex;align-items:center;justify-content:center;background:var(--color-surface);font-family:var(--font-mono);font-size:11px">.4s</div><div class="lbl">.4s<br>+100ms</div></div>
+        <div class="mini-swatch"><div class="fill" style="display:flex;align-items:center;justify-content:center;background:var(--color-surface);font-family:var(--font-mono);font-size:11px">.5s</div><div class="lbl">.5s<br>maioria</div></div>
+        <div class="mini-swatch"><div class="fill" style="display:flex;align-items:center;justify-content:center;background:var(--color-surface);font-family:var(--font-mono);font-size:11px">.6s</div><div class="lbl">.6s<br>-100ms</div></div>
+      </div>
+      <span class="collapse-arrow">→</span>
+      <div class="collapse-after">
+        <div class="mini-swatch"><div class="fill" style="display:flex;align-items:center;justify-content:center;background:var(--color-surface);font-family:var(--font-mono);font-size:11px">500ms</div><div class="lbl">--duration-slow</div></div>
+      </div>
+      <div class="collapse-label">3 durações → 1. Único item com mudança claramente perceptível (±100ms) — mantido porque a contagem de "3 durações" já era um requisito dado, não uma escolha em aberto.</div>
+    </div>
+  </div>
+</section>
+
+<footer class="page-foot">
+  <div class="wrap">tokens-preview.html · gerado a partir de assets/tokens.css · branch design-system</div>
+</footer>
+
+<script>
+(function(){
+  var toggle = document.getElementById('themeToggle');
+  var readout = document.getElementById('themeReadout');
+  function apply(theme){
+    document.documentElement.setAttribute('data-theme', theme);
+    if (readout) readout.textContent = theme;
+  }
+  var current = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+  apply(current);
+  toggle.addEventListener('click', function(){
+    current = current === 'dark' ? 'light' : 'dark';
+    apply(current);
+  });
+})();
+</script>
+
+</body>
+</html>
