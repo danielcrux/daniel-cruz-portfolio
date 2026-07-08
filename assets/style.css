@@ -282,6 +282,7 @@ a.identity:hover .identity-text b{color:var(--accent);}
 }
 .hero-stats{display:flex;gap:56px;flex-wrap:wrap;}
 .hero-stat{font-size:16px;color:var(--soft);line-height:1.5;}
+.hero-stats-note{margin-top:14px;font-size:13px;color:var(--soft);opacity:.75;}
 .hero-note{text-align:right;max-width:420px;}
 .hero-stat b{
   display:block;font-size:34px;font-weight:600;color:var(--ink);
