@@ -203,10 +203,12 @@ a.identity:hover .identity-text b{color:var(--accent);}
 .hero-title .accent-word{color:var(--accent);}
 
 .type-line{display:block;}
-.type-line-word{display:block;}
+.type-line-word{display:block;font-style:italic;}
 .rotating-word-text{display:inline;}
 .rotating-cursor{
   display:inline-block;margin-left:.02em;
+  font-weight:400;font-style:normal;
+  transform:scaleX(.45);transform-origin:left center;
   animation:cursor-blink 1s step-end infinite;
 }
 @keyframes cursor-blink{0%,50%{opacity:1;}51%,100%{opacity:0;}}
