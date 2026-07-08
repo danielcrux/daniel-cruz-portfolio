@@ -6,6 +6,20 @@
 document.addEventListener('DOMContentLoaded', () => {
   document.body.classList.add('is-ready');
 
+  /* ---------- theme toggle (dark/light) ---------- */
+  // The initial theme is already applied by an inline script in <head>
+  // (before first paint); this just wires up the click-to-switch + persists
+  // the choice so it's remembered across pages and future visits.
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const next = isDark ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+  }
+
   /* ---------- header scroll state ---------- */
   const header = document.getElementById('site-header');
   if (header) {
