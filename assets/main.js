@@ -53,8 +53,11 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- testimonial carousel ---------- */
   const testimonialSlides = document.querySelectorAll('[data-testimonial-slide]');
   const testimonialDots = document.querySelectorAll('[data-testimonial-dot]');
+  const testimonialCarousel = document.querySelector('.testimonial-carousel');
   if (testimonialSlides.length && testimonialDots.length) {
+    let currentTestimonial = 0;
     const showTestimonial = (index) => {
+      currentTestimonial = index;
       testimonialSlides.forEach((slide, i) => slide.classList.toggle('active', i === index));
       testimonialDots.forEach((dot, i) => {
         const isActive = i === index;
@@ -66,6 +69,33 @@ document.addEventListener('DOMContentLoaded', () => {
     testimonialDots.forEach((dot, index) => {
       dot.addEventListener('click', () => showTestimonial(index));
     });
+
+    // Swipe support for touch devices (mobile/tablet)
+    if (testimonialCarousel) {
+      let touchStartX = 0;
+      let touchDeltaX = 0;
+
+      testimonialCarousel.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        touchDeltaX = 0;
+      }, { passive: true });
+
+      testimonialCarousel.addEventListener('touchmove', (e) => {
+        touchDeltaX = e.touches[0].clientX - touchStartX;
+      }, { passive: true });
+
+      testimonialCarousel.addEventListener('touchend', () => {
+        const SWIPE_THRESHOLD = 40;
+        if (Math.abs(touchDeltaX) > SWIPE_THRESHOLD) {
+          const count = testimonialSlides.length;
+          if (touchDeltaX < 0) {
+            showTestimonial((currentTestimonial + 1) % count);
+          } else {
+            showTestimonial((currentTestimonial - 1 + count) % count);
+          }
+        }
+      });
+    }
   }
 
   /* ---------- mobile menu ---------- */
