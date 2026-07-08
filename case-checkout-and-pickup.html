@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Checkout &amp; Pickup — Daniel Cruz</title>
-<meta name="description" content="Making in-store pickup as fast and painless as checkout should be — a case study by Daniel Cruz, Product Designer.">
+<title>Pickup Location Selection — Daniel Cruz</title>
+<meta name="description" content="Adding delivery flexibility to the checkout experience — a case study by Daniel Cruz, Product Designer.">
 <link rel="preconnect" href="https://api.fontshare.com">
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
@@ -31,54 +31,132 @@
 
   <section class="case-hero">
     <div class="wrap">
-      <p class="breadcrumb"><a href="index.html#work">Work</a> / <b>Checkout &amp; Pickup</b></p>
+      <p class="breadcrumb"><a href="index.html#work">Work</a> / <b>Pickup Location Selection</b></p>
       <h1 class="case-title">
-        <span class="reveal-line"><span>Making in-store pickup as fast and painless as checkout should be</span></span>
+        <span class="reveal-line"><span>Adding delivery flexibility to the checkout experience</span></span>
       </h1>
 
-      <div class="case-cover" style="--thumb-a:#dde0e6;--thumb-b:#b6bdd0;">
-        <span class="cover-note">Add a screenshot of the pickup flow here</span>
+      <div class="cover-media reveal-up">
+        <img src="images/pickup/cover.jpg" alt="Tablet showing the Select Pickup Location screen next to the Herbalife checkout flow">
       </div>
     </div>
   </section>
 
-  <section class="case-body">
+  <section class="case-body" style="padding-top:90px;">
     <div class="wrap case-grid">
       <div class="case-copy">
-        <h3>Challenge</h3>
-        <p class="reveal-up">The pickup experience felt bolted onto checkout instead of designed alongside it. Order status was vague, customers weren't sure when to head to the store, and staff had no easy way to tell who had actually arrived — which meant long waits at the counter for something that should've taken seconds.</p>
-
-        <h3>Approach</h3>
-        <p class="reveal-up">I mapped the full journey from adding an item to cart all the way to walking out with it in hand, and rebuilt the status states around what the customer needed to know at each step. Real-time "ready for pickup" notifications replaced generic order updates, and I designed a simple companion view for store staff to see who was arriving and when. We piloted the flow in two stores before rolling it out further.</p>
-
-        <div class="case-image reveal-up" style="--thumb-a:#dde0e6;--thumb-b:#b6bdd0;">
-          <span class="cover-note">Add a supporting screenshot here</span>
-        </div>
+        <h3>The Challenge</h3>
+        <p class="case-feature-quote reveal-up">"How do we make self-collection feel like a first-class choice, not a workaround buried in the checkout flow?"</p>
+        <p class="reveal-up">In India's fast-growing e-commerce market, delivery flexibility is becoming a key differentiator. While home delivery remains the default, customers in dense urban areas often prefer collecting orders from nearby pickup points to avoid missed deliveries, better fit their schedules, or reduce delivery fees. But the pickup option (PUDO) was hidden within secondary flows, resulting in low discoverability, high friction during address selection, and drop-offs caused by forced home delivery. The challenge was to integrate Pickup Location into the Address Step in a way that was intuitive for first-time users, fast for repeat buyers, consistent across guest and logged-in flows, and non-disruptive to checkout conversion.</p>
       </div>
 
       <div class="meta-grid reveal-up">
-        <div class="meta-item"><span>Client</span><b>Confidential (NDA)</b></div>
-        <div class="meta-item"><span>Year</span><b>2024</b></div>
-        <div class="meta-item"><span>Duration</span><b>9 weeks</b></div>
-        <div class="meta-item"><span>Type</span><b>Mobile · Retail</b></div>
-        <div class="meta-item"><span>Industry</span><b>Retail &amp; Commerce</b></div>
+        <div class="meta-item"><span>Client</span><b>Herbalife</b></div>
+        <div class="meta-item"><span>Agency</span><b>Strategy CX</b></div>
+        <div class="meta-item"><span>Role</span><b>Product Designer</b></div>
+        <div class="meta-item"><span>Industry</span><b>E-commerce / Retail</b></div>
         <div class="meta-item full">
           <span>Scope</span>
           <div class="chip-row">
-            <span class="chip">UX Research</span>
-            <span class="chip">UI Design</span>
-            <span class="chip">Service Design</span>
-            <span class="chip">Prototyping</span>
+            <span class="chip">End-to-End UX</span>
+            <span class="chip">Checkout Flow</span>
+            <span class="chip">Guest &amp; Logged-in</span>
+            <span class="chip">Web &amp; Mobile</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Goals -->
+  <section class="case-feature">
+    <div class="wrap">
+      <span class="head-tag">Context</span>
+      <div class="case-feature-head reveal-up">
+        <span class="tag">Goals</span>
+        <h3>What success needed to look like.</h3>
+        <p>Make pickup as discoverable as home delivery. Reduce friction in address selection. Increase successful order completion for users preferring self-collection. Decrease failed delivery attempts in dense urban areas.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Choosing the Delivery Method -->
+  <section class="case-feature">
+    <div class="wrap">
+      <span class="head-tag">Core · My work</span>
+      <div class="case-feature-head reveal-up">
+        <span class="tag">01 — Choosing the Delivery Method</span>
+        <h3>An equal choice, made early.</h3>
+        <p>To make pickup visible from the start, we introduced a two-option toggle at the top of the Address Step: Ship to My Address, or Pick Up from a Nearby Location. Both options were given equal visual weight to encourage discovery. For first-time users, inline hints explain the benefits of pickup — faster availability, flexible hours — without breaking the checkout flow.</p>
+      </div>
+      <img class="reveal-up" src="images/pickup/01-delivery-method.png" alt="Pickup and shipping options toggle progressing from initial choice to a selected store pickup with hours and ID verification">
+      <p class="case-feature-label reveal-up" style="margin-top:24px;">UX principle — early, explicit choice reduces cognitive load and prevents hidden features from being overlooked.</p>
+    </div>
+  </section>
+
+  <!-- Searching for Pickup Locations -->
+  <section class="case-feature">
+    <div class="wrap">
+      <span class="head-tag">Core · My work</span>
+      <div class="case-feature-head reveal-up">
+        <span class="tag">02 — Searching for Pickup Locations</span>
+        <h3>Built for speed and clarity.</h3>
+        <p>Once pickup is selected, users are taken to a dedicated search interface where they can search by city, PIN code or full address — or grant location access for an instant, current-location search. Results are shown in both list and map views: list view supports quick scanning of distance, open/closed status and availability tags, while map view supports spatial decision-making in dense urban contexts. Selected locations are saved instantly and reflected in the Address Summary in real time, without extra confirmation screens.</p>
+      </div>
+      <img class="reveal-up" src="images/pickup/02-search-locations.png" alt="Location permission prompt and Select Pickup Location search modal with map results, on mobile and desktop">
+      <p class="case-feature-label reveal-up" style="margin-top:24px;">UX principle — minimize steps between intent (choose pickup) and commitment (location selected).</p>
+    </div>
+  </section>
+
+  <!-- Search suggestions & fallback -->
+  <section class="case-feature">
+    <div class="wrap">
+      <span class="head-tag">Context</span>
+      <div class="case-feature-head reveal-up">
+        <span class="tag">03 — Guiding the Search</span>
+        <h3>Helpful even when there's no match.</h3>
+        <p>Typing a PIN code surfaces matching pickup partners as live search suggestions, so users rarely need to scan a full list. And when no pickup location exists near an address, the flow doesn't dead-end — it offers a clear fallback to add a shipping address instead, keeping the order moving.</p>
+      </div>
+      <img class="reveal-up" src="images/pickup/03-search-suggestions.png" alt="Search suggestions by PIN code and a no-results state offering to add a shipping address instead">
+    </div>
+  </section>
+
+  <!-- Refining the Results -->
+  <section class="case-feature">
+    <div class="wrap">
+      <span class="head-tag">Core · My work</span>
+      <div class="case-feature-head reveal-up">
+        <span class="tag">04 — Refining the Results</span>
+        <h3>Progressive narrowing, not choice overload.</h3>
+        <p>To help users reach a decision faster, we added contextual filters — distance range, open now, opening hours, and pickup partner type (Herbalife Center, FedEx Hub). Filters update results dynamically and sit at the top to reduce scanning effort, and the layout is scalable enough to absorb new filter types without a redesign.</p>
+      </div>
+      <img class="reveal-up" src="images/pickup/04-filters-results.png" alt="Pickup type filter dropdown with All Locations, Herbalife Center and FedEx Hub options, alongside the filtered results and map">
+      <p class="case-feature-label reveal-up" style="margin-top:24px;">UX principle — progressive narrowing reduces choice overload and speeds up decision-making.</p>
+    </div>
+  </section>
+
+  <!-- Persistent Confirmation -->
+  <section class="case-feature">
+    <div class="wrap">
+      <span class="head-tag">Core · My work</span>
+      <div class="case-feature-head reveal-up">
+        <span class="tag">05 — Persistent Confirmation</span>
+        <h3>Reversible by design.</h3>
+        <p>Once selected, the pickup location stays persistently displayed in the Address Summary during checkout and in the Final Order Summary before payment — including store hours and the ID verification required to collect the order. Users can change their selection at any time without restarting the flow, which lowers anxiety and raises confidence to proceed.</p>
+      </div>
+      <p class="case-feature-label reveal-up">Before — shipping and store pickup shown as collapsed options</p>
+      <img class="reveal-up" src="images/pickup/05-checkout-before.png" alt="Checkout page before a delivery method is chosen, with Shipping and Store pickup shown as collapsed options">
+
+      <p class="case-feature-label reveal-up" style="margin-top:56px;">After — store pickup selected, with hours and ID verification</p>
+      <img class="reveal-up" src="images/pickup/06-checkout-confirmed.png" alt="Checkout page with Store pickup selected, showing store hours, ID verification fields and the order summary">
+      <p class="case-feature-label reveal-up" style="margin-top:24px;">UX principle — reversible choices reduce user anxiety and lower abandonment risk.</p>
+    </div>
+  </section>
+
   <section class="case-quote">
     <div class="wrap">
-      <blockquote class="reveal-up">Add a short client quote about the impact of this project.</blockquote>
-      <p class="quote-author reveal-up"><b>Client name</b> — Role, Company</p>
+      <blockquote class="reveal-up">The redesigned Address Step transforms pickup from a hidden alternative into a primary delivery method — discoverable from the start, efficient to search and filter, and reversible at every step.</blockquote>
+      <p class="quote-author reveal-up"><b>Impact</b> — improved conversion for customers who prefer self-collection, fewer failed delivery attempts, and logistics cost savings, aligning delivery flexibility with both customer expectations and business efficiency goals.</p>
     </div>
   </section>
 
@@ -89,19 +167,19 @@
         <a href="index.html#work" class="btn-ghost magnetic">See all projects</a>
       </div>
       <div class="more-grid" data-stagger>
-        <a href="case-forecasting-platform.html" class="work-card">
-          <div class="work-thumb" style="--thumb-a:#e3ded1;--thumb-b:#c7c0ac;--thumb-c:#fff;">
-            <div class="blob b1"></div><div class="blob b2"></div>
-            <span class="thumb-tag">SaaS · B2B</span>
+        <a href="case-genesis.html" class="work-card">
+          <div class="work-thumb has-image">
+            <img src="images/genesis/00-cover-macbook.png" alt="Genesis forecasting platform dashboard on a MacBook">
+            <span class="thumb-tag">Oil &amp; Gas · Hess</span>
           </div>
-          <div class="work-info"><div><h3>Forecasting Platform</h3><span>Distributor analytics · SaaS</span></div><div class="work-arrow">↗</div></div>
+          <div class="work-info"><div><h3>Genesis</h3><span>Centralized forecasting platform · SaaS</span></div><div class="work-arrow">↗</div></div>
         </a>
-        <a href="case-distributor-dashboard.html" class="work-card">
-          <div class="work-thumb" style="--thumb-a:#e8ded9;--thumb-b:#cdb9b0;--thumb-c:#fff;">
-            <div class="blob b1"></div><div class="blob b2"></div>
-            <span class="thumb-tag">SaaS · Enterprise</span>
+        <a href="case-distributor-hub.html" class="work-card">
+          <div class="work-thumb has-image">
+            <img src="images/distributor-hub/cover.jpg" alt="Distributor checking the Herbalife performance dashboard on their phone">
+            <span class="thumb-tag">Health &amp; Nutrition · Herbalife</span>
           </div>
-          <div class="work-info"><div><h3>Distributor Dashboard</h3><span>Inventory &amp; orders · Enterprise</span></div><div class="work-arrow">↗</div></div>
+          <div class="work-info"><div><h3>Distributor Hub</h3><span>Unified dashboard &amp; performance · Web</span></div><div class="work-arrow">↗</div></div>
         </a>
       </div>
     </div>
