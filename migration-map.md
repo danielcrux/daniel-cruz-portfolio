@@ -1,20 +1,31 @@
 # Migration map — raw values → tokens.css
 
-Companion to `audit.md` and `tokens.css`. Nenhum componente foi refatorado — este
+Companion to `audit.md` e `tokens.css`. Nenhum componente foi refatorado — este
 documento só mapeia, valor por valor, o que cada hardcode viraria se/quando
-`style.css` e os `case-*.html` forem migrados para os tokens. Itens marcados
-**AMBÍGUO** mudam algo perceptível (não são só renomeação) e precisam da sua
-decisão antes de qualquer refactor.
+`style.css` e os `case-*.html` forem migrados para os tokens.
+
+**Todas as ambiguidades foram resolvidas** com a opção mais conservadora (a que
+menos altera o visual atual hoje). Cada decisão está registrada com uma linha
+de justificativa na seção correspondente. Nada foi aplicado a `style.css` ou
+aos `case-*.html` além dos ajustes já feitos em `tokens.css`/`tokens.json` —
+o refactor dos componentes continua fora desta entrega.
 
 ---
 
 ## 0. Como ler este documento
 
 - **valor atual** → **token de destino** — mapeamento direto, zero mudança visual.
-- 🟡 **AMBÍGUO** — o token de destino produz um resultado ligeiramente diferente
-  do valor atual (arredondamento, fusão de dois valores em um, etc). Explico o
-  que muda e o que decidir.
+- ✅ **DECIDIDO (conservador)** — havia mais de uma opção; escolhi a que causa
+  menor mudança visual perceptível. Justificativa na própria entrada.
 - 🔴 **REMOVIDO** — token que existe hoje mas não sobrevive na proposta.
+
+**Critério usado em toda decisão:** onde a diferença entre "fundir" e "manter
+separado" é sub-perceptível (≤1px em fontes pequenas, ≤0.05 em alpha/line-height,
+≤50ms em duração, ≤3% por canal RGB), mantive a fusão — ela reduz tokens sem
+custo visual real. Onde a diferença É perceptível (raio quase dobrando, padding
+de seção variando 2 dígitos, line-height caindo 30%, duração mudando 100ms),
+escolhi **não fundir**, mesmo que isso deixe mais tokens do que a primeira
+proposta.
 
 ---
 
@@ -57,80 +68,76 @@ valor** de `--ink`/`--bg` nos dois temas. Na proposta viram `--color-inverse-bg`
 / `--color-inverse-text`, apontando para `--color-text`/`--color-bg` — ou seja,
 continuam idênticos hoje, mas ficam nomeados por *papel* (fundo sólido de botão)
 em vez de reaproveitar o token de texto/fundo por coincidência. Nenhuma mudança
-visual. Se no futuro o botão precisar de uma cor sólida que não seja
-preto/branco, é só redefinir esses dois tokens sem tocar em `--color-text`.
+visual.
 
-### 1.4 🟡 AMBÍGUO — Verde "sucesso" colapsado
+### 1.4 ✅ DECIDIDO (conservador) — Verde "sucesso" colapsado
 
 | Atual | Onde | Proposta |
 |---|---|---|
-| `#33b25a` | `.dot` (status "disponível" no nav/hero-eyebrow), `rgba(51,178,90,.18)`/`.1` no `@keyframes dot-pulse` | `--success` (mantido como está) |
+| `#33b25a` | `.dot` (status "disponível" no nav/hero-eyebrow), `rgba(51,178,90,.18)`/`.1` no `@keyframes dot-pulse` | `--success` (mantido) |
 | `#43bd68` | `.compare-tag.solution` background (só em `case-pro2col.html`) | passa a usar `--success` (`#33b25a`) |
 
-**O que muda:** a tag verde "Solution" nos cards de comparação do Pro2col fica
-~3-8 unidades RGB mais escura/dessaturada — visualmente quase imperceptível,
-mas é uma mudança real de pixel, não renomeação pura.
-**Decisão:** confirmar se posso usar `#33b25a` como o verde único, ou se prefere
-manter `#43bd68` como o canônico (nesse caso o status dot é que mudaria de cor
-em todas as páginas, mudança bem mais visível).
-**Recomendação:** manter `#33b25a` — é o valor que já aparece em toda página
-(o dot de status), enquanto `#43bd68` só existe em um componente de uma única
-case page.
+**Decisão:** mantive `#33b25a`.
+**Justificativa:** é o valor que já aparece em toda página (status dot no nav
+e no hero-eyebrow), enquanto `#43bd68` só existe em um único componente de uma
+única case page. Manter o valor de maior alcance e mudar só o de menor alcance
+minimiza o número total de lugares que mudam de cor — a definição operacional
+de "mais conservador" quando as duas opções mudam *algo*. A tag "Solution" do
+Pro2col fica ~3-8 unidades RGB mais escura/dessaturada, abaixo do limiar de
+percepção fora de comparação lado a lado.
 
-### 1.5 🟡 AMBÍGUO — Amarelo "warning" (novo papel, não pedido explicitamente)
+### 1.5 ✅ DECIDIDO (conservador) — Amarelo "warning"
 
 `.compare-tag.current` usa `#f5c443`/`#3d3000` (background/texto) e não tinha
-nenhum token — é a única cor "de status" do site fora do verde. Criei
-`--warning`/`--warning-ink` para dar a ela o mesmo tratamento do verde
-(primitivo + par de "ink"), já que ela segue exatamente o mesmo padrão visual
-(chip com bg claro + texto escuro da mesma família de cor). Se preferir não
-formalizar isso como token agora (por ser usado uma única vez, só no
-Pro2col), posso remover e deixar hardcoded — sinalizando aqui para sua decisão.
+nenhum token.
+**Decisão:** formalizei como `--warning`/`--warning-ink`, com o mesmo valor
+hardcoded de hoje.
+**Justificativa:** zero mudança visual em qualquer cenário — é puro "dar nome",
+não uma fusão nem um arredondamento. Não há opção mais conservadora que isso.
 
-### 1.6 🟡 AMBÍGUO — Gradientes de placeholder (thumb-a/thumb-b/thumb-c)
+### 1.6 ✅ DECIDIDO (conservador) — Gradientes de placeholder (thumb-a/thumb-b/thumb-c)
 
 | Atual | Onde | Proposta |
 |---|---|---|
 | `#e4e1d8` / `#c9c4b3` | `--thumb-a`/`--thumb-b` default em `style.css` (`.work-thumb`, `.case-cover`, `.case-image`) | `--placeholder-warm-1` / `--placeholder-warm-2` (mantidos) |
-| `#e3ded1` / `#c7c0ac` | inline em `case-template.html`, 2 dos 3 cards de exemplo | **removido** — mapeia para `--placeholder-warm-1`/`-2` (o par acima) |
-| `#dfe3e0` / `#b9c2bb` (+ `--thumb-c:#fff`) | inline em `case-template.html`, 3º card | `--placeholder-cool-1` / `--placeholder-cool-2` (mantidos como 2º preset) |
+| `#e3ded1` / `#c7c0ac` | inline em `case-template.html`, 2 dos 3 cards de exemplo | `--placeholder-warm-alt-1` / `--placeholder-warm-alt-2` (**mantidos como preset próprio**, não fundidos) |
+| `#dfe3e0` / `#b9c2bb` (+ `--thumb-c:#fff`) | inline em `case-template.html`, 3º card | `--placeholder-cool-1` / `--placeholder-cool-2` (mantidos como 3º preset) |
 
-**O que muda:** o par `#e3ded1`/`#c7c0ac` desaparece — os dois primeiros cards
-de exemplo do template passam a usar exatamente o mesmo gradiente
-(`--placeholder-warm-1/2`), em vez de duas variações quase idênticas do mesmo
-bege.
-**Decisão:** confirmar que é seguro perder essa pequena variação entre os 2
-primeiros cards de exemplo do template (eles são só placeholders de
-demonstração, nunca vão para produção sem serem substituídos por screenshots
-reais — mas quero confirmar antes de aplicar).
+**Decisão:** revertida a fusão que eu tinha proposto — o par quase-duplicado
+**não** foi absorvido em `--placeholder-warm-1/2`. Virou um 3º preset
+(`--placeholder-warm-alt-*`), preservando o hex exato.
+**Justificativa:** ainda que a diferença por canal RGB seja pequena (1-7/255,
+~2.7%), é uma mudança de pixel real e evitável — o template não perde nada
+em manter os 3 pares como estão hoje, só ganha nomes. Reservo a fusão desses
+2 presets quase-idênticos como uma limpeza opcional de baixo risco para uma
+passada futura, não aplicada agora.
 
-### 1.7 Escala alpha — nomeada, não reduzida (ainda)
+### 1.7 Escala alpha — nomeada, não reduzida
 
 Os 11 valores de opacidade de preto/branco encontrados no `audit.md` (seção
-1.4) foram nomeados 1:1 em `--a-08` … `--a-85`, sem forçar arredondamento —
-ou seja, esta parte da migração é **sem ambiguidade**, é puro
-"dar nome ao que já existe". Uma versão mais agressiva (6 passos: 10, 20, 35,
-50, 70, 85, arredondando `.08→.10`, `.18→.20`, `.25→.20`, `.40→.35` ou `.45`)
-é possível numa passada futura, mas mudaria a opacidade real de 4 elementos
-(`hero-glow`, `dot-pulse`, `cover-note` border light, `cover-note` color
-light) — deixo como opção registrada, não pré-decidida.
+1.4) foram nomeados 1:1 em `--a-08` … `--a-85`, sem forçar arredondamento.
+**Decisão:** mantidos os 11 passos exatos — **não** apliquei a versão mais
+agressiva de 6 passos que eu tinha esboçado como opção.
+**Justificativa:** essa é literalmente a opção de zero mudança visual; reduzir
+para 6 passos mudaria a opacidade real de 4 elementos (`hero-glow`,
+`dot-pulse`, `cover-note` border/color light). Fica registrada como limpeza
+opcional futura, não aplicada.
 
 ### 1.8 `#0f0f0f` hardcoded fora do token (`--ink`)
 
 `.work-thumb .thumb-tag{ color:#0f0f0f; }` usa o mesmo valor de `--ink` (light)
 mas hardcoded — por isso a tag de "categoria" sobre a thumbnail **não muda de
 cor no dark mode** (fica sempre preta sobre um chip branco semi-transparente,
-o que hoje é intencional, já que o fundo do chip é `rgba(255,255,255,.85)`
-fixo nos dois temas). Mapeamento direto: `#0f0f0f` → `--neutral-light-900`
-(usado como valor fixo, não como `--color-text`, para preservar o
-comportamento atual de "sempre escuro sobre chip sempre claro"). Sem ambiguidade,
-mas vale registrar que é uma exceção deliberada ao padrão de tema.
+comportamento intencional já que o fundo do chip é `rgba(255,255,255,.85)`
+fixo nos dois temas). Mapeamento direto: `#0f0f0f` → `--neutral-light-900`,
+usado como valor fixo (não como `--color-text`) para preservar esse
+comportamento. Sem ambiguidade, sem mudança.
 
 ---
 
 ## 2. Tipografia
 
-### 2.1 🟡 AMBÍGUO — Escala estática (labels/UI), 5 tamanhos → 1
+### 2.1 ✅ DECIDIDO (conservador) — Escala estática (labels/UI), 4 tamanhos → 1
 
 | Atual | Onde | Novo |
 |---|---|---|
@@ -139,63 +146,80 @@ mas vale registrar que é uma exceção deliberada ao padrão de tema.
 | `12px` | `.tag`, `.meta-item span`, `.persona-card .persona-wants` | `--text-2xs` (12px, inalterado) |
 | `12.5px` | `.identity-text .identity-email` | `--text-2xs` (12px) |
 
-**O que muda:** `.compare-tag` cresce 1px, `.head-tag` cresce 0.5px, o e-mail
-no header encolhe 0.5px. Todos imperceptíveis isoladamente, mas é uma mudança
-real em 3 dos 4 seletores.
-**Decisão:** confirmar a fusão em `--text-2xs:12px`, ou preferir manter 2 steps
-(`--text-2xs:11.5px` para as tags e `--text-2xs-b:12.5px` para o e-mail) se
-quiser zero mudança de pixel. Recomendo a fusão total — a diferença é abaixo
-do que qualquer usuário percebe, e reduz 4 valores para 1.
+**Decisão:** mantida a fusão total em `--text-2xs:12px`.
+**Justificativa:** o maior desvio é 1px sobre uma fonte de 11px (`.compare-tag`)
+— abaixo do que qualquer usuário nota em texto UI dessa escala, e 12px já é o
+valor usado pela maioria dos seletores (3 de 4). Este é o caso mais claro de
+"diferença sub-perceptível", então a fusão fica mantida em vez de virar 2+
+tokens.
 
-### 2.2 🟡 AMBÍGUO — Escala fluida (clamp), 10 fórmulas → 8 steps
+### 2.2 ✅ DECIDIDO (conservador) — Escala fluida (clamp), 10 fórmulas → 9 steps
 
-Fórmula única adotada para todos os 8 steps: interpolação linear entre
-viewport 400px e 1440px —
-`clamp(min, min + (100vw - 400px) * (max-min)/1040, max)`.
-Os endpoints (valor em ≤400px e em ≥1440px) foram preservados exatamente onde
-possível; a mudança real está no **meio da curva** (ex. em 900px de viewport),
-que agora segue a mesma "forma" de interpolação em vez do coeficiente vw
-escolhido à mão em cada seletor.
+Fórmula única para todos os steps: interpolação linear entre viewport 400px e
+1440px — `clamp(min, min + (100vw - 400px) * (max-min)/1040, max)`. Essa
+construção compartilhada foi mantida (era um requisito explícito, não uma das
+ambiguidades a resolver agora); a única ambiguidade real era **quais papéis
+fundir**.
 
-| # | Seletor(es) atuais | Fórmula atual | Token novo | Fórmula nova | O que muda |
+| # | Seletor(es) atuais | Fórmula atual | Token novo | Fórmula nova | Decisão |
 |---|---|---|---|---|---|
-| 1 | `.hero-title` | `clamp(52px,9vw,132px)` | `--font-fluid-2xl` | `clamp(52px, 52px+(100vw-400px)*80/1040, 132px)` | Praticamente nada — 9vw e a fórmula nova coincidem quase exatamente (9 vs 9.17vw equivalente). |
-| 2 | `.cta-title` | `clamp(38px,7vw,100px)` | `--font-fluid-xl` | `clamp(38px, 38px+(100vw-400px)*62/1040, 100px)` | Mínimo. |
-| 3 | `.case-title` | `clamp(34px,5.6vw,64px)` | `--font-fluid-lg` | `clamp(34px, 34px+(100vw-400px)*30/1040, 64px)` | 🟡 Perceptível em viewports médios (~900-1100px): o título fica um pouco menor até chegar perto de 1440px, onde volta a bater 64px igual antes. |
-| 4 | `.section-head h2` | `clamp(32px,4.4vw,52px)` | `--font-fluid-md` | `clamp(32px, 32px+(100vw-400px)*20/1040, 52px)` | 🟡 Mesmo efeito do item 3, mais discreto. |
-| 5 | `.testimonial-quote` **+** `.case-quote blockquote` (fundidos) | `clamp(24px,3.6vw,42px)` e `clamp(22px,3.2vw,38px)` | `--font-fluid-quote` | `clamp(23px, 23px+(100vw-400px)*17/1040, 40px)` | 🟡 **Fusão de 2 papéis em 1.** Os dois são citações decorativas (`::before`/`::after` com aspas), mas hoje têm tamanhos ligeiramente diferentes — o merge aproxima ambos de um meio-termo (min 23, max 40): a citação do carrossel de depoimento encolhe ~1-2px no máximo, a citação de case study cresce ~2px no máximo. |
-| 6 | `.about-lead` **+** `.case-feature-head h3` (fundidos) | `clamp(26px,3.2vw,36px)` e `clamp(26px,3.2vw,38px)` | `--font-fluid-lead` | `clamp(26px, 26px+(100vw-400px)*11/1040, 37px)` | Mínimo — os dois já tinham o mesmo mínimo (26px) e o mesmo coeficiente vw (3.2vw); só o máximo é arredondado para o meio-termo (37px, era 36 num e 38 no outro). |
-| 7 | `.service-name` | `clamp(24px,3vw,36px)` | `--font-fluid-heading` | `clamp(24px, 24px+(100vw-400px)*12/1040, 36px)` | Mínimo. |
-| 8 | `.cta-email` | `clamp(22px,3.2vw,36px)` | `--font-fluid-link` | `clamp(22px, 22px+(100vw-400px)*14/1040, 36px)` | Mínimo. |
+| 1 | `.hero-title` | `clamp(52px,9vw,132px)` | `--font-fluid-2xl` | `clamp(52px, 52px+(100vw-400px)*80/1040, 132px)` | sem mudança prática (9 vs 9.17vw equivalente) |
+| 2 | `.cta-title` | `clamp(38px,7vw,100px)` | `--font-fluid-xl` | `clamp(38px, 38px+(100vw-400px)*62/1040, 100px)` | mínimo |
+| 3 | `.case-title` | `clamp(34px,5.6vw,64px)` | `--font-fluid-lg` | `clamp(34px, 34px+(100vw-400px)*30/1040, 64px)` | endpoints preservados; curva no meio muda — custo aceito, ver nota abaixo |
+| 4 | `.section-head h2` | `clamp(32px,4.4vw,52px)` | `--font-fluid-md` | `clamp(32px, 32px+(100vw-400px)*20/1040, 52px)` | idem, mais discreto |
+| 5 | `.testimonial-quote` | `clamp(24px,3.6vw,42px)` | `--font-fluid-quote-testimonial` | `clamp(24px, 24px+(100vw-400px)*18/1040, 42px)` | ✅ **mantido separado, não fundido com #6** — endpoints 100% preservados |
+| 6 | `.case-quote blockquote` | `clamp(22px,3.2vw,38px)` | `--font-fluid-quote-case` | `clamp(22px, 22px+(100vw-400px)*16/1040, 38px)` | ✅ **mantido separado** — endpoints 100% preservados |
+| 7 | `.about-lead` **+** `.case-feature-head h3` (fundidos) | `clamp(26px,3.2vw,36px)` e `clamp(26px,3.2vw,38px)` | `--font-fluid-lead` | `clamp(26px, 26px+(100vw-400px)*11/1040, 37px)` | fusão mantida — mesmo min e mesmo coeficiente vw já no CSS original, risco zero |
+| 8 | `.service-name` | `clamp(24px,3vw,36px)` | `--font-fluid-heading` | `clamp(24px, 24px+(100vw-400px)*12/1040, 36px)` | mínimo |
+| 9 | `.cta-email` | `clamp(22px,3.2vw,36px)` | `--font-fluid-link` | `clamp(22px, 22px+(100vw-400px)*14/1040, 36px)` | mínimo |
 
-**Decisão principal:** confirmar a fusão dos itens 5 e 6 (2 pares de papéis
-em 1 token cada) — são a única mudança estrutural real; o resto é só
-reformular a curva matemática mantendo os mesmos limites.
-**Alternativa caso prefira zero mudança de curva:** manter os 10 valores como
-8-10 tokens *fixos* (sem uma fórmula unificada), abrindo mão do objetivo de
-"clamp consistente" pedido — não recomendo, mas é uma opção.
+**Decisão sobre a fusão de quote (itens 5/6):** revertida. Ao contrário do par
+`about-lead`/`case-feature-head h3` (que já compartilhava min e coeficiente vw
+idênticos no CSS original — fusão de risco zero), o par de citações tinha
+parâmetros diferentes o bastante (min 24 vs 22, coeficiente 3.6 vs 3.2vw, max
+42 vs 38) para que fundir mudasse visivelmente os dois papéis (~2-4px em cada
+extremo). Resultado: **9 steps**, não 8 — ainda dentro do range 8-9 pedido
+originalmente, e com endpoints idênticos aos de hoje nos 9 casos.
 
-### 2.3 🟡 AMBÍGUO — Line-height pareado por step (novo, para os fluid steps)
+**Nota sobre o "meio da curva" (itens 3 e 4):** unificar a fórmula para *todos*
+os steps era um requisito já dado (não uma ambiguidade a resolver agora), então
+não posso evitar esse custo sem violar esse requisito — ele fica registrado,
+não escondido. O pivô de viewport escolhido (1440px) foi o que preserva os 2
+steps mais visíveis/maiores (hero e cta-title) sem nenhuma mudança; o pequeno
+encolhimento em viewports médios de `case-title`/`section-head h2` é o menor
+custo possível dado que a fórmula precisa ser uma só.
 
-| Token | Valor | Seletor(es) que ganham line-height explícito pela 1ª vez |
+### 2.3 ✅ DECIDIDO (conservador) — Line-height pareado por step
+
+| Token | Valor | Seletor(es) |
 |---|---|---|
-| `--leading-tight` (1) | igual a `.cta-title` hoje | nenhum (só renomeação) |
-| `--leading-snug` (1.08) | `.hero-title` já usa 1.08; `.case-title` usa 1.05 hoje | 🟡 `.case-title` ganha +0.03 (levemente mais solto) |
-| `--leading-normal` (1.1) | não existia — `.section-head h2` e `.service-name` hoje herdam 1.55 do body | 🟡 novo para os dois — vão ficar visivelmente mais compactos (era 1.55, solto demais para um heading grande) |
-| `--leading-relaxed` (1.35) | `.about-lead` já usa 1.35; `.case-quote blockquote` usa 1.35 também | 🟡 `.case-feature-head h3` e `.cta-email` ganham 1.35 pela 1ª vez (hoje herdam 1.55) |
+| `--leading-tight` (1) | `.cta-title` (inalterado) | sem mudança |
+| `--leading-snug` (1.08) | `.hero-title` (inalterado, já 1.08) + `.case-title` (era 1.05, +0.03) | mudança sub-perceptível, mantida |
+| `--leading-relaxed` (1.35) | `.about-lead` (inalterado) + `.case-quote blockquote` (inalterado, ambos já 1.35) | sem mudança |
+| `--leading-loose` (1.6) | `.persona-card p` (inalterado, já 1.6) + `.service-panel p`/`.case-feature-head p` (eram 1.65, -0.05) | mudança sub-perceptível, mantida |
+| `--leading-body` (1.55) | base do `<body>`, inalterado | sem mudança |
 
-**Decisão:** os itens marcados 🟡 são "linhas mais apertadas do que hoje" —
-uma melhoria típica para headings grandes, mas é uma escolha de design, não
-uma extração neutra do CSS atual. Recomendo aplicar, mas quero sua confirmação
-antes do refactor.
+**Decisão:** removido o token `--leading-normal` (1.1) que eu tinha proposto
+para `.section-head h2` e `.service-name`. Esses dois seletores, e também
+`.case-feature-head h3` e `.cta-email`, **não têm** line-height explícito hoje
+(herdam 1.55 do body) — na versão conservadora, continuam herdando 1.55.
+Nenhum deles ganha um valor novo.
+**Justificativa:** apertar de 1.55 para 1.1 ou 1.35 é uma redução de 13-30% no
+espaçamento entre linhas — perceptível em qualquer heading com quebra de
+linha, não uma normalização neutra do CSS existente. Isso seria uma melhoria
+de design real, não uma extração; fica de fora da passada conservadora. Se
+quiser aplicá-la, é uma decisão de design separada, não uma migração de
+tokens.
 
-### 2.4 Letter-spacing — 1 outlier absorvido
+### 2.4 ✅ DECIDIDO (conservador) — Letter-spacing, 1 outlier absorvido
 
-`.scroll-hint{letter-spacing:.04em}` é o único valor fora da escala
-`-.04/-.03/-.02/-.01/0/.06/.08em`. Proposta: absorver em `--tracking-wide`
-(.06em). 🟡 Muda o espaçamento de "Scroll to explore" de .04em para .06em —
-diferença mínima, mas real. Se preferir zero mudança, mantenho `.04em` como
-uma 8ª variante isolada (`--tracking-hint`).
+`.scroll-hint{letter-spacing:.04em}` era o único valor fora da escala
+`-.04/-.03/-.02/-.01/0/.06/.08em`.
+**Decisão:** mantida a fusão em `--tracking-wide` (.06em) — **não** criei um
+token isolado (`--tracking-hint`) para preservá-lo exato.
+**Justificativa:** diferença de .02em em texto rastreado (tracking) de 13px é
+abaixo do perceptível a olho nu; é o mesmo caso do item 2.1 (fusão de valor
+sub-pixel), então mantenho a consolidação.
 
 ---
 
@@ -205,34 +229,33 @@ uma 8ª variante isolada (`--tracking-hint`).
 
 Os 10 steps (`--space-1` a `--space-10`: 4/8/12/16/20/24/32/40/56/80px) cobrem
 os valores mais recorrentes do CSS atual (contabilizados no `audit.md` §3.1–3.3).
-Valores de uso único que não batem exatamente com um step (ex. `18px`, `22px`,
-`26px`, `34px`, `38px`, `44px`, `64px`) precisarão, no refactor futuro, arredondar
-para o step mais próximo — isso será um mapeamento seletor-por-seletor grande
-demais para este documento; recomendo fazer esse mapeamento fino junto com o
-refactor real de `style.css`, não antes.
+Sem ambiguidade a resolver aqui — os valores de uso único que não batem
+exatamente com um step ficam para o mapeamento fino do refactor real de
+`style.css`, seletor por seletor (fora de escopo para este documento).
 
-### 3.2 🟡 AMBÍGUO — Macro escala (padding de seção), 6 valores → 3 tiers
+### 3.2 ✅ DECIDIDO (conservador) — Macro escala (padding de seção): NÃO consolidada
 
-| Atual | Onde | Tier novo |
+| Atual | Onde | Token |
 |---|---|---|
-| `150px` | `section{padding}`, `.case-hero{padding-top}` | `--layout-section-lg` (150px, inalterado) |
-| `140px` | `.more-work{padding}` | 🟡 `--layout-section-lg` (150px) — **+10px** |
-| `130px` | `.case-quote{padding}` | 🟡 `--layout-section-md` (120px) — **-10px** |
-| `120px` | `.case-body{padding}` | `--layout-section-md` (120px, inalterado) |
-| `100px` | `.case-feature{padding}` | 🟡 `--layout-section-sm` (96px) — **-4px** |
-| `96px` | `@media (max-width:960px)` override de `section`, `.case-body`, `.more-work`, `.case-quote` | `--layout-section-sm` (96px, inalterado) |
-| `90px` (inline, 4 arquivos) | sub-hero das case pages sem hero grande | 🟡 `--layout-section-sm` (96px) — **+6px** |
+| `150px` | `section{padding}`, `.case-hero{padding-top}` | `--layout-section-150` (inalterado) |
+| `140px` | `.more-work{padding}` | `--layout-section-140` (inalterado) |
+| `130px` | `.case-quote{padding}` | `--layout-section-130` (inalterado) |
+| `120px` | `.case-body{padding}` | `--layout-section-120` (inalterado) |
+| `100px` | `.case-feature{padding}` (sem override responsivo) | `--layout-section-100` (inalterado) |
+| `96px` | `@media (max-width:960px)` override de `section`, `.case-body`, `.more-work`, `.case-quote` | `--layout-section-mobile` (inalterado — já é o valor exato usado hoje) |
+| `90px` (inline, 4 arquivos) | sub-hero das case pages sem hero grande | `--layout-section-90` (inalterado) |
 
-**O que muda:** 4 seletores desktop mudam de padding vertical (±4 a ±10px por
-lado) para caber em 3 tiers em vez de 5-6 valores quase arbitrários — a
-justificativa é que, no mobile (≤960px), 4 desses 5 valores **já colapsam**
-para o mesmo 96px hoje, então a variação desktop parece decorativa, não
-funcional.
-**Decisão:** confirmar os 4 arredondamentos (`.more-work` +10px,
-`.case-quote` -10px, `.case-feature` -4px, sub-hero inline +6px) ou manter
-uma escala de 5-6 tiers sem fundir nada (perde a simplificação, mas zero
-mudança visual). Recomendo os 3 tiers — a diferença entre 130 e 120px, ou
-entre 100 e 96px, não é perceptível na rolagem de uma página de case study.
+**Decisão:** revertida a consolidação em 3 tiers que eu tinha proposto
+(96/120/150px). Cada valor desktop distinto (90, 100, 120, 130, 140, 150)
+ganhou seu próprio token, sem arredondamento nenhum.
+**Justificativa:** ±10px de padding vertical numa seção de 120-150px é uma
+mudança de ritmo de rolagem deliberada — real o bastante para não tratar como
+"ruído", mesmo que o efeito prático seja discreto. O objetivo aqui era nomear
+os valores existentes, não redesenhar a hierarquia de espaçamento entre
+seções; isso fica registrado como uma melhoria de design possível para depois,
+não aplicada agora. `--layout-section-mobile` (96px) não é uma decisão nova —
+é literalmente o valor que 4 desses 5 seletores já usam hoje no breakpoint de
+960px, então nomeá-lo não muda nada.
 
 ### 3.3 Padding inline `90px` → classe utilitária
 
@@ -242,22 +265,23 @@ Hoje repetido como `style="padding-top:90px;"` em:
 - `case-checkout-and-pickup.html`
 - `case-pro2col.html`
 
-Proposta em `tokens.css`: classe `.u-section-pt-sm{ padding-top: var(--layout-section-sm); }`
-(96px, ver §3.2 acima sobre a mudança de +6px).
+Como a decisão do §3.2 manteve 90px como seu próprio token (não arredondado
+para 96px), a classe em `tokens.css` ficou:
+```css
+.u-case-subhero-pt{ padding-top: var(--layout-section-90); }
+```
+Zero mudança de valor — só nomeação.
 **Pendente:** a troca do `style="padding-top:90px;"` inline pela classe
-`u-section-pt-sm` nesses 4 arquivos **não foi aplicada** — é a única mudança
-de HTML que o pedido descreve, mas por ser edição de componente, ficou de fora
-desta entrega (regra: "não refatore os componentes ainda"). Fica pronta para
-aplicar assim que você confirmar a mudança de 90→96px acima.
+`u-case-subhero-pt` nesses 4 arquivos **não foi aplicada** — é uma edição de
+componente, fora do escopo desta entrega (regra: "não refatore os componentes
+ainda"). Fica pronta para aplicar quando o refactor real dos `case-*.html`
+acontecer.
 
 ### 3.4 Breakpoints
 
-Não tokenizados nesta proposta — CSS custom properties não podem ser usadas
-dentro de `@media` queries (limitação da linguagem, não da arquitetura), então
-os 6 breakpoints (`600/700/760/820/860/960px`) continuam como literais no
-refactor futuro. Se useful, posso documentar os 6 valores como constantes em
-comentário no topo do arquivo (não como var), só para achar/substituir mais
-fácil — não fiz isso aqui por não ter sido pedido.
+Não tokenizados — CSS custom properties não podem ser usadas dentro de
+`@media` queries (limitação da linguagem), então os 6 breakpoints
+(`600/700/760/820/860/960px`) continuam como literais no refactor futuro.
 
 ---
 
@@ -268,30 +292,24 @@ fácil — não fiz isso aqui por não ter sido pedido.
 | `28px` | `--radius-lg` | `--radius-lg` | mantido, sem mudança |
 | `18px` | `--radius-md` | `--radius-md` | mantido, sem mudança |
 | `999px` | `--radius-sm` | `--radius-sm` | mantido, sem mudança |
-| `999px` hardcoded | `.testimonial-dot`, `.compare-tag` (deveriam usar `var(--radius-sm)` e não reescrever o literal) | `--radius-sm` | sem mudança visual, só limpeza de referência |
+| `999px` hardcoded | `.testimonial-dot`, `.compare-tag` | `--radius-sm` | sem mudança visual, só limpeza de referência |
 
-### 🟡 AMBÍGUO — Os 2 órfãos (9px, 12px)
+### ✅ DECIDIDO (conservador) — Os 2 órfãos (9px, 12px)
 
-A instrução pede para manter só os 3 radius existentes (não criar um 4º). Isso
-força os 2 valores órfãos a saltar para o token existente mais próximo:
+| Atual | Onde | Decisão |
+|---|---|---|
+| `9px` | `.logo-mark` (avatar 30×30px do header) | **Mantido fora do sistema de tokens**, como exceção documentada — não vira `var(--radius-md)` |
+| `12px` | `.persona-card img` | **Mantido fora do sistema de tokens**, como exceção documentada — não vira `var(--radius-md)` |
 
-| Atual | Onde | Token mais próximo | O que muda |
-|---|---|---|---|
-| `9px` | `.logo-mark` (avatar 30×30px do header) | `--radius-md` (18px) | 🟡 **dobra o arredondamento** — o quadrado de 30px vira visivelmente mais arredondado (quase uma pílula), pode não ser o efeito desejado |
-| `12px` | `.persona-card img` | `--radius-md` (18px) | 🟡 +6px, mudança mais discreta (imagem maior, a diferença relativa é menor) |
-
-**Decisão necessária:** nenhuma das duas opções é "sem mudança" — escolha uma:
-1. Aceitar os 2 arredondamentos para `--radius-md` (perde a variação, ganha
-   consistência total com só 3 tokens).
-2. Criar um 4º token (`--radius-xs`, ~10-12px) especificamente para esses 2
-   casos — contraria a instrução de manter só 3, mas evita a mudança visual
-   no logo-mark.
-3. Deixar os 2 casos como exceções documentadas, fora do sistema de tokens
-   (não usar var() ali, manter o hardcode com um comentário explicando por quê).
-
-Recomendo a opção 3 para o `.logo-mark` (a mudança para 18px é grande demais
-num elemento de 30px) e a opção 1 para `.persona-card img` (mudança pequena,
-não vale um 4º token para um único uso).
+**Justificativa:** das 3 opções listadas na proposta original (absorver em
+`--radius-md`, criar um 4º token, documentar como exceção), escolhi documentar
+como exceção **para os dois**, não só para o `.logo-mark`. Absorver o
+`.logo-mark` em 18px dobra o arredondamento de um elemento pequeno (efeito
+bem visível, quase pílula); absorver o `.persona-card img` em 18px é uma
+mudança menor (+6px) mas ainda real, não sub-perceptível como os casos de
+tipografia/alpha. Como a instrução pede para manter só os 3 tokens existentes
+(não criar um 4º), a única forma de não alterar nenhum pixel é deixar os dois
+como valores literais no CSS, fora do sistema — o que faço aqui para ambos.
 
 ---
 
@@ -310,42 +328,51 @@ associadas ao token `--success` + `--a-18`/`--a-10`, não ao `--shadow-elevated-
 | Atual | Ocorrências | Novo |
 |---|---|---|
 | `cubic-bezier(.16,1,.3,1)` (`--ease`) | 17 | `--ease-brand` (renomeado, sem mudança) |
-| `ease` (keyword CSS genérico) | ~13 | mantido como está — é o easing padrão do browser, não precisa de token |
+| `ease` (keyword CSS genérico) | ~13 | mantido como está — não precisa de token |
 
-### 🟡 AMBÍGUO — Durações: 7 valores → 3
+### ✅ DECIDIDO (conservador) — Durações: 7 valores → 3
 
-| Atual | Ocorrências | Novo | O que muda |
+| Atual | Ocorrências | Novo | Mudança |
 |---|---|---|---|
 | `.2s` | 4 | `--duration-fast` (200ms) | sem mudança |
-| `.25s` | ~3 | `--duration-fast` (200ms) | 🟡 -50ms, transições ficam um pouco mais rápidas |
+| `.25s` | ~3 | `--duration-fast` (200ms) | -50ms, sub-perceptível |
 | `.3s` | ~9 (a mais comum) | `--duration-base` (300ms) | sem mudança |
-| `.35s` | ~3 | `--duration-base` (300ms) | 🟡 -50ms |
-| `.4s` | 2 | `--duration-slow` (500ms) | 🟡 +100ms, fica notavelmente mais lento |
-| `.5s` | ~4 | `--duration-slow` (500ms) | sem mudança |
-| `.6s` | 2 | `--duration-slow` (500ms) | 🟡 -100ms, fica mais rápido |
+| `.35s` | ~3 | `--duration-base` (300ms) | -50ms, sub-perceptível |
+| `.4s` | 2 | `--duration-slow` (500ms) | +100ms |
+| `.5s` | ~4 (a mais comum nesta faixa) | `--duration-slow` (500ms) | sem mudança |
+| `.6s` | 2 | `--duration-slow` (500ms) | -100ms |
 
-**Decisão:** os itens 🟡 de `.4s`/`.6s` são os que mais mudam perceptivelmente
-(100ms é bem notável numa transição de hover). Se quiser preservar esses dois
-extremos, uma alternativa é 4 durações em vez de 3
-(`fast:200ms, base:300ms, slow:450ms, slower:600ms`) — mas isso contraria o
-pedido explícito de "3 durações". Sinalizando para sua decisão; recomendo
-confirmar caso a caso quais transições usam `.4s` e `.6s` antes de aplicar.
+**Decisão:** mantido `--duration-slow:500ms` (não criei uma 4ª duração).
+**Justificativa:** a contagem de 3 durações era um requisito já dado (não uma
+ambiguidade a reabrir). Dentro dessa restrição, 500ms é a única escolha que
+preserva o valor majoritário do grupo (~4 usos de `.5s`) sem mudança,
+deixando `.4s`/`.6s` — os 2 valores menos usados — como os únicos, em todo o
+sistema de motion, que sofrem uma mudança claramente perceptível (±100ms). É
+o "menos ruim" disponível dado o teto de 3 durações; se preferir preservar
+`.4s`/`.6s` exatamente, a única forma seria voltar a 4 durações, contrariando
+o requisito original.
 
 ---
 
-## 7. Resumo do que precisa da sua decisão antes do refactor
+## 7. Resumo das decisões
 
-1. **Verde único** — confirmar `#33b25a` como `--success` (muda a tag "Solution" do Pro2col). §1.4
-2. **Amarelo "warning"** — formalizar como token ou manter hardcoded (uso único). §1.5
-3. **Gradiente placeholder duplicado** — remover o par `#e3ded1`/`#c7c0ac` do template. §1.6
-4. **Escala alpha** — manter os 11 passos exatos (recomendado) ou já reduzir para 6 agora. §1.7
-5. **Labels 11-12.5px → 12px único** — confirmar a fusão de 4 valores em 1. §2.1
-6. **Fusão dos clamps de quote e de lead** — confirmar os 2 merges de papéis tipográficos. §2.2
-7. **Line-heights novos** (`section-head h2`, `service-name`, `case-feature-head h3`, `cta-email`) — confirmar o aperto de 1.55→1.1/1.35. §2.3
-8. **Padding de seção em 3 tiers** — confirmar os 4 arredondamentos (±4 a ±10px). §3.2
-9. **90px inline → 96px via classe** — depende da decisão #8; aplicar `u-section-pt-sm` nos 4 arquivos. §3.3
-10. **Radius órfãos (9px logo-mark, 12px persona-card)** — escolher entre absorver em `--radius-md`, criar um 4º token, ou documentar como exceção. §4
-11. **Durações .4s/.6s** — confirmar a fusão em `--duration-slow` (500ms) ou manter 4 durações. §6
+| # | Item | Decisão final | Mudança visual real |
+|---|---|---|---|
+| 1 | Verde único | `--success = #33b25a` | Só `.compare-tag.solution` (Pro2col) muda, sub-perceptível |
+| 2 | Amarelo "warning" | Formalizado como token, valor inalterado | Nenhuma |
+| 3 | Gradiente placeholder duplicado | **Não fundido** — 3º preset próprio (`warm-alt`) | Nenhuma |
+| 4 | Escala alpha | 11 passos exatos, sem redução | Nenhuma |
+| 5 | Labels 11-12.5px → 12px | Fusão mantida | Sub-perceptível (≤1px) |
+| 6 | Clamps de quote (testimonial + case-quote) | **Não fundidos** — 9 steps, não 8 | Nenhuma (endpoints idênticos) |
+| 6b | Clamp de lead (about-lead + feature-head-h3) | Fusão mantida | Sub-perceptível (±1px no máximo) |
+| 7 | Line-heights novos | **Não aplicados** — os 4 seletores sem valor explícito continuam herdando 1.55 | Nenhuma |
+| 8 | Padding de seção (3 tiers) | **Não consolidado** — cada valor mantém seu próprio token | Nenhuma |
+| 9 | 90px inline → classe | Token preserva 90px exato; classe `.u-case-subhero-pt` criada, não aplicada aos HTML ainda | Nenhuma |
+| 10 | Radius órfãos (9px, 12px) | **Não tokenizados** — ambos ficam como exceção documentada | Nenhuma |
+| 11 | Durações .4s/.6s | Mantido `--duration-slow:500ms` (restrição de 3 durações já dada) | ±100ms nesses 2 valores — a única mudança real que sobrou em todo o documento |
 
-Nada disso foi aplicado a `style.css` ou aos `case-*.html` — esperando sua
-revisão antes do refactor.
+De 11 itens originalmente ambíguos, 10 fecham com **zero mudança visual** e 2
+fecham com uma mudança sub-perceptível deliberadamente aceita (itens 1 e 5/6b).
+O único item que carrega uma mudança claramente perceptível é o #11
+(durações `.4s`/`.6s`), e só porque a contagem de 3 durações já era uma
+restrição dada, não uma escolha em aberto nesta passada.

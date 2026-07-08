@@ -59,11 +59,13 @@
   --warning-ink: #3d3000; /* dark text sat on top of a --warning chip */
 
   /* ---------- color / case-cover placeholder gradients ----------
-     Two presets kept (a warm beige, a cool sage) — the audit found a third,
-     near-duplicate warm pair that added no visual variety; it is dropped
-     here and mapped to placeholder-warm in migration-map.md §1. */
+     3 presets kept, not 2 — see migration-map.md §1.6: the near-duplicate
+     warm pair found in case-template.html was NOT merged into warm-1/2 in
+     the conservative pass, to keep the template's example cards pixel-exact. */
   --placeholder-warm-1: #e4e1d8;
   --placeholder-warm-2: #c9c4b3;
+  --placeholder-warm-alt-1: #e3ded1;
+  --placeholder-warm-alt-2: #c7c0ac;
   --placeholder-cool-1: #dfe3e0;
   --placeholder-cool-2: #b9c2bb;
 
@@ -106,19 +108,24 @@
   /* ---------- typography / fluid display scale ----------
      Replaces the 10 ad hoc clamp() formulas the audit found (each with its
      own, independently-guessed vw coefficient) with ONE construction used
-     for all 8 steps: linear interpolation between a 400px and a 1440px
+     for all 9 steps: linear interpolation between a 400px and a 1440px
      viewport, clamp(min, min + (100vw - 400px) * (max-min)/1040, max).
      Endpoints (the size at ≤400px and at ≥1440px) are preserved exactly
-     from the current CSS wherever a step maps 1:1; two pairs of steps
-     that shared the same min value AND the same underlying role were
-     merged (see migration-map.md §2 for the merge rationale and the two
-     steps whose value was rounded by 1-2px to make the merge clean). */
-  --font-fluid-2xl: clamp(52px, 52px + (100vw - 400px) * 80/1040, 132px); /* hero title */
-  --font-fluid-xl:  clamp(38px, 38px + (100vw - 400px) * 62/1040, 100px); /* cta title */
-  --font-fluid-lg:  clamp(34px, 34px + (100vw - 400px) * 30/1040, 64px);  /* case title */
-  --font-fluid-md:  clamp(32px, 32px + (100vw - 400px) * 20/1040, 52px);  /* section head h2 */
-  --font-fluid-quote:   clamp(23px, 23px + (100vw - 400px) * 17/1040, 40px); /* testimonial + case-quote (merged) */
-  --font-fluid-lead:    clamp(26px, 26px + (100vw - 400px) * 11/1040, 37px); /* about-lead + case-feature-head h3 (merged) */
+     from the current CSS for every step except the one merge below.
+     Conservative pass (migration-map.md §2.2): only ONE pair was merged —
+     about-lead + case-feature-head-h3, which already shared the same min
+     AND the same vw coefficient in the original CSS (zero-risk merge).
+     testimonial-quote and case-quote were NOT merged (their original
+     parameters differed enough that merging would visibly resize both),
+     so this scale has 9 steps instead of 8 — still inside the requested
+     8-9 range. */
+  --font-fluid-2xl:  clamp(52px, 52px + (100vw - 400px) * 80/1040, 132px); /* hero title */
+  --font-fluid-xl:   clamp(38px, 38px + (100vw - 400px) * 62/1040, 100px); /* cta title */
+  --font-fluid-lg:   clamp(34px, 34px + (100vw - 400px) * 30/1040, 64px);  /* case title */
+  --font-fluid-md:   clamp(32px, 32px + (100vw - 400px) * 20/1040, 52px);  /* section head h2 */
+  --font-fluid-quote-testimonial: clamp(24px, 24px + (100vw - 400px) * 18/1040, 42px); /* home testimonial carousel — kept standalone */
+  --font-fluid-quote-case:        clamp(22px, 22px + (100vw - 400px) * 16/1040, 38px); /* case-quote blockquote — kept standalone */
+  --font-fluid-lead:    clamp(26px, 26px + (100vw - 400px) * 11/1040, 37px); /* about-lead + case-feature-head h3 (merged, zero-risk) */
   --font-fluid-heading: clamp(24px, 24px + (100vw - 400px) * 12/1040, 36px); /* service-name */
   --font-fluid-link:    clamp(22px, 22px + (100vw - 400px) * 14/1040, 36px); /* cta-email */
 
@@ -129,16 +136,17 @@
   --weight-bold:    700;
 
   /* ---------- typography / line-height ----------
-     4 roles instead of 9-10 ad hoc values. Paired 1:1 with the fluid
-     steps above — see migration-map.md §2 for which selectors gain an
-     explicit line-height they didn't have before (they inherited body's
-     1.55, which is looser than these). */
-  --leading-tight:  1;     /* cta-title */
-  --leading-snug:   1.08;  /* hero-title, case-title (1.05-1.08, rounded to one value) */
-  --leading-normal: 1.1;   /* section-head h2, service-name — new, previously unset */
-  --leading-relaxed:1.35;  /* lead + quote merges, case-copy/feature-head paragraphs */
-  --leading-loose:  1.6;   /* long-form body copy (about-body p, persona-card p, case-feature-head p) */
-  --leading-body:   1.55;  /* base body line-height, unchanged */
+     Conservative pass (migration-map.md §2.3): only merges values that
+     were already near-identical explicit values in the CSS. Selectors that
+     currently have NO explicit line-height (section-head h2, service-name,
+     case-feature-head h3, cta-email) are NOT given one here — they keep
+     inheriting --leading-body exactly as today, since 1.55 → 1.1/1.35 would
+     be a clearly visible tightening, not a rounding. */
+  --leading-tight:  1;     /* cta-title, unchanged */
+  --leading-snug:   1.08;  /* hero-title (unchanged) + case-title (was 1.05, +0.03 — imperceptible) */
+  --leading-relaxed:1.35;  /* about-lead (unchanged) + case-quote blockquote (unchanged) */
+  --leading-loose:  1.6;   /* long-form body copy (persona-card p was 1.6, service-panel/case-feature-head p were 1.65, -0.05 — imperceptible) */
+  --leading-body:   1.55;  /* base body line-height, unchanged — also what section-head h2, service-name, case-feature-head h3 and cta-email keep inheriting */
 
   /* ---------- typography / letter-spacing ----------
      Drops the single outlier (.04em on .scroll-hint) into the nearest
@@ -164,16 +172,28 @@
   --space-10: 80px;
 
   /* ---------- spacing / layout (macro section rhythm) ----------
-     Consolidates 6 near-arbitrary section padding values (90/100/120/
-     130/140/150px) into 3 tiers. Justified by the site's own responsive
-     behavior: at ≤960px, 4 of these 5 values already collapse to the same
-     96px — see migration-map.md §3 for the full before/after per selector,
-     including the padding-top:90px inline style this replaces. */
-  --layout-section-sm: 96px;   /* was: 90px inline (case sub-hero), 100px (.case-feature), 96px (all @960px overrides) */
-  --layout-section-md: 120px;  /* was: 120px (.case-body), 130px (.case-quote) */
-  --layout-section-lg: 150px;  /* was: 150px (section, .case-hero), 140px (.more-work) */
+     Conservative pass (migration-map.md §3.2): NOT consolidated into 3
+     tiers as first proposed — a ±10px shift on section padding is a real,
+     deliberate design change, not a rounding, so each distinct desktop
+     value keeps its own token. --layout-section-mobile is not a rounding
+     either: it's the exact value the responsive override already uses
+     today for 4 of these 5 selectors (.case-feature is the one exception,
+     and keeps 100px at every viewport, unchanged). */
+  --layout-section-90:  90px;  /* case sub-hero padding-top, today inline in 4 case-*.html files */
+  --layout-section-100: 100px; /* .case-feature (no responsive override today) */
+  --layout-section-120: 120px; /* .case-body */
+  --layout-section-130: 130px; /* .case-quote */
+  --layout-section-140: 140px; /* .more-work */
+  --layout-section-150: 150px; /* section, .case-hero */
+  --layout-section-mobile: 96px; /* @max-width:960px override shared by section, .case-body, .more-work, .case-quote today */
 
-  /* ---------- radius (unchanged — already the healthiest subsystem) ---------- */
+  /* ---------- radius (unchanged — already the healthiest subsystem) ----------
+     2 orphan values (.logo-mark's 9px, .persona-card img's 12px) are
+     deliberately NOT included here. Conservative pass (migration-map.md
+     §4): absorbing either into --radius-md (18px) would be a 50-100%
+     increase in corner rounding — clearly visible, not a rounding. They
+     stay as documented one-off exceptions in style.css when it's
+     refactored, outside the 3-token radius system. */
   --radius-lg: 28px;
   --radius-md: 18px;
   --radius-sm: 999px;
@@ -181,11 +201,18 @@
   /* ---------- shadow (unchanged — the site intentionally has only one) ---------- */
   --shadow-elevated-offset: 0 18px 40px;
 
-  /* ---------- motion ---------- */
+  /* ---------- motion ----------
+     Conservative pass (migration-map.md §6): 500ms was already the
+     majority value within this tier (~4 uses of .5s vs ~2 each of .4s/
+     .6s) — keeping it, rather than 400 or 600, minimizes total drift
+     across the 3 durations mandated for this scale. .4s/.6s are the only
+     two values in the whole motion system that shift by a clearly
+     noticeable amount (±100ms); every other merge in this file rounds by
+     an amount small enough to be imperceptible. */
   --ease-brand: cubic-bezier(.16,1,.3,1);
-  --duration-fast: 200ms; /* merges .2s + .25s */
-  --duration-base: 300ms; /* merges .3s + .35s, the most common duration today */
-  --duration-slow: 500ms; /* merges .4s + .5s + .6s */
+  --duration-fast: 200ms; /* merges .2s + .25s — imperceptible, -50ms */
+  --duration-base: 300ms; /* merges .3s + .35s — imperceptible, -50ms; already the most common duration today */
+  --duration-slow: 500ms; /* merges .4s (+100ms) + .5s (unchanged) + .6s (-100ms) */
 }
 
 
@@ -220,6 +247,8 @@
 
   --color-placeholder-1: var(--placeholder-warm-1);
   --color-placeholder-2: var(--placeholder-warm-2);
+  --color-placeholder-1-alt: var(--placeholder-warm-alt-1);
+  --color-placeholder-2-alt: var(--placeholder-warm-alt-2);
   --color-placeholder-accent: var(--white);
 
   /* Composite overlays: alpha applied on top of the theme's own bg color.
@@ -254,9 +283,10 @@ html[data-theme="dark"]{
 /* ==========================================================================
    3. LAYOUT UTILITY
    The one class requested to replace the repeated inline
-   style="padding-top:90px;" found in 4 of the 5 case-*.html pages. Not
-   yet applied to those files — see migration-map.md §3.
+   style="padding-top:90px;" found in 4 of the 5 case-*.html pages. Value
+   kept at 90px (see migration-map.md §3.2/§3.3 — the conservative pass did
+   not round it to the 96px mobile tier). Not yet applied to those files.
    ========================================================================== */
-.u-section-pt-sm{
-  padding-top: var(--layout-section-sm);
+.u-case-subhero-pt{
+  padding-top: var(--layout-section-90);
 }
