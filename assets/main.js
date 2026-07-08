@@ -161,6 +161,31 @@ document.addEventListener('DOMContentLoaded', () => {
     typeNext();
   }
 
+  /* ---------- hero rotating word ---------- */
+  // Cycles the accent word in the H1 (e.g. "clarity" -> "structure" -> ...)
+  // with a fade-out/fade-in. Word list + starting word live in the markup
+  // via data-words, so the page still reads fine if this script never runs.
+  const rotatingWord = document.getElementById('heroRotatingWord');
+  if (rotatingWord) {
+    const words = (rotatingWord.dataset.words || rotatingWord.textContent)
+      .split(',')
+      .map((w) => w.trim())
+      .filter(Boolean);
+    const ROTATE_INTERVAL = 2500;
+    const FADE_DURATION = 300;
+    let wordIndex = 0;
+    if (words.length > 1) {
+      setInterval(() => {
+        rotatingWord.classList.add('word-fading');
+        setTimeout(() => {
+          wordIndex = (wordIndex + 1) % words.length;
+          rotatingWord.textContent = words[wordIndex];
+          rotatingWord.classList.remove('word-fading');
+        }, FADE_DURATION);
+      }, ROTATE_INTERVAL);
+    }
+  }
+
   /* ---------- GSAP scroll reveals ---------- */
   if (window.gsap && window.ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
