@@ -684,6 +684,44 @@ html[data-theme="dark"] .case-cover .cover-note{
 .cover-media.portrait{max-width:420px;margin-left:auto;margin-right:auto;aspect-ratio:auto;}
 .cover-media.portrait img{height:auto;object-fit:initial;}
 
+/* ---------- image expand (lightbox) ----------
+   .img-expand-wrap is injected at runtime by main.js around every
+   content image except case covers, work-thumb links and the nav avatar —
+   see main.js for the exclusion list. Using a wrapper (not editing every
+   case-*.html img) means this applies site-wide with zero markup changes. */
+.img-expand-wrap{display:block;position:relative;}
+.img-expand-btn{
+  position:absolute;right:14px;bottom:14px;z-index:5;
+  width:38px;height:38px;border-radius:50%;
+  background:var(--color-bg);border:1px solid var(--color-border);color:var(--color-text);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 20px var(--color-shadow);
+  opacity:0;transform:translateY(6px);
+  transition:opacity var(--duration-base) ease, transform var(--duration-base) ease, background var(--duration-base) ease;
+}
+.img-expand-wrap:hover .img-expand-btn,
+.img-expand-btn:focus-visible{opacity:1;transform:translateY(0);}
+@media (hover:none){.img-expand-btn{opacity:1;transform:none;}}
+
+.img-lightbox{
+  position:fixed;inset:0;z-index:200;
+  background:rgba(15,15,15,.92);
+  display:flex;align-items:center;justify-content:center;padding:40px;
+  opacity:0;visibility:hidden;transition:opacity var(--duration-base) ease, visibility var(--duration-base) ease;
+}
+.img-lightbox.open{opacity:1;visibility:visible;}
+.img-lightbox img{max-width:100%;max-height:100%;border-radius:var(--radius-md);box-shadow:0 30px 80px rgba(0,0,0,.5);}
+.img-lightbox-close{
+  position:absolute;top:24px;right:24px;width:44px;height:44px;border-radius:50%;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+}
+.img-lightbox-close:hover{background:rgba(255,255,255,.18);}
+@media (max-width:600px){
+  .img-lightbox{padding:20px;}
+  .img-lightbox-close{top:14px;right:14px;width:38px;height:38px;}
+}
+
 /* ---------- responsive ---------- */
 @media (max-width:960px){
   .work-grid, .about-grid, .case-grid, .more-grid{grid-template-columns:1fr;}
@@ -695,7 +733,7 @@ html[data-theme="dark"] .case-cover .cover-note{
   .nav-links:not(.open), .nav-cta{display:none;}
   .menu-btn{display:flex;}
   .hero-stats{gap:36px;}
-  .float-cta span.label{display:none;}
+  .float-cta{display:none;}
   .hero-note{text-align:left;max-width:100%;}
 }
 @media (max-width:600px){

@@ -335,4 +335,58 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   }
+
+  /* ---------- image expand (lightbox) ----------
+     Every content image gets an expand button, except case covers,
+     cross-page "more work" thumbnails (already links elsewhere) and the
+     nav avatar. Wrapping at runtime means no case-*.html markup changes. */
+  const expandCandidates = Array.from(document.querySelectorAll('main img')).filter(
+    (img) => !img.closest('.cover-media') && !img.closest('.work-thumb') && !img.closest('.identity-avatar')
+  );
+
+  if (expandCandidates.length) {
+    const lightbox = document.createElement('div');
+    lightbox.className = 'img-lightbox';
+    lightbox.innerHTML =
+      '<button type="button" class="img-lightbox-close" aria-label="Close">' +
+      '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg>' +
+      '</button><img alt="">';
+    document.body.appendChild(lightbox);
+    const lightboxImg = lightbox.querySelector('img');
+    const closeBtn = lightbox.querySelector('.img-lightbox-close');
+
+    const openLightbox = (src, alt) => {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt || '';
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+    const closeLightbox = () => {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    };
+    closeBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+
+    expandCandidates.forEach((img) => {
+      const wrap = document.createElement('span');
+      wrap.className = 'img-expand-wrap';
+      img.parentNode.insertBefore(wrap, img);
+      wrap.appendChild(img);
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'img-expand-btn';
+      btn.setAttribute('aria-label', 'Expand image');
+      btn.innerHTML =
+        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg>';
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        openLightbox(img.currentSrc || img.src, img.alt);
+      });
+      wrap.appendChild(btn);
+    });
+  }
 });
