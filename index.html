@@ -33,6 +33,71 @@
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/tokens.css">
 <link rel="stylesheet" href="assets/style.css">
+<style>
+  /* Page-local: distinct footer entry pointing at the Lab page, kept out
+     of assets/style.css so the shared component library stays untouched. */
+  .footer-links li{display:flex;align-items:center;}
+  .footer-links .footer-lab-link{
+    color:var(--color-accent);font-weight:var(--weight-semibold);
+    display:inline-flex;align-items:center;gap:6px;line-height:1;
+  }
+  .footer-links .footer-lab-link:hover{color:var(--color-accent);}
+  .footer-links .footer-lab-link .dot{
+    width:5px;height:5px;border-radius:50%;background:var(--color-accent);
+    box-shadow:0 0 0 3px color-mix(in srgb, var(--color-accent) 18%, transparent);
+    display:inline-block;flex-shrink:0;
+  }
+
+  /* Page-local: LinkedIn link next to the CV button in About. Uses
+     .btn-ghost's existing color:var(--color-text), which already flips to
+     near-white in dark mode — no extra dark-mode override needed. */
+  .about-cv{display:flex;flex-wrap:wrap;align-items:center;gap:22px;}
+  .about-cv .about-linkedin{display:inline-flex;align-items:center;gap:8px;}
+
+  /* Page-local: small teaser pointing at the Lab/Design System page.
+     Deliberately not a .work-card — dashed border + surface bg keep it
+     visually smaller than the real case studies above it. */
+  .ds-teaser{padding:56px 0 0;}
+  .ds-teaser-card{
+    display:grid;grid-template-columns:1.3fr 0.7fr;gap:32px;align-items:center;
+    background:var(--color-surface);border:1px dashed var(--color-border);
+    border-radius:var(--radius-md);padding:32px 36px;
+  }
+  .ds-teaser-tag{
+    display:inline-block;font-size:var(--text-2xs);font-weight:var(--weight-bold);
+    letter-spacing:var(--tracking-wide);text-transform:uppercase;color:var(--color-accent);margin-bottom:10px;
+  }
+  .ds-teaser-copy h3{
+    font-size:var(--text-xl);font-weight:var(--weight-semibold);color:var(--color-text);
+    letter-spacing:var(--tracking-tight);margin-bottom:10px;
+  }
+  .ds-teaser-copy p{
+    font-size:var(--text-sm);color:var(--color-text-muted);line-height:var(--leading-loose);
+    max-width:52ch;margin-bottom:18px;
+  }
+  .ds-teaser-preview{
+    background:var(--color-bg);border:1px solid var(--color-border);
+    border-radius:var(--radius-md);padding:18px 20px;
+    display:flex;flex-direction:column;gap:14px;
+  }
+  .ds-mini-label{
+    font-size:10px;font-weight:var(--weight-semibold);letter-spacing:var(--tracking-wide);
+    text-transform:uppercase;color:var(--color-text-muted);margin-bottom:7px;
+  }
+  .ds-mini-swatches{display:flex;gap:8px;}
+  .ds-mini-swatch{width:22px;height:22px;border-radius:6px;border:1px solid var(--color-border);}
+  .ds-mini-type{display:flex;align-items:baseline;gap:10px;}
+  .ds-mini-type .aa{
+    font-family:var(--font-body);font-size:24px;font-weight:var(--weight-semibold);
+    color:var(--color-text);letter-spacing:var(--tracking-tight);
+  }
+  .ds-mini-type .fam{font-family:var(--font-mono);font-size:11px;color:var(--color-text-muted);}
+  .ds-mini-code{
+    display:block;font-family:var(--font-mono);font-size:11px;color:var(--color-text-secondary);
+    background:var(--color-surface);border-radius:6px;padding:8px 10px;
+  }
+  @media (max-width:760px){.ds-teaser-card{grid-template-columns:1fr;}}
+</style>
 </head>
 <body>
 
@@ -89,7 +154,7 @@
         <div class="hero-stats-block">
           <div class="hero-stats">
             <div class="hero-stat"><b><span class="count" data-count="3" data-suffix="+">3+</span></b>years of experience</div>
-            <div class="hero-stat"><b><span class="count" data-count="11" data-suffix="">11</span></b>projects shipped</div>
+            <div class="hero-stat"><b><span class="count" data-count="10" data-suffix="+">10+</span></b>projects shipped</div>
             <div class="hero-stat"><b><span class="count" data-count="100" data-suffix="%">100%</span></b>remote collaboration</div>
           </div>
           <p class="hero-stats-note">+4 years in architecture before that</p>
@@ -182,6 +247,37 @@
     </div>
   </section>
 
+  <!-- Design system teaser (not a 5th case card) -->
+  <section class="ds-teaser">
+    <div class="wrap">
+      <div class="ds-teaser-card reveal-up">
+        <div class="ds-teaser-copy">
+          <span class="ds-teaser-tag">AI + Design Systems</span>
+          <h3>Curious how this site itself was built?</h3>
+          <p>I turned my own portfolio into a design system an AI agent can audit — tokens, Figma variables, and workflows that keep code and design honest.</p>
+          <a href="case-agentic-design-system.html" class="btn-ghost magnetic">See how it works <span class="btn-icon">↗</span></a>
+        </div>
+        <div class="ds-teaser-preview" aria-label="Live tokens, type and code read from this site's own CSS">
+          <div>
+            <span class="ds-mini-label">Colors</span>
+            <div class="ds-mini-swatches" id="dsMiniSwatches"></div>
+          </div>
+          <div>
+            <span class="ds-mini-label">Typography</span>
+            <div class="ds-mini-type">
+              <span class="aa">Aa</span>
+              <span class="fam" id="dsMiniFont"></span>
+            </div>
+          </div>
+          <div>
+            <span class="ds-mini-label">Code</span>
+            <code class="ds-mini-code" id="dsMiniCode"></code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Services -->
   <section id="services">
     <div class="wrap">
@@ -267,6 +363,10 @@
           </div>
           <div class="about-cv">
             <a href="https://drive.google.com/file/d/1bZdxfccuLWwc9rK2qTTMwkR8DkUrQnU-/view" target="_blank" rel="noopener" class="btn magnetic">Read my CV <span class="btn-icon">↗</span></a>
+            <a href="https://linkedin.com/in/danieroc" target="_blank" rel="noopener" class="btn-ghost magnetic about-linkedin">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><line x1="7.5" y1="9.5" x2="7.5" y2="17"/><circle cx="7.5" cy="6.5" r="0.9" fill="currentColor" stroke="none"/><path d="M11.5 17v-4.5c0-1.5 1-2.5 2.5-2.5s2.5 1 2.5 2.5V17"/><line x1="11.5" y1="9.5" x2="11.5" y2="17"/></svg>
+              LinkedIn
+            </a>
           </div>
         </div>
       </div>
@@ -319,6 +419,7 @@
     <ul class="footer-links">
       <li><a href="https://linkedin.com/in/danieroc" target="_blank" rel="noopener">LinkedIn</a></li>
       <li><a href="mailto:danierocruz@gmail.com">Email</a></li>
+      <li><a href="case-agentic-design-system.html" class="footer-lab-link"><span class="dot"></span>Lab</a></li>
     </ul>
   </div>
 </footer>
@@ -326,5 +427,37 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="assets/main.js"></script>
+<script>
+(function(){
+  var SWATCHES = [
+    { name: '--color-bg' },
+    { name: '--color-accent' },
+    { name: '--color-accent', opacity: 0.45 },
+    { name: '--color-warning' },
+    { name: '--color-border' }
+  ];
+  var row = document.getElementById('dsMiniSwatches');
+  var code = document.getElementById('dsMiniCode');
+  var fam = document.getElementById('dsMiniFont');
+  if (!row) return;
+
+  function render() {
+    var cs = getComputedStyle(document.documentElement);
+    row.innerHTML = SWATCHES.map(function (s) {
+      var val = cs.getPropertyValue(s.name).trim();
+      var opacityStyle = s.opacity ? 'opacity:' + s.opacity + ';' : '';
+      return '<span class="ds-mini-swatch" style="background:' + val + ';' + opacityStyle + '" title="' + s.name + (s.opacity ? ' @ ' + s.opacity : '') + '"></span>';
+    }).join('');
+    if (code) code.textContent = '--color-accent: ' + cs.getPropertyValue('--color-accent').trim() + ';';
+    if (fam) fam.textContent = cs.getPropertyValue('--font-body').split(',')[0].trim().replace(/['"]/g, '');
+  }
+
+  render();
+  new MutationObserver(render).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme']
+  });
+})();
+</script>
 </body>
 </html>

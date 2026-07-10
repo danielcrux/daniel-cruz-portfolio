@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>
+(function(){
+  try {
+    var saved = localStorage.getItem('theme');
+    var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {}
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentic Design System — Daniel Cruz</title>
+<meta name="description" content="AI does the mechanical work; design decides what's worth keeping. 119 tokens, 118 of 118 in sync with Figma, zero gaps — a Lab piece by Daniel Cruz.">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="canonical" href="https://danielcruz.work/case-agentic-design-system.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Agentic Design System — Daniel Cruz">
+<meta property="og:description" content="AI does the mechanical work; design decides what's worth keeping. 119 tokens, 118 of 118 in sync with Figma, zero gaps — a Lab piece by Daniel Cruz.">
+<meta property="og:image" content="https://danielcruz.work/images/agentic/social-preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="800">
+<meta property="og:url" content="https://danielcruz.work/case-agentic-design-system.html">
+<meta property="og:site_name" content="Daniel Cruz">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Agentic Design System — Daniel Cruz">
+<meta name="twitter:description" content="AI does the mechanical work; design decides what's worth keeping. 119 tokens, 118 of 118 in sync with Figma, zero gaps — a Lab piece by Daniel Cruz.">
+<meta name="twitter:image" content="https://danielcruz.work/images/agentic/social-preview.jpg">
+
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  /* Case-local presentation helpers (token-driven; no new palette) */
+  .agentic-swatches{
+    display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:28px;
+  }
+  .agentic-swatch{
+    border-radius:var(--radius-md);border:1px solid var(--color-border);
+    overflow:hidden;background:var(--color-surface);
+  }
+  .agentic-swatch .chip-color{height:72px;}
+  .agentic-swatch .chip-meta{padding:10px 12px;}
+  .agentic-swatch .chip-meta code{
+    display:block;font-family:var(--font-mono);font-size:10px;color:var(--color-text-muted);
+    letter-spacing:0;text-transform:none;margin-bottom:4px;
+  }
+  .agentic-swatch .chip-meta b{font-size:var(--text-2xs);color:var(--color-text);font-weight:var(--weight-semibold);}
+  @media (max-width:820px){.agentic-swatches{grid-template-columns:repeat(3,1fr);}}
+  @media (max-width:520px){.agentic-swatches{grid-template-columns:repeat(2,1fr);}}
+
+  .workflow-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-6);margin-top:36px;
+  }
+  .workflow-card{
+    background:var(--color-surface);border:1px solid var(--color-border);
+    border-radius:var(--radius-md);padding:28px;display:flex;flex-direction:column;gap:14px;
+  }
+  .workflow-card .wf-step{
+    font-size:var(--text-2xs);font-weight:var(--weight-bold);letter-spacing:var(--tracking-wide);
+    text-transform:uppercase;color:var(--color-accent);
+  }
+  .workflow-card h4{
+    font-size:var(--text-xl);font-weight:var(--weight-semibold);color:var(--color-text);
+    letter-spacing:var(--tracking-tight);
+  }
+  .diff-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6);margin-top:36px;align-items:start;}
+  .diff-label{
+    display:inline-flex;align-items:center;gap:8px;font-size:var(--text-2xs);font-weight:var(--weight-bold);
+    letter-spacing:var(--tracking-wide);text-transform:uppercase;margin-bottom:12px;
+  }
+  .diff-label.before{color:var(--color-warning-ink);}
+  .diff-label.before::before{content:"−";color:var(--color-warning);}
+  .diff-label.after{color:var(--color-success-ink);}
+  .diff-label.after::before{content:"+";color:var(--color-success);}
+  html[data-theme="dark"] .diff-label.before{color:var(--color-warning);}
+  html[data-theme="dark"] .diff-label.after{color:var(--color-success);}
+  .diff-code{margin-top:0;font-size:11px;}
+  @media (max-width:820px){.diff-grid{grid-template-columns:1fr;}}
+  .wf-terminal{
+    background:var(--color-inverse-bg);color:var(--color-inverse-text);
+    border-radius:var(--radius-md);padding:16px 18px;
+    font-family:var(--font-mono);font-size:11px;line-height:1.75;
+    overflow-x:auto;
+  }
+  .wf-terminal .ln{display:block;white-space:pre-wrap;word-break:break-word;}
+  .wf-terminal .prompt{color:var(--color-accent);}
+  .wf-terminal .out{opacity:.7;}
+  .wf-terminal .ok{color:var(--color-success);opacity:1;font-weight:var(--weight-semibold);}
+  .workflow-card .wf-number{
+    margin-top:auto;padding-top:18px;border-top:1px solid var(--color-border);
+    font-size:var(--text-3xl);font-weight:var(--weight-semibold);color:var(--color-text);
+    letter-spacing:var(--tracking-tight);
+  }
+  .workflow-card .wf-number span{
+    display:block;font-size:var(--text-xs);font-weight:var(--weight-medium);
+    color:var(--color-text-muted);margin-top:4px;letter-spacing:0;
+  }
+  @media (max-width:900px){.workflow-grid{grid-template-columns:1fr;}}
+
+  .layer-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6);margin-top:36px;
+  }
+  .layer-card{
+    border:1px solid var(--color-border);border-radius:var(--radius-md);padding:28px;
+    background:var(--color-bg);
+  }
+  .layer-card h4{
+    font-size:var(--text-lg);font-weight:var(--weight-semibold);color:var(--color-text);margin-bottom:10px;
+  }
+  .layer-card p{font-size:var(--text-md);color:var(--color-text-secondary);line-height:var(--leading-loose);}
+  .layer-card code{
+    font-family:var(--font-mono);font-size:var(--text-2xs);color:var(--color-text);
+    background:var(--color-surface);border:1px solid var(--color-border);
+    border-radius:6px;padding:2px 6px;
+  }
+  @media (max-width:700px){.layer-grid{grid-template-columns:1fr;}}
+
+  .code-block{
+    margin-top:28px;background:var(--color-inverse-bg);color:var(--color-inverse-text);
+    border-radius:var(--radius-md);padding:24px 28px;overflow-x:auto;
+    font-family:var(--font-mono);font-size:var(--text-2xs);line-height:1.65;
+  }
+  .code-block .cmt{color:var(--color-text-muted);opacity:.85;}
+  html[data-theme="dark"] .code-block .cmt{opacity:.7;}
+
+  .sync-bar{
+    margin-top:28px;height:12px;border-radius:var(--radius-sm);overflow:hidden;
+    background:var(--color-border);display:flex;
+  }
+  .sync-bar .fill{background:var(--color-success);width:100%;}
+  .sync-bar .gap{background:var(--color-warning);width:0;flex:none;}
+  .sync-caption{margin-top:12px;font-size:var(--text-sm);color:var(--color-text-muted);}
+
+  /* ---------- Lab hero (replaces case-hero for this page only) ---------- */
+  .lab-hero{
+    padding-top:var(--layout-section-150);padding-bottom:70px;
+    border-bottom:1px solid var(--color-border);
+  }
+  .lab-hero-top{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-bottom:26px;}
+  .lab-tag{
+    display:inline-flex;align-items:center;gap:8px;flex-shrink:0;
+    font-size:var(--text-2xs);font-weight:var(--weight-bold);letter-spacing:var(--tracking-wider);
+    text-transform:uppercase;color:var(--color-accent);
+    background:var(--color-surface);border:1px solid var(--color-border);
+    padding:6px 14px;border-radius:var(--radius-sm);
+  }
+  .lab-tag .dot{
+    width:6px;height:6px;border-radius:50%;background:var(--color-accent);
+    box-shadow:0 0 0 3px color-mix(in srgb, var(--color-accent) 18%, transparent);
+  }
+  .lab-subtag{font-size:var(--text-sm);color:var(--color-text-muted);max-width:52ch;}
+
+  .lab-hero-grid{display:grid;grid-template-columns:1.15fr 0.85fr;gap:var(--space-8);align-items:start;}
+  .lab-hero-copy h1{
+    font-size:var(--font-fluid-lg);font-weight:var(--weight-semibold);
+    letter-spacing:var(--tracking-tight);line-height:var(--leading-snug);
+  }
+  .lab-hero-copy .lede{
+    margin-top:22px;font-size:var(--text-lg);color:var(--color-text-secondary);
+    line-height:var(--leading-loose);max-width:48ch;
+  }
+
+  .token-live-panel{
+    background:var(--color-surface);border:1px solid var(--color-border);
+    border-radius:var(--radius-md);overflow:hidden;
+  }
+  .token-live-panel-head{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 18px;border-bottom:1px solid var(--color-border);
+  }
+  .token-live-panel-head b{font-family:var(--font-mono);font-weight:var(--weight-medium);font-size:var(--text-xs);color:var(--color-text);}
+  .token-live-panel-head .dotrow{display:flex;gap:6px;}
+  .token-live-panel-head .dotrow i{width:8px;height:8px;border-radius:50%;background:var(--color-border);}
+  .token-live-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--color-border);}
+  .token-live-cell{background:var(--color-surface);padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+  .token-live-swatch{height:32px;border-radius:8px;border:1px solid var(--color-border);}
+  .token-live-cell code{font-family:var(--font-mono);font-size:10px;color:var(--color-text-muted);letter-spacing:0;}
+  .token-live-cell b.hex{font-family:var(--font-mono);font-weight:var(--weight-medium);font-size:var(--text-2xs);color:var(--color-text);letter-spacing:0;text-transform:lowercase;}
+  .token-live-caption{
+    padding:14px 18px;font-size:var(--text-xs);color:var(--color-text-muted);
+    line-height:var(--leading-loose);border-top:1px solid var(--color-border);
+  }
+  @media (max-width:900px){
+    .lab-hero-grid{grid-template-columns:1fr;}
+    .token-live-grid{grid-template-columns:repeat(3,1fr);}
+  }
+  @media (max-width:480px){
+    .token-live-grid{grid-template-columns:repeat(2,1fr);}
+  }
+
+  /* ---------- Figma-style Variables panel ----------
+     Deliberately its own fixed-dark palette (literal hex, not site tokens):
+     this replicates Figma's own UI chrome, which stays dark regardless of
+     the site's light/dark toggle — it's a panel from a different app. */
+  .fig-panel{
+    background:#2c2c2c;border:1px solid #3a3a3a;border-radius:var(--radius-md);
+    overflow:hidden;font-family:var(--font-body);color:#e8e8e8;
+  }
+  .fig-panel-titlebar{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:14px 18px;background:#232323;border-bottom:1px solid #3a3a3a;
+  }
+  .fig-panel-title{font-size:var(--text-md);font-weight:var(--weight-semibold);color:#f2f2f2;}
+  .fig-panel-search{
+    display:flex;align-items:center;gap:8px;background:#333;border:1px solid #444;
+    border-radius:8px;padding:6px 12px;flex-shrink:0;
+  }
+  .fig-panel-search svg{opacity:.6;flex-shrink:0;}
+  .fig-panel-search input{
+    background:none;border:none;outline:none;color:#e8e8e8;font-size:var(--text-sm);
+    width:140px;font-family:var(--font-body);
+  }
+  .fig-panel-search input::placeholder{color:#8a8a8a;}
+
+  .fig-panel-body{display:flex;height:460px;}
+  .fig-sidebar{
+    width:200px;flex-shrink:0;background:#262626;border-right:1px solid #3a3a3a;
+    overflow-y:auto;padding:14px 10px;
+  }
+  .fig-sidebar-label{
+    font-size:10px;font-weight:var(--weight-semibold);letter-spacing:var(--tracking-wide);
+    text-transform:uppercase;color:#8a8a8a;padding:6px 10px;margin-top:8px;
+  }
+  .fig-sidebar-label:first-child{margin-top:0;}
+  .fig-row-btn{
+    display:flex;align-items:center;justify-content:space-between;width:100%;
+    text-align:left;padding:7px 10px;border-radius:6px;font-size:var(--text-sm);
+    color:#cfcfcf;background:none;border:none;cursor:pointer;font-family:var(--font-body);
+  }
+  .fig-row-btn:hover{background:#333;}
+  .fig-row-btn span:last-child{color:#8a8a8a;font-size:var(--text-2xs);}
+  .fig-row-btn.active{background:#3a3a3a;color:#fff;font-weight:var(--weight-medium);}
+  .fig-row-btn.active.is-group{background:#4c4cff;color:#fff;}
+  .fig-row-btn.active.is-group span:last-child{color:rgba(255,255,255,.75);}
+
+  .fig-table-wrap{flex:1;overflow-y:auto;min-width:0;}
+  .fig-table-head{
+    display:grid;grid-template-columns:1fr 1fr;gap:12px;
+    padding:10px 20px;background:#2c2c2c;border-bottom:1px solid #3a3a3a;
+    font-size:var(--text-xs);font-weight:var(--weight-semibold);color:#9a9a9a;
+    position:sticky;top:0;z-index:1;
+  }
+  .fig-subgroup-head{
+    padding:10px 20px 6px;font-size:var(--text-xs);color:#8a8a8a;background:#272727;
+  }
+  .fig-subgroup-head b{color:#c8c8c8;font-weight:var(--weight-semibold);}
+  .fig-var-row{
+    display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center;
+    padding:9px 20px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.03);
+    position:relative;
+  }
+  .fig-var-row:hover{background:#333;}
+  .fig-var-name{
+    display:flex;align-items:center;gap:8px;font-family:var(--font-mono);
+    font-size:var(--text-sm);color:#d8d8d8;min-width:0;
+  }
+  .fig-var-name .fig-swatch{width:16px;height:16px;border-radius:4px;border:1px solid rgba(255,255,255,.18);flex-shrink:0;}
+  .fig-var-value{
+    display:flex;align-items:center;gap:10px;font-family:var(--font-mono);
+    font-size:var(--text-sm);color:#a8a8a8;min-width:0;
+  }
+  .fig-var-value .val-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .fig-var-alias{color:#7a8bff;font-size:var(--text-xs);}
+  .fig-var-row .fig-copied{
+    position:absolute;right:20px;top:50%;transform:translateY(-50%);
+    font-size:var(--text-2xs);color:#6bd68a;font-weight:var(--weight-semibold);
+    opacity:0;transition:opacity .25s ease;pointer-events:none;
+  }
+  .fig-var-row.copied .fig-copied{opacity:1;}
+  .fig-expand-btn{
+    background:none;border:none;color:#8a8a8a;cursor:pointer;padding:2px 6px;
+    font-size:var(--text-xs);flex-shrink:0;border-radius:4px;
+  }
+  .fig-expand-btn:hover{background:#3a3a3a;color:#e8e8e8;}
+  .fig-expand-panel{
+    grid-column:1/-1;display:none;gap:20px;padding:10px 0 4px 24px;
+    font-size:var(--text-xs);color:#a8a8a8;
+  }
+  .fig-var-row.expanded .fig-expand-panel{display:flex;}
+  .fig-expand-mode{display:flex;align-items:center;gap:8px;}
+  .fig-expand-mode .fig-swatch{width:14px;height:14px;border-radius:4px;border:1px solid rgba(255,255,255,.18);}
+  .fig-empty{padding:40px 20px;text-align:center;color:#8a8a8a;font-size:var(--text-sm);}
+  @media (max-width:820px){
+    .fig-panel-body{flex-direction:column;height:auto;}
+    .fig-sidebar{width:100%;display:flex;flex-wrap:wrap;gap:4px;border-right:none;border-bottom:1px solid #3a3a3a;max-height:150px;}
+    .fig-table-wrap{max-height:420px;}
+  }
+</style>
+</head>
+<body>
+
+<header id="site-header">
+  <div class="wrap nav">
+    <a href="index.html" class="logo identity">
+      <span class="identity-avatar"><img src="images/avatar.jpg" alt="Daniel Cruz"></span>
+      <span class="identity-text"><b>Daniel Cruz</b></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#work">Work</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">
+      <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+    </button>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu"><span></span><span></span></button>
+  </div>
+</header>
+
+<main>
+
+  <section class="lab-hero">
+    <div class="wrap">
+      <div class="lab-hero-top reveal-up">
+        <span class="lab-tag"><span class="dot"></span>Lab</span>
+        <span class="lab-subtag">Process, not a client case — this page documents how the site itself was built.</span>
+      </div>
+
+      <div class="lab-hero-grid">
+        <div class="lab-hero-copy">
+          <h1 class="case-title">
+            <span class="reveal-line"><span>AI does the mechanical work. Design decides what’s worth keeping.</span></span>
+          </h1>
+          <p class="lede reveal-up">This site is built by AI + Design working together — not AI replacing design judgment, and not design ignoring what AI is good at. The two stay in their lanes, each doing what it’s actually better at. Everything below shows where that line falls.</p>
+        </div>
+
+        <div class="token-live-panel reveal-up" id="heroTokenPanel" aria-label="Live tokens read from this page's CSS">
+          <div class="token-live-panel-head">
+            <b>tokens.css — live</b>
+            <span class="dotrow" aria-hidden="true"><i></i><i></i><i></i></span>
+          </div>
+          <div class="token-live-grid" id="heroTokenGrid"></div>
+          <p class="token-live-caption">Reading this page’s real <code style="font-family:var(--font-mono);font-size:0.95em;">--color-*</code> custom properties live via <code style="font-family:var(--font-mono);font-size:0.95em;">getComputedStyle</code> — not a screenshot. Toggle dark mode above to watch it update.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-body u-case-subhero-pt">
+    <div class="wrap case-grid">
+      <div class="case-copy">
+        <h3>The Challenge</h3>
+        <p class="case-feature-quote reveal-up">“The site looked right. The system underneath didn’t exist — every section generated in isolation, every value a one-off.”</p>
+        <p class="reveal-up">I built this portfolio fast with AI. That speed left a familiar debt: hardcoded hex, ad‑hoc type sizes, and no bridge between Figma and code. The question wasn’t “can AI make another screen?” — it was whether I could structure tokens so an agent could <b>maintain</b> the system: find redundancy, spot dead values, and prove code and Figma still match.</p>
+      </div>
+
+      <div class="meta-grid reveal-up">
+        <div class="meta-item"><span>Type</span><b>Design System · Experiment</b></div>
+        <div class="meta-item"><span>Context</span><b>Personal portfolio</b></div>
+        <div class="meta-item"><span>Year</span><b>2026</b></div>
+        <div class="meta-item"><span>Role</span><b>Design + systems</b></div>
+        <div class="meta-item full">
+          <span>Scope</span>
+          <div class="chip-row">
+            <span class="chip">Token architecture</span>
+            <span class="chip">Figma Variables</span>
+            <span class="chip">Agent audits</span>
+            <span class="chip">Code ↔ design sync</span>
+          </div>
+        </div>
+        <div class="meta-item full">
+          <span>Stack</span>
+          <div class="chip-row">
+            <span class="chip">tokens.css</span>
+            <span class="chip">tokens.json</span>
+            <span class="chip">Figma MCP</span>
+            <span class="chip">Agent workflows</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results strip -->
+  <section class="case-feature">
+    <div class="wrap">
+      <div class="case-feature-head reveal-up">
+        <span class="tag">Results</span>
+        <h3>Health as a number — not a feeling.</h3>
+        <p>Three agent workflows produced a documented paper trail: input → finding → outcome. The headline metrics below are from those runs, not placeholders.</p>
+      </div>
+      <div class="stat-row reveal-up">
+        <div class="stat"><b>119</b><span>CSS tokens in the system</span></div>
+        <div class="stat"><b>5</b><span>tokens consolidatable (119 → 114)</span></div>
+        <div class="stat"><b>3</b><span>directly-dead tokens found</span></div>
+        <div class="stat"><b>118/118</b><span>code ↔ Figma in sync</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hypothesis -->
+  <section class="case-feature">
+    <div class="wrap">
+      <div class="case-feature-head reveal-up">
+        <span class="tag">Hypothesis</span>
+        <h3>Structure the system so an agent can operate inside it.</h3>
+        <p>Most AI-assisted design-system work scaffolds components once and freezes. I wanted the opposite: a variables architecture that is machine-readable, a Figma file that mirrors code, and audits an agent can run without babysitting every line.</p>
+      </div>
+      <div class="insight-callout reveal-up">
+        If tokens are semantically layered, aliases are explicit, and Figma variables map 1:1 to CSS, then an agent can perform maintenance that usually needs a human with a spreadsheet.
+      </div>
+    </div>
+  </section>
+
+  <!-- Token architecture -->
+  <section class="case-feature">
+    <div class="wrap">
+      <div class="case-feature-head reveal-up">
+        <span class="tag">Token architecture</span>
+        <h3>Primitives hold values. Semantics hold meaning.</h3>
+        <p>Layer 1 is context-free: neutral ramps, brand, spacing, type. Layer 2 is role-based — <code style="font-family:var(--font-mono);font-size:0.9em;">--color-bg</code>, <code style="font-family:var(--font-mono);font-size:0.9em;">--color-text</code> — what components actually consume. Dark mode swaps the semantic block; components never hardcode a theme.</p>
+      </div>
+
+      <div class="layer-grid reveal-up">
+        <div class="layer-card">
+          <h4>Primitive</h4>
+          <p>Raw values named by scale — never used directly in components. Example: <code>--neutral-light-900</code>, <code>--space-4</code>, <code>--duration-base</code>.</p>
+        </div>
+        <div class="layer-card">
+          <h4>Semantic</h4>
+          <p>Intent aliases that theme. Example: <code>--color-text</code> → light <code>--neutral-light-900</code>, dark <code>--neutral-dark-50</code>.</p>
+        </div>
+      </div>
+
+      <div class="agentic-swatches reveal-up" aria-label="Semantic color tokens">
+        <div class="agentic-swatch">
+          <div class="chip-color" style="background:var(--color-bg);border-bottom:1px solid var(--color-border);"></div>
+          <div class="chip-meta"><code>--color-bg</code><b>Background</b></div>
+        </div>
+        <div class="agentic-swatch">
+          <div class="chip-color" style="background:var(--color-surface);"></div>
+          <div class="chip-meta"><code>--color-surface</code><b>Surface</b></div>
+        </div>
+        <div class="agentic-swatch">
+          <div class="chip-color" style="background:var(--color-border);"></div>
+          <div class="chip-meta"><code>--color-border</code><b>Border</b></div>
+        </div>
+        <div class="agentic-swatch">
+          <div class="chip-color" style="background:var(--color-text);"></div>
+          <div class="chip-meta"><code>--color-text</code><b>Text</b></div>
+        </div>
+        <div class="agentic-swatch">
+          <div class="chip-color" style="background:var(--color-text-muted);"></div>
+          <div class="chip-meta"><code>--color-text-muted</code><b>Muted</b></div>
+        </div>
+        <div class="agentic-swatch">
+          <div class="chip-color" style="background:var(--color-accent);"></div>
+          <div class="chip-meta"><code>--color-accent</code><b>Accent</b></div>
+        </div>
+      </div>
+
+      <div class="code-block reveal-up" role="figure" aria-label="Semantic token example">
+<span class="cmt">/* Light: semantic → primitive */</span><br>
+--color-bg:   var(--neutral-light-50);<br>
+--color-text: var(--neutral-light-900);<br>
+--color-accent: var(--accent-light);<br>
+<br>
+<span class="cmt">/* Dark: same roles, different ramp */</span><br>
+html[data-theme="dark"] {<br>
+&nbsp;&nbsp;--color-bg:   var(--neutral-dark-900);<br>
+&nbsp;&nbsp;--color-text: var(--neutral-dark-50);<br>
+&nbsp;&nbsp;--color-accent: var(--accent-dark);<br>
+}
+      </div>
+    </div>
+  </section>
+
+  <!-- Variables browser -->
+  <section class="case-feature">
+    <div class="wrap">
+      <div class="case-feature-head reveal-up">
+        <span class="tag">Variables</span>
+        <h3>Browse the real variables — not a screenshot of Figma, a parser reading the same file.</h3>
+        <p>This panel fetches this site's actual <code style="font-family:var(--font-mono);font-size:0.9em;">assets/tokens.css</code> at page load and parses it into the same Primitives / Semantic split Figma uses. Click a row to copy its <code style="font-family:var(--font-mono);font-size:0.9em;">var()</code>; expand a semantic color to compare Light vs Dark.</p>
+      </div>
+
+      <div class="fig-panel reveal-up" id="figVarsPanel">
+        <div class="fig-panel-titlebar">
+          <span class="fig-panel-title">Variables</span>
+          <div class="fig-panel-search">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.4"/><path d="m14 14-3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            <input type="text" id="figVarsSearch" placeholder="Search">
+          </div>
+        </div>
+        <div class="fig-panel-body">
+          <aside class="fig-sidebar">
+            <div class="fig-sidebar-label">Collections</div>
+            <div id="figCollections"></div>
+            <div class="fig-sidebar-label">Groups</div>
+            <div id="figGroups"></div>
+          </aside>
+          <div class="fig-table-wrap">
+            <div class="fig-table-head"><span>Name</span><span>Value</span></div>
+            <div id="figTableBody"></div>
+          </div>
+        </div>
+      </div>
+      <p class="token-live-caption" style="margin-top:14px;padding:0;border:none;">Built by fetching and parsing this page's real stylesheet at load — counts and values can't drift from the source because they <i>are</i> the source.</p>
+    </div>
+  </section>
+
+  <!-- One real merge: fluid type collapse -->
+  <section class="case-feature">
+    <div class="wrap">
+      <div class="case-feature-head reveal-up">
+        <span class="tag">One merge, in real code</span>
+        <h3>Ten guessed clamp() formulas → one shared construction.</h3>
+        <p>Every fluid heading used to carry its own hand-picked <code style="font-family:var(--font-mono);font-size:0.9em;">vw</code> coefficient — ten independent guesses at how fast type should scale between viewports. The token system replaces all of them with one formula: linear interpolation between a 400px and 1440px viewport, endpoints preserved exactly from the original CSS. This is the real before/after, not a mockup.</p>
+      </div>
+
+      <div class="diff-grid reveal-up">
+        <div class="diff-col">
+          <span class="diff-label before">Before — 10 ad hoc formulas</span>
+          <div class="code-block diff-code" role="figure" aria-label="Original clamp formulas, before the token system">
+.hero-title            { font-size: clamp(52px, 9vw, 132px); }<br>
+.cta-title             { font-size: clamp(38px, 7vw, 100px); }<br>
+.case-title            { font-size: clamp(34px, 5.6vw, 64px); }<br>
+.section-head h2       { font-size: clamp(32px, 4.4vw, 52px); }<br>
+.testimonial-quote     { font-size: clamp(24px, 3.6vw, 42px); }<br>
+.case-quote blockquote { font-size: clamp(22px, 3.2vw, 38px); }<br>
+.about-lead            { font-size: clamp(26px, 3.2vw, 36px); }<br>
+.case-feature-head h3  { font-size: clamp(26px, 3.2vw, 38px); }<br>
+.service-name          { font-size: clamp(24px, 3vw, 36px); }<br>
+.cta-email             { font-size: clamp(22px, 3.2vw, 36px); }
+          </div>
+        </div>
+        <div class="diff-col">
+          <span class="diff-label after">After — 9 shared-construction tokens</span>
+          <div class="code-block diff-code" role="figure" aria-label="Fluid type tokens after the token system, one shared formula">
+<span class="cmt">/* clamp(min, min + (100vw - 400px) * (max-min)/1040, max) */</span><br>
+--font-fluid-2xl:  clamp(52px, 52px + (100vw - 400px) * 80/1040, 132px);<br>
+--font-fluid-xl:   clamp(38px, 38px + (100vw - 400px) * 62/1040, 100px);<br>
+--font-fluid-lg:   clamp(34px, 34px + (100vw - 400px) * 30/1040, 64px);<br>
+--font-fluid-md:   clamp(32px, 32px + (100vw - 400px) * 20/1040, 52px);<br>
+--font-fluid-quote-testimonial: clamp(24px, 24px + (100vw - 400px) * 18/1040, 42px);<br>
+--font-fluid-quote-case: clamp(22px, 22px + (100vw - 400px) * 16/1040, 38px);<br>
+--font-fluid-lead: clamp(26px, 26px + (100vw - 400px) * 11/1040, 37px); <span class="cmt">/* merged, zero-risk */</span><br>
+--font-fluid-heading: clamp(24px, 24px + (100vw - 400px) * 12/1040, 36px);<br>
+--font-fluid-link: clamp(22px, 22px + (100vw - 400px) * 14/1040, 36px);
+          </div>
+        </div>
+      </div>
+      <p class="token-live-caption" style="margin-top:14px;padding:0;border:none;">Only one real merge happened — <code style="font-family:var(--font-mono);font-size:0.9em;">about-lead</code> and <code style="font-family:var(--font-mono);font-size:0.9em;">case-feature-head h3</code> already shared the same min and vw coefficient in the original CSS, so folding them into <code style="font-family:var(--font-mono);font-size:0.9em;">--font-fluid-lead</code> was zero-risk. The testimonial and case-quote pair looked similar but had different enough parameters that merging would have visibly resized both — so they stayed separate. That distinction was the actual design decision; collapsing the formula itself was mechanical.</p>
+    </div>
+  </section>
+
+  <!-- Dark mode proof -->
+  <section class="case-feature">
+    <div class="wrap">
+      <div class="case-feature-head reveal-up">
+        <span class="tag">Dark mode as proof</span>
+        <h3>If the architecture works, theme is a switch — not a rewrite.</h3>
+        <p>Toggle the theme control in the header. Every swatch and surface on this page follows semantic tokens. That same alias chain is what the agent walks when it audits “is this primitive still needed?” — including dark overrides that a naïve grep would miss.</p>
+      </div>
+      <div class="compare-grid reveal-up">
+        <div class="compare-card">
+          <span class="compare-tag current">False positive</span>
+          <p>Count only light-mode definitions and every <b>--neutral-dark-*</b> looks dead.</p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-tag solution">Correct graph</span>
+          <p>Include <b>html[data-theme="dark"]</b> aliases — those primitives are alive via the semantic layer.</p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-tag solution">Result</span>
+          <p><b>0</b> transitively-dead tokens after the full alias graph. The rigor is in the chain, not the headline count.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Agent workflows -->
+  <section class="case-feature">
+    <div class="wrap">
+      <div class="case-feature-head reveal-up">
+        <span class="tag">Agent workflows</span>
+        <h3>Three audits. One paper trail each.</h3>
+        <p>Inspired by the idea of agentic design systems — not “prompt a screen,” but “give the machine a vocabulary worth maintaining.” Each workflow was analysis-only: no live-site edits until reviewed. Branch: <b>audit-agent-workflows</b>.</p>
+      </div>
+
+      <div class="workflow-grid reveal-up">
+        <article class="workflow-card">
+          <span class="wf-step">Workflow 01</span>
+          <h4>Token consolidation</h4>
+          <div class="wf-terminal" role="figure" aria-label="Token consolidation audit output">
+            <span class="ln"><span class="prompt">$</span> audit tokens --consolidate tokens.css tokens.json</span>
+            <span class="ln out">&gt; resolving var() chains to light-mode concrete values…</span>
+            <span class="ln out">&gt; grouping exact matches + ΔE color deltas + ±1px neighbors…</span>
+            <span class="ln out">&gt; most matches are intentional layering or cross-axis (12px = space AND type)</span>
+            <span class="ln out">&gt; real redundancy: warm-alt placeholder pair (ΔE≈2.3–2.4), optional 19px step</span>
+            <span class="ln ok">✓ 5 droppable if every merge accepted (119 → 114) — design still decides</span>
+          </div>
+          <p class="wf-number">5<span>tokens droppable if merges accepted (119 → 114)</span></p>
+        </article>
+
+        <article class="workflow-card">
+          <span class="wf-step">Workflow 02</span>
+          <h4>Dead token cleanup</h4>
+          <div class="wf-terminal" role="figure" aria-label="Dead token cleanup audit output">
+            <span class="ln"><span class="prompt">$</span> audit tokens --dead-check tokens.css</span>
+            <span class="ln out">&gt; grep production CSS/JS/HTML for var(--name)…</span>
+            <span class="ln out">&gt; building reverse alias graph, including html[data-theme="dark"]…</span>
+            <span class="ln out">&gt; WARNING: light-only parse would false-flag every --neutral-dark-* as dead</span>
+            <span class="ln out">&gt; 23 tokens alive only via alias chain (dark theme included)</span>
+            <span class="ln ok">✓ 3 directly-dead · 0 transitively-dead — candidates only, nothing deleted</span>
+          </div>
+          <p class="wf-number">3<span>directly-dead · 0 transitively-dead</span></p>
+        </article>
+
+        <article class="workflow-card">
+          <span class="wf-step">Workflow 03</span>
+          <h4>Code ↔ Figma drift</h4>
+          <div class="wf-terminal" role="figure" aria-label="Code to Figma drift audit output">
+            <span class="ln"><span class="prompt">$</span> audit drift --code tokens.css --figma figma-variables-export.json</span>
+            <span class="ln out">&gt; comparing 118 code tokens against 126 Figma variables…</span>
+            <span class="ln out">&gt; normalizing px vs unitless, font stacks, easing, clamp() vs min/max…</span>
+            <span class="ln out">&gt; found 1 code-only token: --color-placeholder-accent</span>
+            <span class="ln out">&gt; added to Figma as Semantic var (alias: base/white) — same day</span>
+            <span class="ln ok">✓ 118/118 in sync · 0 genuine mismatches · 0 gaps</span>
+          </div>
+          <p class="wf-number">118/118<span>tokens in sync · zero gaps</span></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Drift detail -->
+  <section class="case-feature">
+    <div class="wrap">
+      <div class="case-feature-head reveal-up">
+        <span class="tag">Drift audit</span>
+        <h3>118 of 118 tokens in sync.</h3>
+        <p>After fair comparison rules, the system holds together completely. The one code-only token found (<code style="font-family:var(--font-mono);font-size:0.9em;">--color-placeholder-accent</code>) wasn’t left as a footnote — it was added to Figma as a Semantic variable, aliased to <code style="font-family:var(--font-mono);font-size:0.9em;">base/white</code>, matching in both Light and Dark, the same day the audit found it.</p>
+      </div>
+      <div class="reveal-up">
+        <div class="sync-bar" role="img" aria-label="118 of 118 tokens in sync">
+          <div class="fill" data-sync-fill></div>
+          <div class="gap"></div>
+        </div>
+        <p class="sync-caption">100% paired and matching — the one gap found during the audit was closed the same day. Architectural exception: composite shadow as Figma Effect Style.</p>
+      </div>
+      <div class="stat-row reveal-up">
+        <div class="stat"><b>127</b><span>Figma variables in export</span></div>
+        <div class="stat"><b>0</b><span>genuine value mismatches</span></div>
+        <div class="stat"><b>0</b><span>code-only gaps</span></div>
+        <div class="stat"><b>3</b><span>workflows validated</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What I learned -->
+  <section class="case-feature">
+    <div class="wrap">
+      <div class="case-feature-head reveal-up">
+        <span class="tag">What I learned</span>
+        <h3>The agent is fast. Judgment stays human.</h3>
+        <p>Mechanical work — resolving aliases, counting refs, normalizing px vs unitless Figma numbers — is where agents shine. Collapsing two near-black text colors, or deciding whether a 19px type step is “the same thing wearing a different name,” is still a design decision. The audit’s job is to surface candidates with a paper trail, not to auto-merge without review.</p>
+      </div>
+      <div class="compare-grid reveal-up">
+        <div class="compare-card">
+          <span class="compare-tag solution">Quality becomes measurable</span>
+          <p>System health is <b>118/118 in sync</b>, <b>3</b> dead candidates, <b>5</b> consolidatable — not “feels tidy.”</p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-tag solution">Two greens, one canonical value</span>
+          <p>The audit found two near-identical greens in production — <b>#33b25a</b> (status dot) and <b>#43bd68</b> (a compare-tag). Mechanically, either could win. <b>#33b25a</b> was kept because it was already the site-wide value; the single-use color moved instead. Usage counts are cheap for an agent to produce — deciding which one is “canonical” isn’t.</p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-tag solution">A merge the agent proposed, and lost</span>
+          <p>The audit’s first pass suggested merging two near-identical fluid quote formulas. Reversed: their real parameters (24px vs 22px min, different vw coefficients) meant merging would visibly resize both. Pattern-matching found the similarity; a human found the difference that mattered.</p>
+        </div>
+      </div>
+      <p class="reveal-up" style="margin-top:28px;font-size:var(--text-md);color:var(--color-text-secondary);line-height:var(--leading-loose);">One gap actually closed while building this page: the drift audit flagged <code style="font-family:var(--font-mono);font-size:0.9em;">--color-placeholder-accent</code> as code-only, with no Figma counterpart. It was added to Figma the same day — a Semantic variable aliased to <code style="font-family:var(--font-mono);font-size:0.9em;">base/white</code>, matching in both Light and Dark. That’s the loop actually closing, not just getting described.</p>
+    </div>
+  </section>
+
+  <!-- Go verify it yourself -->
+  <section class="case-feature">
+    <div class="wrap">
+      <div class="case-feature-head reveal-up">
+        <span class="tag">Go verify it yourself</span>
+        <h3>Explore the full system in Figma.</h3>
+        <p>Every value in the panel above is bound as a real Figma Variable in the source file — primitives, semantic aliases, Light and Dark modes. Nothing here is a swatch pasted into a frame.</p>
+      </div>
+      <a href="https://www.figma.com/design/3HAXQsUOokAnayylSTkJMe/Daniel-Cruz-_-Portfolio?m=auto&t=6juAi7lvLZRjRvdV-1" target="_blank" rel="noopener" class="btn magnetic reveal-up" id="figmaFileLink">Open the Figma file <span class="btn-icon">↗</span></a>
+    </div>
+  </section>
+
+  <section class="case-quote">
+    <div class="wrap">
+      <blockquote class="reveal-up">The design system is no longer only documentation for developers. It’s instructions for a machine — and the designer’s job is to make those instructions worth following.</blockquote>
+      <p class="quote-author reveal-up"><b>Reflection</b> — on agentic maintenance of this portfolio’s tokens</p>
+    </div>
+  </section>
+
+  <section class="more-work">
+    <div class="wrap">
+      <div class="section-head reveal-up">
+        <div><span class="tag">More work</span><h2>Keep exploring.</h2></div>
+        <a href="index.html#work" class="btn-ghost magnetic">See all projects</a>
+      </div>
+      <div class="more-grid" data-stagger>
+        <a href="case-genesis.html" class="work-card">
+          <div class="work-thumb has-image">
+            <img src="images/genesis/00-cover-macbook.png" alt="Genesis forecasting platform dashboard on a MacBook">
+            <span class="thumb-tag">Oil &amp; Gas · Hess</span>
+          </div>
+          <div class="work-info"><div><h3>Genesis</h3><span>Centralized forecasting platform · SaaS</span></div><div class="work-arrow">↗</div></div>
+        </a>
+        <a href="case-pro2col.html" class="work-card">
+          <div class="work-thumb has-image">
+            <img src="images/pro2col/cover.jpg" alt="Pro2col wellness platform on a phone">
+            <span class="thumb-tag">Health · Herbalife</span>
+          </div>
+          <div class="work-info"><div><h3>Pro2col</h3><span>Wellness platform · Mobile</span></div><div class="work-arrow">↗</div></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <span class="tag reveal-up">Contact</span>
+      <h2 class="cta-title reveal-up">Let's build<br>something great.</h2>
+      <a href="mailto:danierocruz@gmail.com" class="cta-email magnetic">danierocruz@gmail.com</a>
+      <p class="cta-sub">Usually respond within 24h · Open to remote, B2B &amp; SaaS projects.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <button class="back-to-top magnetic" id="backToTop" aria-label="Back to top">
+    <span>Take me to the top</span>
+    <span class="btn-icon">↑</span>
+  </button>
+  <div class="wrap footer-row">
+    <span class="footer-note">© 2026 Daniel Cruz. All rights reserved.</span>
+    <ul class="footer-links">
+      <li><a href="https://linkedin.com/in/danieroc" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="mailto:danierocruz@gmail.com">Email</a></li>
+    </ul>
+  </div>
+</footer>
+
+<a href="mailto:danierocruz@gmail.com" class="float-cta magnetic">
+  <span class="label">Let's talk</span>
+  <span class="btn-icon">↗</span>
+</a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="assets/main.js"></script>
+<script>
+(function(){
+  var HERO_TOKENS = [
+    { name: '--color-bg', label: 'Background' },
+    { name: '--color-surface', label: 'Surface' },
+    { name: '--color-border', label: 'Border' },
+    { name: '--color-text', label: 'Text' },
+    { name: '--color-text-secondary', label: 'Text secondary' },
+    { name: '--color-text-muted', label: 'Text muted' },
+    { name: '--color-accent', label: 'Accent' },
+    { name: '--color-success', label: 'Success' },
+    { name: '--color-warning', label: 'Warning' }
+  ];
+
+  var grid = document.getElementById('heroTokenGrid');
+  if (!grid) return;
+
+  function renderHeroTokens() {
+    var cs = getComputedStyle(document.documentElement);
+    grid.innerHTML = HERO_TOKENS.map(function (t) {
+      var val = cs.getPropertyValue(t.name).trim();
+      return '<div class="token-live-cell">'
+        + '<div class="token-live-swatch" style="background:' + val + '"></div>'
+        + '<code>' + t.name + '</code>'
+        + '<b class="hex">' + val + '</b>'
+        + '</div>';
+    }).join('');
+  }
+
+  renderHeroTokens();
+  // Real dark-mode toggle already just flips html[data-theme] — watching that
+  // attribute (rather than hooking the toggle button) means this stays in
+  // sync with any way the theme changes, not just a click on this page.
+  new MutationObserver(renderHeroTokens).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme']
+  });
+})();
+</script>
+<script>
+(function(){
+  // Sync bar fills on scroll-into-view, same reveal pattern as .reveal-up
+  // and the .count animated stats elsewhere on the site (see main.js).
+  var fill = document.querySelector('[data-sync-fill]');
+  if (!fill || !window.gsap || !window.ScrollTrigger) return;
+  gsap.set(fill, { width: '0%' });
+  ScrollTrigger.create({
+    trigger: '.sync-bar',
+    start: 'top 90%',
+    once: true,
+    onEnter: function () {
+      gsap.to(fill, { width: '100%', duration: 1.3, ease: 'power3.out' });
+    }
+  });
+})();
+</script>
+<script>
+(function(){
+  var panel = document.getElementById('figVarsPanel');
+  if (!panel) return;
+
+  var collectionsEl = document.getElementById('figCollections');
+  var groupsEl = document.getElementById('figGroups');
+  var tableBody = document.getElementById('figTableBody');
+  var searchInput = document.getElementById('figVarsSearch');
+
+  var GROUP_ORDER = {
+    primitives: ['color', 'font', 'space', 'layout', 'radius', 'duration', 'easing'],
+    semantic: ['color']
+  };
+
+  var state = { collection: 'primitives', group: 'all', query: '' };
+  var DATA = { primitives: [], semantic: [] };
+
+  // Same classification Figma's own collections use — color/font/space/
+  // layout/radius/duration/easing. --shadow-elevated-offset is deliberately
+  // excluded: it lives as a Figma Effect Style, not a Variable (see
+  // drift-report.md), so it isn't real here either.
+  function groupOf(name) {
+    if (name === 'black' || name === 'white') return 'color';
+    var colorPrefixes = ['color-', 'neutral-light-', 'neutral-dark-', 'accent-', 'placeholder-warm', 'placeholder-cool', 'success', 'warning', 'a-'];
+    for (var i = 0; i < colorPrefixes.length; i++) { if (name.indexOf(colorPrefixes[i]) === 0) return 'color'; }
+    if (name.indexOf('font-') === 0 || name.indexOf('text-') === 0 || name.indexOf('weight-') === 0 || name.indexOf('leading-') === 0 || name.indexOf('tracking-') === 0) return 'font';
+    if (name.indexOf('space-') === 0) return 'space';
+    if (name.indexOf('layout-') === 0) return 'layout';
+    if (name.indexOf('radius-') === 0) return 'radius';
+    if (name.indexOf('duration-') === 0) return 'duration';
+    if (name.indexOf('ease-') === 0) return 'easing';
+    return 'shadow';
+  }
+
+  function subgroupLabel(name) {
+    if (name.indexOf('neutral-light-') === 0) return 'color / neutral / light';
+    if (name.indexOf('neutral-dark-') === 0) return 'color / neutral / dark';
+    if (name.indexOf('accent-') === 0) return 'color / brand / accent';
+    if (name.indexOf('success') === 0) return 'color / brand / success';
+    if (name.indexOf('warning') === 0) return 'color / brand / warning';
+    if (name.indexOf('placeholder-warm') === 0) return 'color / placeholder / warm';
+    if (name.indexOf('placeholder-cool') === 0) return 'color / placeholder / cool';
+    if (name.indexOf('a-') === 0) return 'color / alpha';
+    if (name === 'black' || name === 'white') return 'color / base';
+    if (name.indexOf('font-fluid-') === 0) return 'font / size / fluid';
+    if (name.indexOf('font-') === 0) return 'font / family';
+    if (name.indexOf('text-') === 0) return 'font / size / static';
+    if (name.indexOf('weight-') === 0) return 'font / weight';
+    if (name.indexOf('leading-') === 0) return 'font / lineHeight';
+    if (name.indexOf('tracking-') === 0) return 'font / letterSpacing';
+    if (name.indexOf('space-') === 0) return 'space';
+    if (name.indexOf('layout-') === 0) return 'layout';
+    if (name.indexOf('radius-') === 0) return 'radius';
+    if (name.indexOf('duration-') === 0) return 'duration';
+    if (name.indexOf('ease-') === 0) return 'easing';
+    return 'other';
+  }
+
+  function extractAlias(value) {
+    var m = /^var\(--([a-zA-Z0-9-]+)\)$/.exec(value.trim());
+    return m ? m[1] : null;
+  }
+
+  function parseDecls(block) {
+    var values = {}; var order = [];
+    var re = /--([a-zA-Z0-9-]+)\s*:\s*([^;]+);/g;
+    var m;
+    while ((m = re.exec(block))) {
+      if (!(m[1] in values)) order.push(m[1]);
+      values[m[1]] = m[2].trim();
+    }
+    return { values: values, order: order };
+  }
+
+  // The whole point: this fetches the SAME assets/tokens.css every other
+  // page on the site links, at load time — the panel below can't drift
+  // from the source because it IS the source, re-parsed.
+  fetch('assets/tokens.css').then(function (res) { return res.text(); }).then(function (css) {
+    var noComments = css.replace(/\/\*[\s\S]*?\*\//g, '');
+
+    var rootBlocks = [];
+    var rootRe = /:root\s*{([\s\S]*?)}/g;
+    var rm;
+    while ((rm = rootRe.exec(noComments))) rootBlocks.push(rm[1]);
+    var darkMatch = /html\[data-theme="dark"\]\s*{([\s\S]*?)}/.exec(noComments);
+    var darkBlock = darkMatch ? darkMatch[1] : '';
+
+    var primitivesParsed = parseDecls(rootBlocks[0] || '');
+    var semanticParsed = parseDecls(rootBlocks[1] || '');
+    var darkParsed = parseDecls(darkBlock);
+
+    DATA.primitives = primitivesParsed.order
+      .filter(function (name) { return groupOf(name) !== 'shadow'; })
+      .map(function (name) {
+        return { name: '--' + name, value: primitivesParsed.values[name], group: groupOf(name), subgroup: subgroupLabel(name) };
+      });
+
+    DATA.semantic = semanticParsed.order.map(function (name) {
+      return {
+        name: '--' + name,
+        value: semanticParsed.values[name],
+        dark: darkParsed.values[name] || semanticParsed.values[name],
+        group: 'color',
+        subgroup: 'color / semantic'
+      };
+    });
+
+    renderSidebar();
+    renderTable();
+  }).catch(function () {
+    tableBody.innerHTML = '<div class="fig-empty">Couldn’t load tokens.css in this context.</div>';
+  });
+
+  function currentEntries() {
+    return state.collection === 'primitives' ? DATA.primitives : DATA.semantic;
+  }
+
+  function renderSidebar() {
+    collectionsEl.innerHTML = ['primitives', 'semantic'].map(function (c) {
+      var active = state.collection === c ? ' active' : '';
+      return '<button class="fig-row-btn' + active + '" data-collection="' + c + '"><span>' + (c === 'primitives' ? 'Primitives' : 'Semantic') + '</span><span>' + DATA[c].length + '</span></button>';
+    }).join('');
+
+    var entries = currentEntries();
+    var groups = GROUP_ORDER[state.collection];
+    var counts = {};
+    entries.forEach(function (e) { counts[e.group] = (counts[e.group] || 0) + 1; });
+
+    var html = '<button class="fig-row-btn is-group' + (state.group === 'all' ? ' active' : '') + '" data-group="all"><span>All</span><span>' + entries.length + '</span></button>';
+    html += groups.map(function (g) {
+      var active = state.group === g ? ' active' : '';
+      return '<button class="fig-row-btn is-group' + active + '" data-group="' + g + '"><span>' + g + '</span><span>' + (counts[g] || 0) + '</span></button>';
+    }).join('');
+    groupsEl.innerHTML = html;
+
+    collectionsEl.querySelectorAll('[data-collection]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        state.collection = btn.dataset.collection;
+        state.group = 'all';
+        renderSidebar();
+        renderTable();
+      });
+    });
+    groupsEl.querySelectorAll('[data-group]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        state.group = btn.dataset.group;
+        renderSidebar();
+        renderTable();
+      });
+    });
+  }
+
+  function copyRow(row, fullName) {
+    var text = 'var(' + fullName + ')';
+    function flash() {
+      row.classList.add('copied');
+      setTimeout(function () { row.classList.remove('copied'); }, 1200);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(flash, flash);
+    } else {
+      flash();
+    }
+  }
+
+  function renderTable() {
+    var entries = currentEntries().filter(function (e) {
+      if (state.group !== 'all' && e.group !== state.group) return false;
+      if (state.query) {
+        var q = state.query.toLowerCase();
+        if (e.name.toLowerCase().indexOf(q) === -1 && e.value.toLowerCase().indexOf(q) === -1) return false;
+      }
+      return true;
+    });
+
+    if (!entries.length) {
+      tableBody.innerHTML = '<div class="fig-empty">No variables match.</div>';
+      return;
+    }
+
+    var isSemantic = state.collection === 'semantic';
+    var html = ''; var lastSubgroup = null;
+    entries.forEach(function (e) {
+      if (e.subgroup !== lastSubgroup) {
+        var parts = e.subgroup.split(' / ');
+        html += '<div class="fig-subgroup-head">' + parts.map(function (part, i) {
+          return i === parts.length - 1 ? '<b>' + part + '</b>' : part;
+        }).join(' / ') + '</div>';
+        lastSubgroup = e.subgroup;
+      }
+      var isColor = e.group === 'color';
+      var swatch = isColor ? '<span class="fig-swatch" style="background:' + e.value + '"></span>' : '';
+      var alias = isColor ? extractAlias(e.value) : null;
+      html += '<div class="fig-var-row" data-name="' + e.name + '">'
+        + '<div class="fig-var-name">' + swatch + '<span>' + e.name + '</span></div>'
+        + '<div class="fig-var-value">'
+        + '<span class="val-text">' + e.value + '</span>'
+        + (alias ? '<span class="fig-var-alias">→ --' + alias + '</span>' : '')
+        + (isSemantic ? '<button class="fig-expand-btn" type="button" aria-label="Expand light/dark">⌄</button>' : '')
+        + '</div>'
+        + '<span class="fig-copied">Copied ✓</span>'
+        + (isSemantic
+          ? '<div class="fig-expand-panel">'
+            + '<div class="fig-expand-mode"><span class="fig-swatch" style="background:' + e.value + '"></span>Light: ' + e.value + '</div>'
+            + '<div class="fig-expand-mode"><span class="fig-swatch" style="background:' + e.dark + '"></span>Dark: ' + e.dark + '</div>'
+            + '</div>'
+          : '')
+        + '</div>';
+    });
+    tableBody.innerHTML = html;
+
+    tableBody.querySelectorAll('.fig-var-row').forEach(function (row) {
+      row.addEventListener('click', function (e) {
+        if (e.target.closest('.fig-expand-btn')) {
+          row.classList.toggle('expanded');
+          return;
+        }
+        copyRow(row, row.dataset.name);
+      });
+    });
+  }
+
+  var searchDebounce;
+  searchInput.addEventListener('input', function () {
+    clearTimeout(searchDebounce);
+    searchDebounce = setTimeout(function () {
+      state.query = searchInput.value.trim();
+      renderTable();
+    }, 120);
+  });
+})();
+</script>
+</body>
+</html>
