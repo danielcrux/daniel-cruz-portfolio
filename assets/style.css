@@ -413,7 +413,11 @@ section{padding:var(--layout-section-150) 0;}
 .service-panel p{
   padding:0 0 34px 84px;max-width:640px;
   font-size:var(--text-base);color:var(--color-text-secondary);line-height:var(--leading-loose);
+  transition:padding-left var(--duration-base) var(--ease-brand);
 }
+/* .service-row shifts padding-left:14px when open (see above) — match it
+   here so the body text stays aligned under the title while expanded. */
+.service-item.open .service-panel p{padding-left:98px;}
 
 /* ---------- about ---------- */
 #about{border-bottom:1px solid var(--color-border);}
@@ -727,6 +731,7 @@ html[data-theme="dark"] .case-cover .cover-note{
   .work-grid, .about-grid, .case-grid, .more-grid{grid-template-columns:1fr;}
   .service-row{grid-template-columns:40px 1fr 44px;}
   .service-panel p{padding-left:64px;}
+  .service-item.open .service-panel p{padding-left:78px;}
   section, .case-body, .more-work, .case-quote{padding:var(--layout-section-mobile) 0;}
 }
 @media (max-width:860px){
