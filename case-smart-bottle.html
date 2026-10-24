@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BRME0KFJ3K"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-BRME0KFJ3K');
+</script>
+
+<script>
+(function(){
+  try {
+    var saved = localStorage.getItem('theme');
+    var theme = saved || 'dark';
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {}
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Bottle — Daniel Cruz</title>
+<meta name="description" content="Designing the app side of a smart water bottle, from pairing to factory reset. A case study by Daniel Cruz, Product Designer.">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+<link rel="canonical" href="https://danielcruz.work/case-smart-bottle.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pro2col — Daniel Cruz">
+<meta property="og:description" content="Designing the app side of a smart water bottle, from pairing to factory reset. A case study by Daniel Cruz, Product Designer.">
+<meta property="og:image" content="https://danielcruz.work/images/social-preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="800">
+<meta property="og:url" content="https://danielcruz.work/case-smart-bottle.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pro2col — Daniel Cruz">
+<meta name="twitter:description" content="Designing the app side of a smart water bottle, from pairing to factory reset. A case study by Daniel Cruz, Product Designer.">
+<meta name="twitter:image" content="https://danielcruz.work/images/social-preview.jpg">
+
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header id="site-header">
+  <div class="wrap nav">
+    <a href="index.html" class="logo identity">
+      <span class="identity-avatar"><img src="images/avatar.jpg" alt="Daniel Cruz"></span>
+      <span class="identity-text"><b>Daniel Cruz</b></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#work">Work</a></li>
+      <li><a href="index.html#experience">Experience</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">
+      <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+    </button>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu"><span></span><span></span></button>
+  </div>
+</header>
+
+<main>
+
+  <section class="case-hero">
+    <div class="wrap">
+      <p class="breadcrumb"><a href="index.html#work">Work</a> / <b>Smart Bottle</b></p>
+      <h1 class="case-title">
+        <span class="reveal-line"><span>Designing the app side of a smart bottle, before the hardware had answers</span></span>
+      </h1>
+      <div class="cover-media reveal-up">
+        <img src="images/water-bottle/cover.jpg" alt="Three Pro2col screens for the smart bottle: bottle added, hydration page and bottle settings">
+      </div>
+    </div>
+  </section>
+
+  <section class="case-body u-case-subhero-pt">
+    <div class="wrap case-grid">
+      <div class="case-copy">
+        <h3>The Challenge</h3>
+        <p class="case-feature-quote reveal-up">“How do you design the app for a bottle when nobody can tell you how the bottle behaves?”</p>
+        <p class="reveal-up">Pro2col was adding its first smart device: a white-label water bottle that tracks every sip and syncs with the app over Bluetooth. The client had very little technical information about the hardware, and the manufacturer’s manual contradicted itself. We had to design the full journey, from unboxing to factory reset, while figuring out how the device actually works.</p>
+      </div>
+
+      <div class="meta-grid reveal-up">
+        <div class="meta-item"><span>Product</span><b>Pro2col Smart Bottle</b></div>
+        <div class="meta-item"><span>Agency</span><b>Strategy CX</b></div>
+        <div class="meta-item"><span>My role</span><b>Product Designer</b></div>
+        <div class="meta-item"><span>Period</span><b>Jul – Oct 2026</b></div>
+        <div class="meta-item"><span>Team</span><b>3 designers, 1 PM</b></div>
+        <div class="meta-item"><span>What was mine</span><b>User flow, competitor research, Bottle ID, Delete Bottle and error messages</b></div>
+        <div class="meta-item full">
+          <span>Scope</span>
+          <div class="chip-row">
+            <span class="chip">Hardware + App</span>
+            <span class="chip">Bluetooth</span>
+            <span class="chip">Mobile</span>
+            <span class="chip">Competitor Research</span>
+            <span class="chip">Low &amp; High Fidelity</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key results -->
+  <section class="case-results">
+    <div class="wrap">
+      <div class="stat-row reveal-up">
+        <div class="stat"><b>Approved</b><span>client sent the bottle to manufacturing</span></div>
+        <div class="stat"><b>9</b><span>connected products benchmarked</span></div>
+        <div class="stat"><b>Feb 2028</b><span>planned launch</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Constraints -->
+  <section class="case-feature">
+    <div class="wrap">
+      <div class="case-feature-head reveal-up">
+        <span class="tag">Constraints</span>
+        <h3>What we had to work within.</h3>
+      </div>
+      <div class="compare-grid" data-stagger>
+        <div class="compare-card">
+          <h4>No hardware specs</h4>
+          <p>The client had little information about the bottle. Its manual skipped the app entirely, and its reset steps didn’t match the device.</p>
+        </div>
+        <div class="compare-card">
+          <h4>The app can’t see why</h4>
+          <p>A reset bottle, a dead battery and a bottle out of range all look the same to the app. Every message had to be true in all three cases.</p>
+        </div>
+        <div class="compare-card">
+          <h4>One bottle, many buyers</h4>
+          <p>Distributors buy bottles in bulk to resell, but only one bottle can be connected to an account at a time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Research -->
+  <section class="case-feature">
+    <div class="wrap">
+      <span class="head-tag">My work</span>
+      <div class="case-feature-head reveal-up">
+        <span class="tag">Competitor research</span>
+        <h3>How connected products handle the hard moments.</h3>
+        <p>I benchmarked 9 connected products, from wearables like Garmin, Oura, Whoop and Apple Watch to smart bottles and mugs like Ember, LARQ, Rebo and our hardware partner. I focused less on the happy path and more on what happens when you pair, lose, reset or give away a device.</p>
+      </div>
+      <div class="compare-grid" data-stagger>
+        <div class="compare-card">
+          <span class="compare-tag neutral">Finding</span><h4>Nobody says “Forget”</h4>
+          <p>“Forget” is phone Bluetooth vocabulary. Device apps say Remove, Reset or Erase, and keep actions that stop and actions that erase clearly apart.</p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-tag neutral">Finding</span><h4>Resets live on the hardware</h4>
+          <p>On every bottle we looked at, reset happens on the device and is confirmed by a light pattern. The app only finds out afterwards.</p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-tag neutral">Finding</span><h4>Support needs data</h4>
+          <p>One bottle app collects diagnostics through a hidden gesture. That pointed us to a visible “Details for support” block.</p>
+        </div>
+      </div>
+      <div class="insight-callout reveal-up">
+        <b>The core insight:</b> the bottle is the source of truth, not the app. Most hard moments happen on the device, so the app has to be honest about what it doesn’t know.
+      </div>
+    </div>
+  </section>
+
+  <!-- Exploration -->
+  <section class="case-feature">
+    <div class="wrap">
+      <span class="head-tag">With team</span>
+      <div class="case-feature-head reveal-up">
+        <span class="tag">Exploration</span>
+        <h3>Three decisions that shaped the flows.</h3>
+      </div>
+      <div class="compare-grid" data-stagger>
+        <div class="compare-card">
+          <span class="compare-tag current">Discarded</span><h4>Syncing through Apple Health</h4>
+          <p>Faster to build, but the app would lose buzz reminders, Do Not Disturb, Buzz to Locate and firmware updates. We went with Bluetooth straight to Pro2col.</p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-tag solution">Chosen</span><h4>“Delete”, not “Forget”</h4>
+          <p>The client first asked for “Forget bottle”. The benchmark showed it collides with the phone’s own “Forget device”, so the final flow uses Delete Bottle.</p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-tag solution">Chosen</span><h4>Reset on the bottle first</h4>
+          <p>Resetting on the device is the default path, and the app reacts to it. Deleting in the app first became the edge case, with its own pending state.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Setup -->
+  <section class="case-feature">
+    <div class="wrap">
+      <span class="head-tag">With team</span>
+      <div class="case-feature-head reveal-up">
+        <span class="tag">01 — Setup &amp; Pairing</span>
+        <h3>From the box to a connected bottle.</h3>
+        <p>Bluetooth permission uses the native system dialog, then the bottle blinks so people know they picked the right one from the list. Naming the bottle is optional, and every step has a way out if the connection fails.</p>
+      </div>
+      <div class="feature-full reveal-up">
+        <img src="images/water-bottle/01-setup.jpg" alt="Bottle setup screens: intro, Bluetooth permission, match your bottle, name your bottle and bottle added">
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottle ID -->
+  <section class="case-feature">
+    <div class="wrap">
+      <span class="head-tag">My work</span>
+      <div class="case-feature-head reveal-up">
+        <span class="tag">02 — Bottle ID</span>
+        <h3>Scan it, or type it.</h3>
+        <p>Each bottle is linked through the ID printed on its box. Scanning the barcode is the main path, and typing the serial number is the fallback, with an FAQ that explains where to find it. Distributors who registered many bottles get an Unlock step to choose which one connects to their account.</p>
+      </div>
+      <div class="feature-full reveal-up">
+        <img src="images/water-bottle/02-bottle-id.jpg" alt="Scan your box barcode, serial number FAQ, manual serial entry, invalid serial error and unlock bottles for distributors">
+      </div>
+    </div>
+  </section>
+
+  <!-- Plan & Reminders -->
+  <section class="case-feature">
+    <div class="wrap">
+      <span class="head-tag">With team</span>
+      <div class="case-feature-head reveal-up">
+        <span class="tag">03 — Plan &amp; Reminders</span>
+        <h3>Hydration only, or the full plan.</h3>
+        <p>After pairing, people choose between a hydration-only experience and the full Pro2col plan. Then they set how often the bottle buzzes and their quiet hours, so reminders fit their day.</p>
+      </div>
+      <div class="feature-full reveal-up">
+        <img src="images/water-bottle/03-plan-reminders.jpg" alt="Choice screen, plan assessment intro, buzz reminder frequency, Do Not Disturb hours and bottle ready">
+      </div>
+    </div>
+  </section>
+
+  <!-- Daily Use -->
+  <section class="case-feature">
+    <div class="wrap">
+      <span class="head-tag">With team</span>
+      <div class="case-feature-head reveal-up">
+        <span class="tag">04 — Daily Use</span>
+        <h3>Every sip, already counted.</h3>
+        <p>The hydration card on Track updates on its own, with temperature, battery and last sync. People who don’t have the bottle yet keep logging water by hand, with a clear path to connect it when it arrives.</p>
+      </div>
+      <div class="feature-full reveal-up">
+        <img src="images/water-bottle/04-daily-use.jpg" alt="Track page with the hydration card, hydration page, bottle not arrived yet state and hydration history">
+      </div>
+      <div class="feature-full reveal-up">
+        <img src="images/water-bottle/07-hydration-card-states.jpg" alt="Hydration card states: connected, goal reached with confetti, and disconnected with a Delete Your Bottle card">
+        <p class="caption">The same hydration card in three states: connected, goal reached, and disconnected after a factory reset.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Settings -->
+  <section class="case-feature">
+    <div class="wrap">
+      <span class="head-tag">With team</span>
+      <div class="case-feature-head reveal-up">
+        <span class="tag">05 — Bottle Settings</span>
+        <h3>Find it, pause it, keep it updated.</h3>
+        <p>Settings brings the bottle’s hardware features into the app: Buzz to Locate, pausing reminders, firmware updates and hydration history.</p>
+      </div>
+      <div class="feature-full reveal-up">
+        <img src="images/water-bottle/05-settings.jpg" alt="Bottle settings, Buzz to Locate and pause buzz reminders screens">
+      </div>
+    </div>
+  </section>
+
+  <!-- Delete Bottle -->
+  <section class="case-feature">
+    <div class="wrap">
+      <span class="head-tag">My work</span>
+      <div class="case-feature-head reveal-up">
+        <span class="tag">06 — Delete Bottle</span>
+        <h3>Removing a device without leaving ghosts behind.</h3>
+        <p>When the app detects a reset bottle, it shows a card on Track instead of failing silently. The copy never claims more than the app knows. Deleting keeps the hydration history, and the destructive red is used only for the final action.</p>
+      </div>
+      <div class="feature-full reveal-up">
+        <img src="images/water-bottle/06-delete-bottle.jpg" alt="Settings with factory reset, Track with a Delete Your Bottle card, delete confirmation, deleting state and factory reset completed">
+      </div>
+    </div>
+  </section>
+
+  <!-- Errors -->
+  <section class="case-feature">
+    <div class="wrap">
+      <span class="head-tag">My work</span>
+      <div class="case-feature-head reveal-up">
+        <span class="tag">07 — Error Messages</span>
+        <h3>One template for every error.</h3>
+        <p>The firmware has 18 error states, so I designed one modular template instead of 18 screens: a title, a plain message, actions, and a collapsible “Details for support” block with a Copy button. Following the client’s rules, there is no red exclamation mark and no big red button. I explored it both as a bottom sheet and as a centered dialog.</p>
+      </div>
+      <div class="feature-full reveal-up">
+        <img src="images/water-bottle/08-error-template.jpg" alt="Error template as a bottom sheet and as a centered dialog, collapsed and with support details expanded">
+      </div>
+    </div>
+  </section>
+
+  <!-- Results & learnings -->
+  <section class="case-feature">
+    <div class="wrap">
+      <div class="case-feature-head reveal-up">
+        <span class="tag">Results &amp; learnings</span>
+        <h3>Approved and in manufacturing, launching in February 2028.</h3>
+        <p>The client approved the experience and sent the bottle to production. Our research also filled gaps in hardware documentation the client didn’t have. What I would do differently: let the bottle connect to other apps and to Apple Health too, instead of only to Pro2col.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-quote">
+    <div class="wrap">
+      <blockquote class="reveal-up">When the hardware is a black box, honest copy is a design decision. The app should never pretend to know more than the bottle told it.</blockquote>
+      <p class="quote-author reveal-up"><b>Reflection</b> · on designing for a device</p>
+    </div>
+  </section>
+
+  <section class="more-work">
+    <div class="wrap">
+      <div class="section-head reveal-up">
+        <div><span class="tag">More work</span><h2>Keep exploring.</h2></div>
+        <a href="projects.html" class="btn-ghost magnetic">View all projects</a>
+      </div>
+      <div class="more-grid" data-stagger>
+        <a href="case-pro2col.html" class="work-card">
+          <div class="work-thumb has-image">
+            <img src="images/pro2col/cover.jpg" alt="Person checking the Pro2col wellness app on their phone">
+            <span class="thumb-tag">Health &amp; Wellness</span>
+          </div>
+          <div class="work-info"><div><h3>Pro2col</h3><span>Wellness tracking app · Mobile</span></div><div class="work-arrow">↗</div></div>
+        </a>
+        <a href="case-genesis.html" class="work-card">
+          <div class="work-thumb has-image">
+            <img src="images/genesis/00-cover-macbook.png" alt="Genesis forecasting platform dashboard on a MacBook">
+            <span class="thumb-tag">Oil &amp; Gas · Hess</span>
+          </div>
+          <div class="work-info"><div><h3>Genesis</h3><span>~30% less manual data gathering · SaaS</span></div><div class="work-arrow">↗</div></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <span class="tag reveal-up">Contact</span>
+      <h2 class="cta-title reveal-up">Let's talk about<br>your next hire.</h2>
+      <a href="mailto:danierocruz@gmail.com" class="cta-email magnetic">danierocruz@gmail.com</a>
+      <p class="cta-sub">Usually respond within 24h · Relocating to Europe. Open to roles in Europe and remote.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <button class="back-to-top magnetic" id="backToTop" aria-label="Back to top">
+    <span>Take me to the top</span>
+    <span class="btn-icon">↑</span>
+  </button>
+  <div class="wrap footer-row">
+    <span class="footer-note">© 2026 Daniel Cruz. All rights reserved.</span>
+    <ul class="footer-links">
+      <li><a href="https://linkedin.com/in/danieroc" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="mailto:danierocruz@gmail.com">Email</a></li>
+    </ul>
+  </div>
+</footer>
+
+<a href="mailto:danierocruz@gmail.com" class="float-cta magnetic">
+  <span class="label">Let's talk</span>
+  <span class="btn-icon">↗</span>
+</a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="assets/main.js"></script>
+</body>
+</html>

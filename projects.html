@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BRME0KFJ3K"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-BRME0KFJ3K');
+</script>
+
+<script>
+(function(){
+  try {
+    var saved = localStorage.getItem('theme');
+    var theme = saved || 'dark';
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {}
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All projects — Daniel Cruz</title>
+<meta name="description" content="Daniel Cruz, Senior Product Designer based in São Paulo and relocating to Europe as an EU citizen. B2B, SaaS and mobile products for clients like Hess and Herbalife.">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+<link rel="canonical" href="https://danielcruz.work/projects.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Daniel Cruz - Product Designer">
+<meta property="og:description" content="Daniel Cruz, Senior Product Designer based in São Paulo and relocating to Europe as an EU citizen. B2B, SaaS and mobile products for clients like Hess and Herbalife.">
+<meta property="og:image" content="https://danielcruz.work/images/social-preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="800">
+<meta property="og:url" content="https://danielcruz.work/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Daniel Cruz - Product Designer">
+<meta name="twitter:description" content="Daniel Cruz, Senior Product Designer based in São Paulo and relocating to Europe as an EU citizen. B2B, SaaS and mobile products for clients like Hess and Herbalife.">
+<meta name="twitter:image" content="https://danielcruz.work/images/social-preview.jpg">
+
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  /* Page-local: distinct footer entry pointing at the Lab page, kept out
+     of assets/style.css so the shared component library stays untouched. */
+  .footer-links li{display:flex;align-items:center;}
+  .footer-links .footer-lab-link{
+    color:var(--color-accent);font-weight:var(--weight-semibold);
+    display:inline-flex;align-items:center;gap:6px;line-height:1;
+  }
+  .footer-links .footer-lab-link:hover{color:var(--color-accent);}
+  .footer-links .footer-lab-link .dot{
+    width:5px;height:5px;border-radius:50%;background:var(--color-accent);
+    box-shadow:0 0 0 3px color-mix(in srgb, var(--color-accent) 18%, transparent);
+    display:inline-block;flex-shrink:0;
+  }
+
+  /* Page-local: LinkedIn link next to the CV button in About. Uses
+     .btn-ghost's existing color:var(--color-text), which already flips to
+     near-white in dark mode — no extra dark-mode override needed. */
+  .about-cv{display:flex;flex-wrap:wrap;align-items:center;gap:22px;}
+  .about-cv .about-linkedin{display:inline-flex;align-items:center;gap:8px;}
+
+  /* Page-local: small teaser pointing at the Lab/Design System page.
+     Deliberately not a .work-card — dashed border + surface bg keep it
+     visually smaller than the real case studies above it. */
+  .ds-teaser{padding:56px 0 0;}
+  .ds-teaser-card{
+    display:grid;grid-template-columns:1.3fr 0.7fr;gap:32px;align-items:center;
+    background:var(--color-surface);border:1px dashed var(--color-border);
+    border-radius:var(--radius-md);padding:32px 36px;
+  }
+  .ds-teaser-tag{
+    display:inline-block;font-size:var(--text-2xs);font-weight:var(--weight-bold);
+    letter-spacing:var(--tracking-wide);text-transform:uppercase;color:var(--color-accent);margin-bottom:10px;
+  }
+  .ds-teaser-copy h3{
+    font-size:var(--text-xl);font-weight:var(--weight-semibold);color:var(--color-text);
+    letter-spacing:var(--tracking-tight);margin-bottom:10px;
+  }
+  .ds-teaser-copy p{
+    font-size:var(--text-sm);color:var(--color-text-muted);line-height:var(--leading-loose);
+    max-width:52ch;margin-bottom:18px;
+  }
+  .ds-teaser-preview{
+    background:var(--color-bg);border:1px solid var(--color-border);
+    border-radius:var(--radius-md);padding:18px 20px;
+    display:flex;flex-direction:column;gap:14px;
+  }
+  .ds-mini-label{
+    font-size:10px;font-weight:var(--weight-semibold);letter-spacing:var(--tracking-wide);
+    text-transform:uppercase;color:var(--color-text-muted);margin-bottom:7px;
+  }
+  .ds-mini-swatches{display:flex;gap:8px;}
+  .ds-mini-swatch{width:22px;height:22px;border-radius:6px;border:1px solid var(--color-border);}
+  .ds-mini-type{display:flex;align-items:baseline;gap:10px;}
+  .ds-mini-type .aa{
+    font-family:var(--font-body);font-size:24px;font-weight:var(--weight-semibold);
+    color:var(--color-text);letter-spacing:var(--tracking-tight);
+  }
+  .ds-mini-type .fam{font-family:var(--font-mono);font-size:11px;color:var(--color-text-muted);}
+  .ds-mini-code{
+    display:block;font-family:var(--font-mono);font-size:11px;color:var(--color-text-secondary);
+    background:var(--color-surface);border-radius:6px;padding:8px 10px;
+  }
+  @media (max-width:760px){.ds-teaser-card{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<header id="site-header">
+  <div class="wrap nav">
+    <div class="logo identity">
+      <span class="identity-avatar"><a href="index.html"><img src="images/avatar.jpg" alt="Daniel Cruz"></a></span>
+      <span class="identity-text">
+        <a href="index.html" class="identity-name">Daniel Cruz</a>
+        <a href="mailto:danierocruz@gmail.com" class="identity-email">danierocruz@gmail.com</a>
+      </span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html#work">Work</a></li>
+      <li><a href="index.html#experience">Experience</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">
+      <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+    </button>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu"><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="case-hero projects-hero">
+    <div class="wrap">
+      <p class="breadcrumb"><a href="index.html#work">Work</a> / <b>All projects</b></p>
+      <h1 class="case-title"><span class="reveal-line"><span>All projects</span></span></h1>
+      <p class="projects-sub reveal-up">Case studies from B2B platforms, mobile apps and connected devices, plus a side project on AI and design systems.</p>
+    </div>
+  </section>
+
+  <section id="work" class="projects-list">
+    <div class="wrap">
+      <div class="work-grid" data-stagger>
+        <a href="case-genesis.html" class="work-card">
+          <div class="work-thumb has-image">
+            <img src="images/genesis/00-cover-macbook.png" alt="Genesis forecasting platform dashboard on a MacBook">
+            <span class="thumb-tag">Oil &amp; Gas · Hess</span>
+          </div>
+          <div class="work-info">
+            <div><h3>Genesis</h3><span>~30% less manual data gathering · SaaS</span></div>
+            <div class="work-arrow">↗</div>
+          </div>
+        </a>
+        <a href="case-smart-bottle.html" class="work-card">
+          <div class="work-thumb has-image">
+            <img src="images/water-bottle/cover.jpg" alt="Pro2col smart bottle screens: bottle added, hydration and settings">
+            <span class="thumb-tag">Hardware + App</span>
+          </div>
+          <div class="work-info">
+            <div><h3>Smart Bottle</h3><span>From pairing to factory reset · Mobile</span></div>
+            <div class="work-arrow">↗</div>
+          </div>
+        </a>
+        <a href="case-pro2col.html" class="work-card">
+          <div class="work-thumb has-image">
+            <img src="images/pro2col/cover.jpg" alt="Person checking the Pro2col wellness app on their phone">
+            <span class="thumb-tag">Health &amp; Wellness</span>
+          </div>
+          <div class="work-info">
+            <div><h3>Pro2col</h3><span>Wellness tracking app · Mobile</span></div>
+            <div class="work-arrow">↗</div>
+          </div>
+        </a>
+        <a href="case-checkout-and-pickup.html" class="work-card">
+          <div class="work-thumb has-image">
+            <img src="images/pickup/cover.jpg" alt="Tablet showing the Select Pickup Location screen next to the checkout flow">
+            <span class="thumb-tag">E-commerce · Herbalife India</span>
+          </div>
+          <div class="work-info">
+            <div><h3>Pickup Location Selection</h3><span>Map-based pickup in checkout · Web &amp; Mobile</span></div>
+            <div class="work-arrow">↗</div>
+          </div>
+        </a>
+        <a href="case-distributor-hub.html" class="work-card">
+          <div class="work-thumb has-image">
+            <img src="images/distributor-hub/cover.jpg" alt="Distributor checking the performance dashboard on their phone">
+            <span class="thumb-tag">Health &amp; Nutrition · Herbalife India</span>
+          </div>
+          <div class="work-info">
+            <div><h3>Distributor Hub</h3><span>Performance dashboard for 650K+ distributors · Web</span></div>
+            <div class="work-arrow">↗</div>
+          </div>
+        </a>
+        <a href="case-agentic-design-system.html" class="work-card">
+          <div class="work-thumb has-image">
+            <img src="images/agentic/00-cover-wide.jpg" alt="This portfolio as an AI-auditable design system" style="object-position:left center">
+            <span class="thumb-tag">Lab · AI + Design Systems</span>
+          </div>
+          <div class="work-info">
+            <div><h3>Agentic Design System</h3><span>How this site was built · Side project</span></div>
+            <div class="work-arrow">↗</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <span class="tag reveal-up">Contact</span>
+      <h2 class="cta-title reveal-up">Let's talk about<br>your next hire.</h2>
+      <a href="mailto:danierocruz@gmail.com" class="cta-email magnetic">danierocruz@gmail.com</a>
+      <p class="cta-sub">Usually respond within 24h · Relocating to Europe. Open to roles in Europe and remote.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <button class="back-to-top magnetic" id="backToTop" aria-label="Back to top">
+    <span>Take me to the top</span>
+    <span class="btn-icon">↑</span>
+  </button>
+  <div class="wrap footer-row">
+    <span class="footer-note">© 2026 Daniel Cruz. All rights reserved.</span>
+    <ul class="footer-links">
+      <li><a href="https://linkedin.com/in/danieroc" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="mailto:danierocruz@gmail.com">Email</a></li>
+      <li><a href="case-agentic-design-system.html" class="footer-lab-link"><span class="dot"></span>Lab</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="assets/main.js"></script>
+</body>
+</html>

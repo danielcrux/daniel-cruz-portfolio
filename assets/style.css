@@ -784,3 +784,10 @@ html[data-theme="dark"] .case-cover .cover-note{
   .exp-accordion .service-panel p{padding-right:0;max-width:none;}
   .exp-accordion .service-panel p,.exp-accordion .service-item.open .service-panel p{padding-left:0;}
 }
+
+/* home: link to all projects under the featured grid */
+.work-more{display:flex;justify-content:center;margin-top:var(--space-9);}
+/* projects page */
+.projects-hero{padding-bottom:0;}
+.projects-sub{margin-top:var(--space-6);max-width:56ch;font-size:var(--text-lg);color:var(--color-text-muted);}
+.projects-list{padding-top:var(--space-9);}
