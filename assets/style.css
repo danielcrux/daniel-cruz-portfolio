@@ -779,3 +779,4 @@ html[data-theme="dark"] .case-cover .cover-note{
 .compare-card h4{font-size:var(--text-lg);font-weight:var(--weight-semibold);color:var(--color-text);margin-bottom:10px;}
 .compare-grid.two{grid-template-columns:repeat(2,1fr);}
 @media (max-width:820px){.compare-grid.two{grid-template-columns:1fr;}}
+.exp-desc{display:block;margin-top:var(--space-3);font-size:var(--text-sm);line-height:var(--leading-loose);max-width:60ch;color:var(--color-text-muted);}
