@@ -98,7 +98,7 @@
         <div class="meta-item"><span>My role</span><b>Senior Product Designer</b></div>
         <div class="meta-item"><span>Period</span><b>Jan – Nov 2026</b></div>
         <div class="meta-item"><span>Team</span><b>10 designers, 1 PM, client engineering</b></div>
-        <div class="meta-item"><span>What was mine</span><b>Trends &amp; Insights, Personalized Plans</b></div>
+        <div class="meta-item"><span>What was mine</span><b>Trends &amp; Insights, Personalized Plans, design QA</b></div>
         <div class="meta-item full">
           <span>Scope</span>
           <div class="chip-row">
@@ -106,6 +106,7 @@
             <span class="chip">Product Design</span>
             <span class="chip">Mobile</span>
             <span class="chip">Design System (support)</span>
+            <span class="chip">Design QA</span>
           </div>
         </div>
       </div>
@@ -120,6 +121,23 @@
         <div class="stat"><b>2 modules</b><span>designed by me, in a 10-designer team</span></div>
         <div class="stat"><b>Feb 2027</b><span>planned launch</span></div>
       </div>
+    </div>
+  </section>
+
+  <!-- Context -->
+  <section class="case-feature">
+    <div class="wrap">
+      <div class="case-feature-head reveal-up">
+        <span class="tag">Context</span>
+        <h3>The real competitor is the delete button.</h3>
+        <p>We opened the client workshop with the market numbers. Most health apps lose people in the first week, so every decision in Pro2col had to answer one question: does this give someone a reason to open the app again tomorrow?</p>
+      </div>
+      <div class="stat-row reveal-up">
+        <div class="stat"><b>25%</b><span>of apps are never used again after the first try</span></div>
+        <div class="stat"><b>30–35%</b><span>day-1 retention for mobile apps</span></div>
+        <div class="stat"><b>3.4%</b><span>30-day retention for health &amp; fitness apps</span></div>
+      </div>
+      <p class="caption reveal-up" style="margin-top:14px;font-size:var(--text-sm);color:var(--color-text-muted);">Market data presented at the workshop. Sources: BuildFire, RevenueCat, Sensor Tower, Statista.</p>
     </div>
   </section>
 
@@ -176,14 +194,56 @@
     </div>
   </section>
 
+  <!-- Design directions -->
+  <section class="case-feature">
+    <div class="wrap">
+      <span class="head-tag">With team</span>
+      <div class="case-feature-head reveal-up">
+        <span class="tag">Exploration</span>
+        <h3>Three directions, one product.</h3>
+        <p>With the team and design leadership, we took three visual directions to a two-day workshop with the client. Daily Immersion put each data point front and center. Fluid Focus built the experience around a single goal. Modular Depth laid everything out as a dashboard to glance at or dive into.</p>
+      </div>
+      <div class="feature-full reveal-up">
+        <img src="images/pro2col/12-directions-to-final.jpg" alt="Three design directions for the Pro2col home, Daily Immersion, Fluid Focus and Modular Depth, next to the final Track and Pro2Score screens">
+        <p class="caption">The final app kept Daily Immersion's card-by-card daily feed and the energy of its score, and borrowed Modular Depth's glance-then-dive pattern for Pro2Score and Insights.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Principles -->
+  <section class="case-feature">
+    <div class="wrap">
+      <span class="head-tag">My work</span>
+      <div class="case-feature-head reveal-up">
+        <span class="tag">Principles</span>
+        <h3>Guidance before data.</h3>
+        <p>Before designing my modules, I benchmarked Noom, Strava, Nike Run Club and Fitbit. Most of them treat guidance as a chat or a lesson that lives apart from daily tracking. I wrote the principles below to keep Pro2col on the other side of that line, and used them to review every screen I designed.</p>
+      </div>
+      <div class="compare-grid" data-stagger>
+        <div class="compare-card">
+          <span class="compare-tag neutral">Principle</span><h4>Guidance before data</h4>
+          <p>The home is a daily guidance hub, not a control panel. It shows what matters now, what is going well and what to adjust today, instead of every metric the app tracks.</p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-tag neutral">Principle</span><h4>Daily actions over passive tracking</h4>
+          <p>Every card ends in one clear next step, like Track All or a single add button, so the screen asks for a small action instead of only reporting numbers.</p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-tag neutral">Principle</span><h4>Act here, learn there</h4>
+          <p>Explanations live one level down. The home stays for action, and pages like Pro2Score carry the context: what the score means and where you sit on the scale.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- First Access & Assessment -->
   <section class="case-feature">
     <div class="wrap">
       <span class="head-tag">With team</span>
       <div class="case-feature-head reveal-up">
         <span class="tag">01 — First Access &amp; Assessment</span>
-        <h3>Onboarding as a foundation, not a form.</h3>
-        <p>The original assessment leaned on complex sliders across 32 questions — technically thorough, practically exhausting. we simplified inputs into multiple-choice questions with consistent anchors, so answering felt fast and the resulting plan still felt personal.</p>
+        <h3>A health assessment, not an endurance challenge.</h3>
+        <p>The plan only works if people finish the assessment, and the original felt like a test of stamina: 32 required questions, many with custom sliders. In this phase we could not remove or reword questions, because the legal and science teams own them. So the team focused on how answering feels, and proposed 16 changes across 5 categories: structure, interaction and input, language, returning users and completion.</p>
       </div>
 
       <p class="case-feature-label reveal-up">Current state — 32 questions, slider-based inputs</p>
@@ -206,6 +266,9 @@
 
       <p class="case-feature-label reveal-up" style="margin-top:var(--space-9);">Solution — simplified, multiple-choice, consistent anchors</p>
       <img class="reveal-up" src="images/pro2col/01-assessment.png" alt="Pro2col login, goal-setting intro and simplified assessment screens">
+      <div class="insight-callout reveal-up">
+        <b>Next: Phase 2.</b> With the wording no longer locked, the next step is an adaptive assessment that starts from the user's goal and asks for more detail only where it changes the plan.
+      </div>
     </div>
   </section>
 
@@ -232,11 +295,33 @@
       <div class="case-feature-head reveal-up">
         <span class="tag">03 — Trends &amp; Insights</span>
         <h3>Progress, not just numbers.</h3>
-        <p>Raw metrics don't motivate — context does. Weekly and monthly views surface trend direction and contextual summaries instead of dumping charts on the user, so progress is something you can feel, not just read.</p>
+        <p>Raw metrics don't motivate, context does. I redesigned Trends &amp; Insights in the updated brand, so it answers how am I doing, against what goal, and am I keeping up with my plan.</p>
       </div>
-      <div class="feature-with-gif reveal-up">
-        <div class="gif-col"><img src="images/pro2col/flow-trends.gif" alt="Animated Pro2col Trends & Insights screen with points summary and 30-day streak" loading="lazy"></div>
-        <div class="img-col"><img src="images/pro2col/03-trends.png" alt="Pro2col weight and nutrition trend charts across weekly and monthly views"></div>
+      <div class="compare-grid two" data-stagger>
+        <div class="compare-card">
+          <span class="compare-tag solution">Overall Performance</span><h4>One view of the week or month</h4>
+          <p>The page opens with overall points progress for the last 7 days or the last month, against the daily target, with the streak and today highlighted.</p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-tag solution">Goals on the chart</span><h4>Last goal and new goal</h4>
+          <p>Insight cards draw the goal right on the chart. When the coach sets a new goal for the customer, the chart shows the last goal and the new one, so progress is read against the right target.</p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-tag solution">Comparison &amp; averages</span><h4>Patterns, not single days</h4>
+          <p>Each metric compares days side by side and adds averages, highs and lows, or how many days hit the goal in monthly view.</p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-tag solution">Product adherence</span><h4>When products were taken</h4>
+          <p>My Products shows each product day by day: taken, partially taken, forgotten or not scheduled, plus the overall adherence for the period.</p>
+        </div>
+      </div>
+      <div class="feature-full reveal-up">
+        <img src="images/pro2col/03-trends-screens.jpg" alt="Pro2col Trends &amp; Insights screens: Overall Points Progress, My Products adherence grid, and Hydration and Steps charts with averages">
+        <p class="caption">Overall Performance at the top, product adherence by day, and metric cards with goal line, average, high and low.</p>
+      </div>
+      <div class="feature-full reveal-up">
+        <img src="images/pro2col/03-trends-goals.jpg" alt="Hydration and Steps insight cards showing the last goal and the new goal set by the coach, in weekly and monthly views">
+        <p class="caption">When the coach changes a goal, the chart keeps both: the last goal and the new one, in weekly and monthly views.</p>
       </div>
     </div>
   </section>
@@ -314,17 +399,25 @@
           <p>We reused the drawers the app already had. Same job, no new engineering, and a more consistent experience.</p>
         </div>
         <div class="compare-card">
-          <span class="compare-tag neutral">From feedback</span><h4>Light and dark versions</h4>
-          <p>Client feedback led us to design both light and dark themes for the app.</p>
+          <span class="compare-tag neutral">From feedback</span><h4>An internal rebrand</h4>
+          <p>We brought the app's visual design up to date with the brand. The early light version below evolved into the current design, and client feedback led us to design both light and dark themes.</p>
         </div>
       </div>
       <div class="feature-full reveal-up">
-        <img src="images/pro2col/10-track-popup-exploration.jpg" alt="Track screen explorations with pop-up modals for adding water">
-        <p class="caption">Earlier version of my Track screen: logging water through pop-ups, before we moved to the drawers already in the system.</p>
+        <img src="images/pro2col/10-home-exploration.jpg" alt="Early light version of the Pro2col home and track screens, with pop-ups for adding water, a streak calendar and a quick-add menu">
+        <p class="caption">Early light version of the home: empty and full daily states, water logging through pop-ups before we moved to the drawers already in the system, the streak calendar and the quick-add menu.</p>
       </div>
-      <div class="feature-full reveal-up">
-        <img src="images/pro2col/11-home-score-states.jpg" alt="Home screen states as the daily score grows from 10 to 100 points">
-        <p class="caption">Home states as the daily score grows from 10 to 100 points, so progress is visible from the first log.</p>
+    </div>
+  </section>
+
+  <!-- Design QA -->
+  <section class="case-feature">
+    <div class="wrap">
+      <span class="head-tag">My work</span>
+      <div class="case-feature-head reveal-up">
+        <span class="tag">Design QA</span>
+        <h3>Closing the gap between Figma and the build.</h3>
+        <p>I ran design QA on the development version of the app. I went through the build screen by screen, compared it with the specs and logged every issue the developers needed to fix, from spacing and states to broken flows, so what ships matches what we designed.</p>
       </div>
     </div>
   </section>
