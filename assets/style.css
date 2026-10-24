@@ -791,3 +791,13 @@ html[data-theme="dark"] .case-cover .cover-note{
 .projects-hero{padding-bottom:0;}
 .projects-sub{margin-top:var(--space-6);max-width:56ch;font-size:var(--text-lg);color:var(--color-text-muted);}
 .projects-list{padding-top:var(--space-9);}
+
+/* v2: tighter gap between hero and Selected Work */
+.hero{min-height:auto;padding-top:170px;padding-bottom:72px;}
+#work{padding-top:110px;}
+.hero-footer-row{margin-top:80px;}
+@media (max-width:960px){
+  .hero{padding-top:120px;padding-bottom:56px;}
+  #work{padding-top:80px;}
+  .hero-footer-row{margin-top:56px;}
+}
