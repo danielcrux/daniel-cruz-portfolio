@@ -117,7 +117,7 @@
     <div class="wrap">
       <div class="stat-row reveal-up">
         <div class="stat"><b>Approved</b><span>client sent the bottle to manufacturing</span></div>
-        <div class="stat"><b>9</b><span>connected products benchmarked</span></div>
+        <div class="stat"><b>11</b><span>connected products benchmarked</span></div>
         <div class="stat"><b>Feb 2028</b><span>planned launch</span></div>
       </div>
     </div>
@@ -130,7 +130,7 @@
         <span class="tag">Constraints</span>
         <h3>What we had to work within.</h3>
       </div>
-      <div class="compare-grid" data-stagger>
+      <div class="compare-grid two" data-stagger>
         <div class="compare-card">
           <h4>No hardware specs</h4>
           <p>The client had little information about the bottle. Its manual skipped the app entirely, and its reset steps didn’t match the device.</p>
@@ -143,6 +143,39 @@
           <h4>One bottle, many buyers</h4>
           <p>Distributors buy bottles in bulk to resell, but only one bottle can be connected to an account at a time.</p>
         </div>
+        <div class="compare-card">
+          <h4>Sync only happens nearby</h4>
+          <p>Intake data only uploads over Bluetooth when the app is open and close to the bottle, so every screen has to show when it last synced.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach -->
+  <section class="case-feature">
+    <div class="wrap">
+      <span class="head-tag">With team</span>
+      <div class="case-feature-head reveal-up">
+        <span class="tag">Approach</span>
+        <h3>Design what we know, park what we don’t.</h3>
+        <p>With so many open questions, we kept a clear line between decisions already confirmed and questions still waiting on the client or the manufacturer.</p>
+      </div>
+      <div class="insight-callout reveal-up">
+        <b>North question:</b> how might we bring smart bottle technology into Pro2col to make the hydration habit easier, and raise app engagement and plan adherence?
+      </div>
+      <div class="compare-grid" data-stagger>
+        <div class="compare-card">
+          <span class="compare-tag neutral">Discovery</span><h4>Confirmed vs. open</h4>
+          <p>We organized what was already decided and mapped every open question from the initial briefing.</p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-tag neutral">Scenario mapping</span><h4>Two filters</h4>
+          <p>A scenario was designed now only if it was in the MVP scope and not blocked by an open question.</p>
+        </div>
+        <div class="compare-card">
+          <span class="compare-tag neutral">Flows &amp; wireframes</span><h4>One end-to-end flow</h4>
+          <p>A single flowchart for every entry scenario, then wireframes for each happy-path screen in Pro2col’s visual style.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -154,7 +187,7 @@
       <div class="case-feature-head reveal-up">
         <span class="tag">Competitor research</span>
         <h3>How connected products handle the hard moments.</h3>
-        <p>I benchmarked 9 connected products, from wearables like Garmin, Oura, Whoop and Apple Watch to smart bottles and mugs like Ember, LARQ, Rebo and our hardware partner. I focused less on the happy path and more on what happens when you pair, lose, reset or give away a device.</p>
+        <p>I benchmarked 11 connected products: wearables like Garmin, Oura, Whoop and Apple Watch, an Ember mug, and smart bottles from our hardware partner, Rebo, Botell, WaterH, Water.io and LARQ. Besides how each one senses and reminds, I looked at the hard moments: pairing, losing, resetting or giving away a device.</p>
       </div>
       <div class="compare-grid" data-stagger>
         <div class="compare-card">
@@ -170,8 +203,28 @@
           <p>One bottle app collects diagnostics through a hidden gesture. That pointed us to a visible “Details for support” block.</p>
         </div>
       </div>
+      <div class="feature-full reveal-up">
+        <img src="images/water-bottle/10-benchmark.jpg" alt="Smart bottle benchmark table comparing sensor, user effort, battery, reminders, offline behavior and app integrations across five bottles">
+        <p class="caption">Most brands don’t document how their bottles behave, the same gap we had with our own hardware.</p>
+      </div>
       <div class="insight-callout reveal-up">
         <b>The core insight:</b> the bottle is the source of truth, not the app. Most hard moments happen on the device, so the app has to be honest about what it doesn’t know.
+      </div>
+    </div>
+  </section>
+
+  <!-- User Flow -->
+  <section class="case-feature">
+    <div class="wrap">
+      <span class="head-tag">My work</span>
+      <div class="case-feature-head reveal-up">
+        <span class="tag">User flow</span>
+        <h3>Three ways in, one journey.</h3>
+        <p>I mapped the full journey in one flowchart. Someone can arrive with the bottle in hand or before buying it, as a new user, an existing user with a plan, or one without. All of them converge into the same setup and sync stages, and only diverge where they have to. The flow also maps the error and recovery paths next to the happy path.</p>
+      </div>
+      <div class="feature-full reveal-up">
+        <img src="images/water-bottle/09-user-flow.jpg" alt="End-to-end user flow in seven stages: entry points, who is arriving, first access, choice and assessment, bottle setup, reminders and daily use, plus bottle settings and error recovery branches">
+        <p class="caption">Simplified from the original flowchart: seven stages, plus the settings and error branches.</p>
       </div>
     </div>
   </section>
@@ -197,6 +250,10 @@
           <span class="compare-tag solution">Chosen</span><h4>Reset on the bottle first</h4>
           <p>Resetting on the device is the default path, and the app reacts to it. Deleting in the app first became the edge case, with its own pending state.</p>
         </div>
+      </div>
+      <div class="feature-full reveal-up">
+        <img src="images/water-bottle/11-early-lowfi.jpg" alt="Early low-fidelity screens: home without a bottle, bottle setup, pairing and calibration, plan setup, home with the bottle connected and troubleshooting">
+        <p class="caption">My first low-fidelity happy path, drawn before we had the hardware details.</p>
       </div>
     </div>
   </section>
@@ -302,7 +359,7 @@
       <div class="case-feature-head reveal-up">
         <span class="tag">07 — Error Messages</span>
         <h3>One template for every error.</h3>
-        <p>The firmware has 18 error states, so I designed one modular template instead of 18 screens: a title, a plain message, actions, and a collapsible “Details for support” block with a Copy button. Following the client’s rules, there is no red exclamation mark and no big red button. I explored it both as a bottom sheet and as a centered dialog.</p>
+        <p>The firmware has 18 error states, so I designed one modular template instead of 18 screens: a title, a plain message, actions, and a collapsible “Details for support” block with a Copy button. Following the client’s rules, there is no red exclamation mark and no big red button. I explored it as a bottom sheet and as a centered dialog, and we chose the bottom sheet because the developers already used that pattern in other products.</p>
       </div>
       <div class="feature-full reveal-up">
         <img src="images/water-bottle/08-error-template.jpg" alt="Error template as a bottom sheet and as a centered dialog, collapsed and with support details expanded">
