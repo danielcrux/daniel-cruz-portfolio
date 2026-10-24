@@ -748,3 +748,34 @@ html[data-theme="dark"] .case-cover .cover-note{
   .persona-grid{grid-template-columns:1fr;}
   .identity-text span{display:none;}
 }
+
+/* ---------- v2: hero fact, experience list, case structure ---------- */
+.hero-stat b.hero-fact{font-size:var(--text-3xl);}
+
+#experience{border-bottom:1px solid var(--color-border);}
+.exp-list{list-style:none;border-top:1px solid var(--color-border);}
+.exp-item{
+  display:grid;grid-template-columns:220px 1fr auto;align-items:baseline;gap:var(--space-6);
+  padding:34px 0;border-bottom:1px solid var(--color-border);
+}
+.exp-period{font-size:var(--text-sm);color:var(--color-text-muted);font-weight:var(--weight-medium);}
+.exp-role{font-size:var(--text-lg);color:var(--color-text-muted);}
+.exp-role b{
+  display:block;font-size:var(--font-fluid-heading);font-weight:var(--weight-semibold);
+  letter-spacing:var(--tracking-tight);color:var(--color-text);margin-bottom:var(--space-1);
+}
+.exp-meta{font-size:var(--text-sm);color:var(--color-text-muted);text-align:right;}
+@media (max-width:760px){
+  .exp-item{grid-template-columns:1fr;gap:var(--space-2);}
+  .exp-meta{text-align:left;}
+}
+
+/* key results strip right under the case hero */
+.case-results{padding:var(--space-9) 0 0;}
+.case-results .stat-row{margin-top:0;}
+
+/* numbered cards for constraints / decisions */
+.compare-tag.neutral{background:var(--color-surface);color:var(--color-text-secondary);border:1px solid var(--color-border);}
+.compare-card h4{font-size:var(--text-lg);font-weight:var(--weight-semibold);color:var(--color-text);margin-bottom:10px;}
+.compare-grid.two{grid-template-columns:repeat(2,1fr);}
+@media (max-width:820px){.compare-grid.two{grid-template-columns:1fr;}}
